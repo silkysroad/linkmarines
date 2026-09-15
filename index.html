@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LINK MARINES · $MARINE · reflections paid in $LINK</title>
+<meta name="description" content="The first cult that was right. Hold $MARINE, get paid in $LINK. Semper Fidelity.">
+<meta property="og:title" content="LINK MARINES · $MARINE">
+<meta property="og:description" content="The first cult that was right. Hold $MARINE, get paid in $LINK. Semper Fidelity.">
+<meta property="og:image" content="banner.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="banner.png">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --link-blue:#2A5ADA;
+    --link-blue-bright:#4a7aff;
+    --bg:#04060f;
+    --panel:#0a0f1f;
+    --green:#39ff6a;
+    --greentext:#789922;
+    --amber:#ffd23f;
+    --red:#ff3355;
+    --chan-bg:#d6daf0;
+    --chan-border:#b7c5d9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:#dfe6ff;
+    font-family:'IBM Plex Mono',monospace;
+    overflow-x:hidden;
+  }
+  /* scanlines */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:999;
+    background:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px);
+  }
+  ::selection{background:var(--link-blue);color:#fff}
+  a{color:var(--link-blue-bright)}
+
+  /* ticker */
+  .tape{
+    background:var(--link-blue);color:#fff;white-space:nowrap;overflow:hidden;
+    font-family:'VT323',monospace;font-size:22px;letter-spacing:1px;
+    border-bottom:1px solid rgba(255,255,255,.25);
+    position:sticky;top:0;z-index:50;
+  }
+  .tape-inner{display:inline-block;padding:6px 0;animation:scroll 32s linear infinite}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* hero */
+  .hero{
+    min-height:92vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:60px 20px 40px;position:relative;
+    background:
+      radial-gradient(ellipse at 50% -20%,rgba(42,90,218,.35),transparent 60%),
+      radial-gradient(ellipse at 80% 110%,rgba(42,90,218,.12),transparent 50%);
+  }
+  .hero .stamp{
+    font-family:'Special Elite',monospace;color:var(--red);
+    border:3px double var(--red);padding:4px 14px;font-size:14px;letter-spacing:4px;
+    transform:rotate(-4deg);margin-bottom:28px;opacity:.9;text-transform:uppercase;
+  }
+  h1{
+    font-family:'VT323',monospace;font-size:clamp(64px,13vw,170px);line-height:.85;
+    color:#fff;text-transform:uppercase;position:relative;
+    text-shadow:0 0 40px rgba(42,90,218,.8);
+  }
+  h1 .glitch{position:relative;display:inline-block}
+  h1 .glitch::before,h1 .glitch::after{
+    content:attr(data-t);position:absolute;left:0;top:0;width:100%;overflow:hidden;
+  }
+  h1 .glitch::before{color:var(--red);clip-path:inset(20% 0 40% 0);animation:g1 2.7s infinite linear alternate}
+  h1 .glitch::after{color:var(--green);clip-path:inset(60% 0 5% 0);animation:g2 3.1s infinite linear alternate}
+  @keyframes g1{0%,88%{transform:none;opacity:0}90%{transform:translate(-4px,2px);opacity:.8}94%{transform:translate(3px,-1px);opacity:.8}100%{transform:none;opacity:0}}
+  @keyframes g2{0%,90%{transform:none;opacity:0}92%{transform:translate(4px,1px);opacity:.7}97%{transform:translate(-3px,2px);opacity:.7}100%{transform:none;opacity:0}}
+  .hero h2{
+    font-family:'VT323',monospace;font-size:clamp(26px,4.5vw,46px);color:var(--link-blue-bright);
+    margin-top:10px;letter-spacing:2px;
+  }
+  .hero p.sub{max-width:640px;margin:26px auto 0;font-size:15px;line-height:1.7;color:#9fb0e0}
+  .hero p.sub b{color:#fff}
+
+  .ca{
+    margin-top:34px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;
+    background:var(--panel);border:1px solid var(--link-blue);padding:12px 16px;border-radius:4px;
+    font-size:12px;word-break:break-all;max-width:92vw;
+    box-shadow:0 0 30px rgba(42,90,218,.25);
+  }
+  .ca span{color:var(--amber)}
+  .ca button{
+    background:var(--link-blue);border:none;color:#fff;font-family:inherit;font-weight:700;
+    padding:8px 14px;cursor:pointer;font-size:12px;letter-spacing:1px;
+  }
+  .ca button:hover{background:var(--link-blue-bright)}
+  .cta-row{margin-top:26px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  .cta-row a{
+    text-decoration:none;font-weight:700;font-size:14px;letter-spacing:2px;padding:14px 26px;
+    border:1px solid var(--link-blue);color:#fff;text-transform:uppercase;transition:.15s;
+  }
+  .cta-row a.primary{background:var(--link-blue)}
+  .cta-row a:hover{background:var(--link-blue-bright);border-color:var(--link-blue-bright);box-shadow:0 0 24px rgba(74,122,255,.5)}
+
+  section{max-width:960px;margin:0 auto;padding:90px 24px}
+  .sec-head{margin-bottom:44px}
+  .sec-head .dossier{
+    font-family:'Special Elite',monospace;font-size:12px;color:var(--red);letter-spacing:3px;text-transform:uppercase;
+  }
+  .sec-head h3{
+    font-family:'VT323',monospace;font-size:clamp(38px,6vw,64px);color:#fff;text-transform:uppercase;line-height:1;
+    margin-top:8px;
+  }
+  .sec-head h3 em{color:var(--link-blue-bright);font-style:normal}
+
+  /* timeline */
+  .tl{border-left:2px solid var(--link-blue);margin-left:6px}
+  .tl-item{position:relative;padding:0 0 42px 30px}
+  .tl-item::before{
+    content:"";position:absolute;left:-8px;top:4px;width:14px;height:14px;background:var(--bg);
+    border:2px solid var(--link-blue-bright);border-radius:50%;box-shadow:0 0 12px rgba(74,122,255,.8);
+  }
+  .tl-item .date{font-family:'VT323',monospace;font-size:24px;color:var(--amber);letter-spacing:1px}
+  .tl-item h4{color:#fff;font-size:16px;margin:6px 0 8px;text-transform:uppercase;letter-spacing:1px}
+  .tl-item p{font-size:14px;line-height:1.75;color:#9fb0e0}
+  .tl-item p b{color:#dfe6ff}
+
+  /* 4chan posts */
+  .chan{background:var(--chan-bg);border:1px solid var(--chan-border);padding:14px 16px;margin-bottom:22px;color:#000;font-family:arial,helvetica,sans-serif;font-size:13.5px;line-height:1.55;border-radius:2px}
+  .chan .meta{margin-bottom:6px;font-size:12.5px}
+  .chan .meta .name{color:#117743;font-weight:700}
+  .chan .meta .id{background:#2A5ADA;color:#fff;padding:0 4px;border-radius:3px;font-size:11px}
+  .chan .meta .no{color:#000;opacity:.6}
+  .chan .gt{color:var(--greentext)}
+  .chan .quote{color:#d00;text-decoration:underline}
+  .chan p{margin:0}
+
+  /* ranks */
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{padding:13px 14px;text-align:left;border-bottom:1px solid rgba(74,122,255,.18)}
+  th{font-family:'VT323',monospace;font-size:20px;color:var(--link-blue-bright);text-transform:uppercase;letter-spacing:2px}
+  td:first-child{color:var(--amber);white-space:nowrap}
+  tr:hover td{background:rgba(42,90,218,.08)}
+  .final-rank td{color:var(--green)}
+  .final-rank td:first-child{color:var(--green)}
+
+  /* reflections */
+  .reflect{
+    background:var(--panel);border:1px solid var(--link-blue);padding:44px 36px;border-radius:6px;
+    box-shadow:0 0 60px rgba(42,90,218,.18);text-align:center;
+  }
+  .reflect .big{
+    font-family:'VT323',monospace;font-size:clamp(34px,5.5vw,56px);color:#fff;line-height:1.05;text-transform:uppercase;
+  }
+  .reflect .big em{color:var(--link-blue-bright);font-style:normal}
+  .reflect p{margin-top:20px;font-size:14.5px;line-height:1.8;color:#9fb0e0;max-width:620px;margin-left:auto;margin-right:auto}
+  .reflect p b{color:#fff}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:34px;text-align:left}
+  .step{border:1px dashed rgba(74,122,255,.4);padding:18px}
+  .step .n{font-family:'VT323',monospace;font-size:30px;color:var(--amber)}
+  .step h5{color:#fff;font-size:13px;text-transform:uppercase;letter-spacing:1px;margin:6px 0}
+  .step p{font-size:12.5px;color:#9fb0e0;margin:0;line-height:1.6}
+
+  /* creed */
+  .creed{text-align:center;font-family:'VT323',monospace}
+  .creed .line{font-size:clamp(24px,4vw,40px);color:#fff;margin-bottom:8px;text-transform:uppercase}
+  .creed .line.blue{color:var(--link-blue-bright)}
+  .creed .line.green{color:var(--green)}
+
+  footer{
+    border-top:1px solid rgba(74,122,255,.25);padding:40px 24px 60px;text-align:center;
+    font-size:12px;color:#5b6c9e;line-height:2;
+  }
+  footer .semper{font-family:'VT323',monospace;font-size:26px;color:var(--link-blue-bright);letter-spacing:3px}
+  footer .links{margin:10px 0}
+  footer .links a{margin:0 12px;text-transform:uppercase;letter-spacing:1px;font-size:12px}
+</style>
+</head>
+<body>
+
+<div class="tape"><div class="tape-inner">
+  1000 EOY · NOT SELLING · SERGEY IS A VISIONARY · GOD PROTOCOL · ORACLES RUN EVERYTHING · STINKY LINKIES AND PROUD · SEMPER FIDELITY · ACCUMULATE · 1000 EOY · NOT SELLING · SERGEY IS A VISIONARY · GOD PROTOCOL · ORACLES RUN EVERYTHING · STINKY LINKIES AND PROUD · SEMPER FIDELITY · ACCUMULATE ·&nbsp;
+</div></div>
+
+<div class="hero">
+  <div class="stamp">Declassified // Field Dossier 001</div>
+  <h1><span class="glitch" data-t="LINK MARINES">LINK MARINES</span></h1>
+  <h2>$MARINE</h2>
+  <p class="sub">
+    they called it a cult. the cult was <b>right</b>.<br>
+    nine years of holding, memeing, and eating FUD for breakfast.<br>
+    now the faithful get paid: hold <b>$MARINE</b>, receive reflections in <b>$LINK</b>.
+  </p>
+  <div class="ca">
+    <span id="ca-text">F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK</span>
+    <button onclick="copyCA(this)">COPY CA</button>
+  </div>
+  <div class="cta-row">
+    <a class="primary" href="https://stonk.fun/token/F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK" target="_blank" rel="noopener">Enlist (Buy)</a>
+    <a href="https://dexscreener.com/solana/F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK" target="_blank" rel="noopener">Chart</a>
+    <a href="#" id="tw-link" target="_blank" rel="noopener">Twitter</a>
+  </div>
+</div>
+
+<section id="lore">
+  <div class="sec-head">
+    <div class="dossier">Exhibit A // The Historical Record</div>
+    <h3>Nine years of being <em>early</em>,<br>not wrong</h3>
+  </div>
+  <div class="tl">
+    <div class="tl-item">
+      <div class="date">SEPT 2017</div>
+      <h4>The ICO</h4>
+      <p>$0.11. a whitepaper about oracles and a man in a plaid shirt. the suits ignored it. <b>/biz/ did not.</b> in the basements of the internet, an army enlisted itself.</p>
+    </div>
+    <div class="tl-item">
+      <div class="date">OCT 2017</div>
+      <h4>SIBOS. The First Breadcrumb.</h4>
+      <p>sergey walks the SWIFT stage in the same shirt. nobody outside the threads noticed. the threads <b>never forgot</b>. breadcrumb autism became a full time occupation.</p>
+    </div>
+    <div class="tl-item">
+      <div class="date">FEB 2018</div>
+      <h4>AssBlaster Posts</h4>
+      <p>an anon claiming insider knowledge drops prophecy after prophecy. "a larp," they said. then the calls started printing. marines stopped asking questions and started <b>accumulating</b>.</p>
+    </div>
+    <div class="tl-item">
+      <div class="date">2018</div>
+      <h4>Crypto Winter. Marines Don't Feel Cold.</h4>
+      <p>everything bled. "stinky linkies" was meant as an insult. it became a <b>rank insignia</b>. sergey ate big macs. marines ate the dip.</p>
+    </div>
+    <div class="tl-item">
+      <div class="date">JUNE 2019</div>
+      <h4>Google Blog. Coinbase Listing.</h4>
+      <p>the first public "told you so." the shirt was on stage at every conference on earth. 1000 EOY intensified. dads who called it a scam went quiet at thanksgiving.</p>
+    </div>
+    <div class="tl-item">
+      <div class="date">2020</div>
+      <h4>DeFi Summer Runs On Chainlink</h4>
+      <p>every protocol you've ever heard of pings a chainlink feed to know what anything is worth. top 5 by market cap. the marines were never crazy. <b>just early.</b></p>
+    </div>
+    <div class="tl-item">
+      <div class="date">MAY 2021</div>
+      <h4>$52.88</h4>
+      <p>from $0.11. some sold. <b>those were not marines.</b> a marine does not sell. a marine reads CCIP documentation at 3am and posts "comfy" in the thread.</p>
+    </div>
+    <div class="tl-item">
+      <div class="date">2022 → 2025</div>
+      <h4>The Quiet Grind</h4>
+      <p>staking shipped. CCIP shipped. SWIFT again, for real this time. banks piloting the rails the basement predicted in 2017. marines kept stacking through it all.</p>
+    </div>
+    <div class="tl-item">
+      <div class="date">NOW</div>
+      <h4>The Marines Get Paid</h4>
+      <p><b>$MARINE.</b> a token by the faithful, for the faithful. hold it and reflections arrive in the one asset every marine swore never to sell. the bag that pays you in LINK for existing.</p>
+    </div>
+  </div>
+</section>
+
+<section id="threads">
+  <div class="sec-head">
+    <div class="dossier">Exhibit B // Recovered Threads</div>
+    <h3>From the <em>archives</em></h3>
+  </div>
+
+  <div class="chan">
+    <div class="meta"><span class="name">Anonymous</span> <span class="id">ID:x7Lk09</span> 09/19/17(Tue)03:41:22 <span class="no">No.3771942</span></div>
+    <p><span class="gt">&gt;be me</span><br>
+    <span class="gt">&gt;buy 25k linkies at 11 cents</span><br>
+    <span class="gt">&gt;dad says it's a scam</span><br>
+    <span class="gt">&gt;mom says get a job</span><br>
+    1000 EOY is not a meme. it is a prophecy. screencap this.</p>
+  </div>
+
+  <div class="chan">
+    <div class="meta"><span class="name">Anonymous</span> <span class="id">ID:aB4st3r</span> 02/04/18(Sun)23:58:07 <span class="no">No.7392011</span></div>
+    <p>I work at a large firm. I cannot say more. what I can say: the partnerships you are laughing about are real, and the ones you haven't heard of are bigger. you will accumulate now or you will spend the next decade explaining why you didn't.</p>
+  </div>
+
+  <div class="chan">
+    <div class="meta"><span class="name">Anonymous</span> <span class="id">ID:hOdL77</span> 03/13/20(Fri)14:02:51 <span class="no">No.17720393</span></div>
+    <p><span class="quote">&gt;&gt;17720301</span><br>
+    I have held through minus 90%. twice. I am so tired, sirs. I will never sell. semper fi.</p>
+  </div>
+
+  <div class="chan">
+    <div class="meta"><span class="name">Anonymous</span> <span class="id">ID:mAr1nE</span> 09/14/26(Mon)16:20:00 <span class="no">No.58800001</span></div>
+    <p>they laughed at the stinky linkies for nine years.<br>
+    now my bag pays me in LINK for existing.<br>
+    <span class="gt">&gt;the market has become the marine</span></p>
+  </div>
+</section>
+
+<section id="ranks">
+  <div class="sec-head">
+    <div class="dossier">Exhibit C // Chain of Command</div>
+    <h3>Know your <em>rank</em></h3>
+  </div>
+  <table>
+    <tr><th>Holding</th><th>Rank</th><th>Notes</th></tr>
+    <tr><td>&lt; 100 LINK</td><td>Boot</td><td>still explaining oracles to your barber</td></tr>
+    <tr><td>100+</td><td>Private</td><td>owns one plaid shirt</td></tr>
+    <tr><td>1,000+</td><td>Corporal</td><td>has screencapped at least one prophecy</td></tr>
+    <tr><td>5,000+</td><td>Sergeant</td><td>survived minus 90% without blinking</td></tr>
+    <tr><td>10,000+</td><td>Lieutenant</td><td>reads CCIP docs recreationally</td></tr>
+    <tr><td>25,000+</td><td>Captain</td><td>dreams in price feeds</td></tr>
+    <tr><td>50,000+</td><td>Colonel</td><td>was in the 2017 threads. has proof</td></tr>
+    <tr><td>100,000+</td><td>General</td><td>sergey knows your wallet by heart</td></tr>
+    <tr class="final-rank"><td>$MARINE holder</td><td>Paid Marine</td><td>the only rank that collects a salary</td></tr>
+  </table>
+</section>
+
+<section id="reflections">
+  <div class="sec-head">
+    <div class="dossier">Exhibit D // The Mechanism</div>
+    <h3>Reflections, paid in <em>$LINK</em></h3>
+  </div>
+  <div class="reflect">
+    <div class="big">Hold <em>$MARINE</em>.<br>Get paid <em>$LINK</em>.</div>
+    <p>every trade feeds the reflection pool. the pool pays holders in <b>chainlink</b>, automatically, straight to your wallet. no staking. no claiming. no forms. nine years of conviction, finally on payroll.</p>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h5>Enlist</h5><p>buy $MARINE on stonkfun. any amount. rank is earned, not bought.</p></div>
+      <div class="step"><div class="n">02</div><h5>Hold the line</h5><p>marines do not sell. you have trained your whole life for this step.</p></div>
+      <div class="step"><div class="n">03</div><h5>Collect</h5><p>$LINK reflections accumulate in your wallet while you sleep, post, and stack.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="creed">
+  <div class="creed">
+    <div class="line">a marine does not sell.</div>
+    <div class="line blue">a marine accumulates.</div>
+    <div class="line">a marine was never wrong.</div>
+    <div class="line green">a marine was early.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="semper">SEMPER FIDELITY</div>
+  <div class="links">
+    <a href="https://stonk.fun/token/F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK" target="_blank" rel="noopener">Buy</a>
+    <a href="https://dexscreener.com/solana/F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK" target="_blank" rel="noopener">Chart</a>
+    <a href="#" id="tw-link-2" target="_blank" rel="noopener">Twitter</a>
+  </div>
+  <div>$MARINE is a meme token launched on stonkfun. not affiliated with chainlink labs. not financial advice. the only thing we guarantee is the memes.</div>
+  <div>CA: F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK</div>
+</footer>
+
+<script>
+function copyCA(btn){
+  navigator.clipboard.writeText(document.getElementById('ca-text').textContent).then(()=>{
+    const t=btn.textContent;btn.textContent='COPIED ✓';setTimeout(()=>btn.textContent=t,1500);
+  });
+}
+</script>
+</body>
+</html>
