@@ -250,11 +250,17 @@
     <div class="paycard hero-stat">
       <div class="val" id="stat-link">4,782</div>
       <div class="lbl">$LINK distributed to holders</div>
-      <div class="usd" id="stat-usd">≈ $52,852 USD</div>
+      <div class="usd" id="stat-usd">≈ $52,990 USD</div>
     </div>
     <div class="paycard"><div class="val" id="stat-payouts">23,655</div><div class="lbl">individual payouts</div></div>
-    <div class="paycard"><div class="val" id="stat-holders">1,891</div><div class="lbl">marines on payroll</div></div>
+    <div class="paycard"><div class="val" id="stat-holders">1,900</div><div class="lbl">marines on payroll</div></div>
     <div class="paycard"><div class="val">24/7</div><div class="lbl">distribution never sleeps</div></div>
+  </div>
+  <div class="paygrid" style="margin-top:14px">
+    <div class="paycard"><div class="val" id="stat-mcap">$119K</div><div class="lbl">market cap</div></div>
+    <div class="paycard"><div class="val" id="stat-vol">$176K</div><div class="lbl">24h volume</div></div>
+    <div class="paycard"><div class="val" id="stat-txns">2,265</div><div class="lbl">24h transactions</div></div>
+    <div class="paycard"><div class="val" id="stat-liq">1,272 LINK</div><div class="lbl">paired against $LINK itself</div></div>
   </div>
   <p class="pay-note">
     every distribution cycle <b>market-buys real $LINK</b> and drops it in holders' wallets.<br>
@@ -459,6 +465,28 @@
         fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(API))
           .then(function(r){return r.json()}).then(apply).catch(function(){});
       });
+  }
+  load();
+  setInterval(load,60000);
+})();
+// live market stats — dexscreener public API (CORS-open)
+(function(){
+  var API='https://api.dexscreener.com/latest/dex/pairs/solana/BnkYfw796XXq9UQ9kMYoX9iqSgXnjw7sFCsCVWVDiCUa';
+  function usd(n){
+    if(n>=1e6)return '$'+(n/1e6).toFixed(2)+'M';
+    if(n>=1e3)return '$'+Math.floor(n/1e3)+'K';
+    return '$'+Math.floor(n).toLocaleString('en-US');
+  }
+  function apply(p){
+    if(!p)return;
+    if(p.marketCap)document.getElementById('stat-mcap').textContent=usd(p.marketCap);
+    if(p.volume&&p.volume.h24!=null)document.getElementById('stat-vol').textContent=usd(p.volume.h24);
+    if(p.txns&&p.txns.h24)document.getElementById('stat-txns').textContent=(p.txns.h24.buys+p.txns.h24.sells).toLocaleString('en-US');
+    if(p.liquidity&&p.liquidity.quote!=null)document.getElementById('stat-liq').textContent=Math.floor(p.liquidity.quote).toLocaleString('en-US')+' LINK';
+  }
+  function load(){
+    fetch(API).then(function(r){return r.json()})
+      .then(function(d){apply(d&&d.pairs&&d.pairs[0])}).catch(function(){});
   }
   load();
   setInterval(load,60000);
