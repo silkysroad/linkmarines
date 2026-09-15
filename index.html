@@ -437,23 +437,31 @@
 </footer>
 
 <script>
-// live payroll numbers — baked fallback, upgrades in place if the API allows it
+// live payroll numbers — direct fetch, CORS-proxy fallback, baked numbers as last resort
 (function(){
+  var API='https://www.stonkfun.xyz/api/rewards?mint=F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK';
   var fmt=function(n){return Math.floor(n).toLocaleString('en-US')};
-  fetch('https://www.stonkfun.xyz/api/rewards?mint=F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK')
-    .then(function(r){return r.json()})
-    .then(function(d){
-      if(!d||!d.distributedTokens)return;
-      document.getElementById('stat-link').textContent=fmt(d.distributedTokens);
-      document.getElementById('stat-usd').textContent='≈ $'+fmt(d.distributedUsd)+' USD';
-      document.getElementById('stat-payouts').textContent=fmt(d.payoutCount);
-      document.getElementById('stat-holders').textContent=fmt(d.holderCount);
-      var line=fmt(d.distributedTokens)+'+ LINK PAID TO MARINES';
-      ['tape-a','tape-b'].forEach(function(id){
-        var el=document.getElementById(id);
-        el.textContent=el.textContent.replace(/^[\d,]+\+ LINK PAID TO MARINES/,line);
+  function apply(d){
+    if(!d||!d.distributedTokens)return;
+    document.getElementById('stat-link').textContent=fmt(d.distributedTokens);
+    document.getElementById('stat-usd').textContent='≈ $'+fmt(d.distributedUsd)+' USD';
+    document.getElementById('stat-payouts').textContent=fmt(d.payoutCount);
+    document.getElementById('stat-holders').textContent=fmt(d.holderCount);
+    var line=fmt(d.distributedTokens)+'+ LINK PAID TO MARINES';
+    ['tape-a','tape-b'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el)el.textContent=el.textContent.replace(/[\d,]+\+ LINK PAID TO MARINES/g,line);
+    });
+  }
+  function load(){
+    fetch(API).then(function(r){return r.json()}).then(apply)
+      .catch(function(){
+        fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(API))
+          .then(function(r){return r.json()}).then(apply).catch(function(){});
       });
-    }).catch(function(){});
+  }
+  load();
+  setInterval(load,60000);
 })();
 function copyCA(btn){
   navigator.clipboard.writeText(document.getElementById('ca-text').textContent).then(()=>{
