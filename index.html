@@ -164,6 +164,43 @@
   .step h5{color:#fff;font-size:13px;text-transform:uppercase;letter-spacing:1px;margin:6px 0}
   .step p{font-size:12.5px;color:#9fb0e0;margin:0;line-height:1.6}
 
+  /* war pay stats */
+  .paygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+  .paycard{
+    background:var(--panel);border:1px solid var(--link-blue);padding:26px 20px;text-align:center;
+    box-shadow:0 0 30px rgba(42,90,218,.15);
+  }
+  .paycard.hero-stat{grid-column:1/-1;border-color:var(--link-blue-bright);box-shadow:0 0 60px rgba(74,122,255,.3)}
+  .paycard .val{font-family:'VT323',monospace;font-size:clamp(40px,7vw,72px);color:#fff;line-height:1;text-shadow:0 0 30px rgba(74,122,255,.8)}
+  .paycard.hero-stat .val{color:var(--green);text-shadow:0 0 40px rgba(57,255,106,.5)}
+  .paycard .lbl{margin-top:10px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#9fb0e0}
+  .paycard .usd{font-family:'VT323',monospace;font-size:22px;color:var(--amber);margin-top:6px}
+  .pay-note{margin-top:22px;text-align:center;font-size:13.5px;line-height:1.8;color:#9fb0e0}
+  .pay-note b{color:#fff}
+  .pay-note .green{color:var(--green)}
+
+  /* mission */
+  .mission{
+    border:3px double var(--red);padding:36px 30px;text-align:center;
+    background:linear-gradient(rgba(255,51,85,.04),transparent);
+  }
+  .mission .order{font-family:'Special Elite',monospace;font-size:12px;color:var(--red);letter-spacing:4px;text-transform:uppercase}
+  .mission h4{font-family:'VT323',monospace;font-size:clamp(30px,5vw,52px);color:#fff;text-transform:uppercase;margin:14px 0 16px;line-height:1}
+  .mission h4 em{color:var(--link-blue-bright);font-style:normal}
+  .mission p{font-size:14.5px;line-height:1.85;color:#9fb0e0;max-width:640px;margin:0 auto}
+  .mission p b{color:#fff}
+
+  /* armory */
+  .armory{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+  .armory figure{
+    background:var(--panel);border:1px solid rgba(74,122,255,.35);padding:10px;transition:.15s;
+  }
+  .armory figure:hover{border-color:var(--link-blue-bright);box-shadow:0 0 24px rgba(74,122,255,.4);transform:translate(-2px,-2px)}
+  .armory img{width:100%;display:block;filter:saturate(.95)}
+  .armory figcaption{
+    font-family:'VT323',monospace;font-size:18px;color:var(--amber);padding:10px 4px 4px;letter-spacing:1px;text-transform:lowercase;
+  }
+
   /* creed */
   .creed{text-align:center;font-family:'VT323',monospace}
   .creed .line{font-size:clamp(24px,4vw,40px);color:#fff;margin-bottom:8px;text-transform:uppercase}
@@ -182,7 +219,7 @@
 <body>
 
 <div class="tape"><div class="tape-inner">
-  1000 EOY · NOT SELLING · SERGEY IS A VISIONARY · GOD PROTOCOL · ORACLES RUN EVERYTHING · STINKY LINKIES AND PROUD · SEMPER FIDELITY · ACCUMULATE · 1000 EOY · NOT SELLING · SERGEY IS A VISIONARY · GOD PROTOCOL · ORACLES RUN EVERYTHING · STINKY LINKIES AND PROUD · SEMPER FIDELITY · ACCUMULATE ·&nbsp;
+  <span id="tape-a">4,764+ LINK PAID TO MARINES · 1000 EOY · NOT SELLING · SERGEY IS A VISIONARY · GOD PROTOCOL · ORACLES RUN EVERYTHING · STINKY LINKIES AND PROUD · SEMPER FIDELITY · ACCUMULATE ·&nbsp;</span><span id="tape-b">4,764+ LINK PAID TO MARINES · 1000 EOY · NOT SELLING · SERGEY IS A VISIONARY · GOD PROTOCOL · ORACLES RUN EVERYTHING · STINKY LINKIES AND PROUD · SEMPER FIDELITY · ACCUMULATE ·&nbsp;</span>
 </div></div>
 
 <div class="hero">
@@ -203,6 +240,28 @@
     <a href="https://dexscreener.com/solana/F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK" target="_blank" rel="noopener">Chart</a>
   </div>
 </div>
+
+<section id="payroll">
+  <div class="sec-head">
+    <div class="dossier">Field Report // Payroll Ledger — Live</div>
+    <h3>LINK already paid to <em>marines</em></h3>
+  </div>
+  <div class="paygrid">
+    <div class="paycard hero-stat">
+      <div class="val" id="stat-link">4,764</div>
+      <div class="lbl">$LINK distributed to holders</div>
+      <div class="usd" id="stat-usd">≈ $52,724 USD</div>
+    </div>
+    <div class="paycard"><div class="val" id="stat-payouts">23,415</div><div class="lbl">individual payouts</div></div>
+    <div class="paycard"><div class="val" id="stat-holders">1,891</div><div class="lbl">marines on payroll</div></div>
+    <div class="paycard"><div class="val">24/7</div><div class="lbl">distribution never sleeps</div></div>
+  </div>
+  <p class="pay-note">
+    every distribution cycle <b>market-buys real $LINK</b> and drops it in holders' wallets.<br>
+    this is not a promise. it is a <span class="green">running ledger</span>. the marines are not just holding LINK anymore.<br>
+    <b>the marines are buying it. block after block. rising up the ranks.</b>
+  </p>
+</section>
 
 <section id="lore">
   <div class="sec-head">
@@ -309,6 +368,16 @@
     <tr><td>100,000+</td><td>General</td><td>sergey knows your wallet by heart</td></tr>
     <tr class="final-rank"><td>$MARINE holder</td><td>Paid Marine</td><td>the only rank that collects a salary</td></tr>
   </table>
+  <div class="mission" style="margin-top:44px">
+    <div class="order">Standing Order No. 1</div>
+    <h4>Rise up the <em>rankings</em></h4>
+    <p>
+      the mission was never the memecoin. the mission is the <b>rank table above</b>.
+      every $MARINE reflection lands as real $LINK in your wallet. your stack grows without you lifting a finger.
+      boot becomes private. private becomes corporal. <b>the payroll promotes you while you sleep.</b>
+      nine years of holding the line, and now the line holds you up.
+    </p>
+  </div>
 </section>
 
 <section id="reflections">
@@ -324,6 +393,26 @@
       <div class="step"><div class="n">02</div><h5>Hold the line</h5><p>marines do not sell. you have trained your whole life for this step.</p></div>
       <div class="step"><div class="n">03</div><h5>Collect</h5><p>$LINK reflections accumulate in your wallet while you sleep, post, and stack.</p></div>
     </div>
+  </div>
+</section>
+
+<section id="armory">
+  <div class="sec-head">
+    <div class="dossier">Exhibit E // The Armory — Recovered Artifacts, 2017–2021</div>
+    <h3>Nine years of <em>ammunition</em></h3>
+  </div>
+  <div class="armory">
+    <figure><img src="memes/7777777.jpg" alt="7777777" loading="lazy"><figcaption>&gt;the prophecy digits</figcaption></figure>
+    <figure><img src="memes/saint-sergey.jpg" alt="saint sergey" loading="lazy"><figcaption>&gt;the visionary</figcaption></figure>
+    <figure><img src="memes/jason-parser.jpg" alt="jason parser" loading="lazy"><figcaption>&gt;jason parser</figcaption></figure>
+    <figure><img src="memes/its-happening-tonight.jpg" alt="its happening tonight" loading="lazy"><figcaption>&gt;strap in boys</figcaption></figure>
+    <figure><img src="memes/comfy-winter-pepe.jpg" alt="comfy winter" loading="lazy"><figcaption>&gt;comfy through winter</figcaption></figure>
+    <figure><img src="memes/icon-of-the-marine.jpg" alt="icon of the marine" loading="lazy"><figcaption>&gt;patron saint of holding</figcaption></figure>
+    <figure><img src="memes/pepe-fine-wine.jpg" alt="fine wine" loading="lazy"><figcaption>&gt;aged like the bags</figcaption></figure>
+    <figure><img src="memes/swift-pepe-cubes.jpg" alt="cubes everywhere" loading="lazy"><figcaption>&gt;can't stop accumulating</figcaption></figure>
+    <figure><img src="memes/raiders-of-the-lost-cube.jpg" alt="raiders of the lost cube" loading="lazy"><figcaption>&gt;the artifact</figcaption></figure>
+    <figure><img src="memes/precious-memories.jpg" alt="precious memories" loading="lazy"><figcaption>&gt;precious memories</figcaption></figure>
+    <figure><img src="memes/goodnight-cube.jpg" alt="goodnight cube" loading="lazy"><figcaption>&gt;sleep well, marine</figcaption></figure>
   </div>
 </section>
 
@@ -347,6 +436,24 @@
 </footer>
 
 <script>
+// live payroll numbers — baked fallback, upgrades in place if the API allows it
+(function(){
+  var fmt=function(n){return Math.floor(n).toLocaleString('en-US')};
+  fetch('https://www.stonkfun.xyz/api/rewards?mint=F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK')
+    .then(function(r){return r.json()})
+    .then(function(d){
+      if(!d||!d.distributedTokens)return;
+      document.getElementById('stat-link').textContent=fmt(d.distributedTokens);
+      document.getElementById('stat-usd').textContent='≈ $'+fmt(d.distributedUsd)+' USD';
+      document.getElementById('stat-payouts').textContent=fmt(d.payoutCount);
+      document.getElementById('stat-holders').textContent=fmt(d.holderCount);
+      var line=fmt(d.distributedTokens)+'+ LINK PAID TO MARINES';
+      ['tape-a','tape-b'].forEach(function(id){
+        var el=document.getElementById(id);
+        el.textContent=el.textContent.replace(/^[\d,]+\+ LINK PAID TO MARINES/,line);
+      });
+    }).catch(function(){});
+})();
 function copyCA(btn){
   navigator.clipboard.writeText(document.getElementById('ca-text').textContent).then(()=>{
     const t=btn.textContent;btn.textContent='COPIED ✓';setTimeout(()=>btn.textContent=t,1500);
