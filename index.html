@@ -219,6 +219,33 @@
     font-family:'VT323',monospace;font-size:18px;color:var(--amber);padding:10px 4px 4px;letter-spacing:1px;text-transform:lowercase;
   }
 
+  /* inline field photos (taped dossier evidence) */
+  .field-photo{
+    background:#e8e4d8;padding:10px 10px 8px;max-width:280px;margin:18px 0 6px;
+    box-shadow:0 6px 18px rgba(0,0,0,.5);transform:rotate(-1.6deg);position:relative;border-radius:1px;
+  }
+  .field-photo.r{transform:rotate(1.4deg)}
+  .field-photo::before{
+    content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-3deg);
+    width:80px;height:22px;background:rgba(214,201,155,.75);box-shadow:0 1px 3px rgba(0,0,0,.25);
+  }
+  .field-photo img{width:100%;display:block;filter:saturate(.92) contrast(1.02)}
+  .field-photo figcaption{
+    font-family:'Special Elite',monospace;font-size:12px;color:#3a3630;padding:7px 2px 0;letter-spacing:.5px;
+  }
+  /* 4chan-style image attachment inside recovered threads */
+  .chan .file{margin:0 0 6px}
+  .chan .file .fileinfo{font-size:11px;color:#000;opacity:.65;margin-bottom:3px}
+  .chan .file img{
+    float:left;max-width:160px;height:auto;margin:3px 16px 6px 0;border:1px solid #b7c5d9;cursor:pointer;
+  }
+  .chan::after{content:"";display:block;clear:both}
+  /* rank icon beside chain of command */
+  .rank-flank{display:flex;gap:34px;align-items:flex-start;flex-wrap:wrap}
+  .rank-flank .tables{flex:1 1 480px;min-width:0}
+  .rank-flank aside{flex:0 0 240px}
+  @media(max-width:760px){.rank-flank aside{flex-basis:100%;display:flex;justify-content:center}}
+
   /* creed */
   .creed{text-align:center;font-family:'VT323',monospace}
   .creed .line{font-size:clamp(24px,4vw,40px);color:#fff;margin-bottom:8px;text-transform:uppercase}
@@ -303,6 +330,7 @@
       <div class="date">OCT 2017</div>
       <h4>SIBOS. The First Breadcrumb.</h4>
       <p>sergey walks the SWIFT stage in the same shirt. nobody outside the threads noticed. the threads <b>never forgot</b>. breadcrumb autism became a full time occupation.</p>
+      <figure class="field-photo"><img src="memes/swift-pepe-cubes.jpg" alt="pepe delivering cubes to swift" loading="lazy"><figcaption>EVIDENCE 002 — courier delivering cubes to SWIFT hq. unconfirmed.</figcaption></figure>
     </div>
     <div class="tl-item">
       <div class="date">JAN 2018</div>
@@ -313,6 +341,7 @@
       <div class="date">2018</div>
       <h4>Crypto Winter. Marines Don't Feel Cold.</h4>
       <p>everything bled. "stinky linkies" was meant as an insult. it became a <b>rank insignia</b>. sergey ate big macs. marines ate the dip.</p>
+      <figure class="field-photo r"><img src="memes/comfy-winter-pepe.jpg" alt="comfy winter pepe" loading="lazy"><figcaption>EVIDENCE 004 — recovered from the winter threads. subject reported "comfy."</figcaption></figure>
     </div>
     <div class="tl-item">
       <div class="date">JUNE 2019</div>
@@ -328,6 +357,7 @@
       <div class="date">MAY 2021</div>
       <h4>$52.88</h4>
       <p>from $0.11. some sold. <b>those were not marines.</b> a marine does not sell. a marine reads CCIP documentation at 3am and posts "comfy" in the thread.</p>
+      <figure class="field-photo"><img src="memes/pepe-fine-wine.jpg" alt="pepe fine wine" loading="lazy"><figcaption>EVIDENCE 007 — the bags, aged like fine wine. do not open.</figcaption></figure>
     </div>
     <div class="tl-item">
       <div class="date">2022 → 2025</div>
@@ -351,6 +381,7 @@
   <div class="chan">
     <span class="stamp">Declassified</span>
     <div class="meta"><span class="name">AssBlaster <span class="trip">!!MBPenmwX43G</span></span> 01/06/18(Sat) <span class="no">No.5991302</span></div>
+    <div class="file"><div class="fileinfo">File: its_happening_tonight.jpg (142 KB)</div><img src="memes/its-happening-tonight.jpg" alt="its happening tonight" loading="lazy"></div>
     <p><span class="subj">THIS IS NOT A DRILL!</span> For those who doubt me, look through the archives of my threads, I told everyone my institution and others would be buying behind closed doors in december and that LINKs price would go up as a result of these tokens being taken out of circulation.</p>
     <a class="arch" href="https://warosu.org/biz/thread/S5989877#p5991302" target="_blank" rel="noopener">▸ real post · warosu archive</a>
   </div>
@@ -365,6 +396,7 @@
   <div class="chan">
     <span class="stamp">The Holy Get</span>
     <div class="meta"><span class="name">Anonymous</span> 02/18/18(Sun)22:26:40 <span class="no">No.7777777</span></div>
+    <div class="file"><div class="fileinfo">File: 7777777.jpg (98 KB)</div><img src="memes/7777777.jpg" alt="the 7777777 get" loading="lazy"></div>
     <p><span class="subj">MY LINKY STAYS SUPER STINKY $1000 EOY</span><br>
     <span class="gt">&gt;seven sevens. the most blessed digits ever rolled on /biz/. it landed on a linkpost. of course it did.</span></p>
     <a class="arch" href="https://warosu.org/biz/thread/S7773242#p7777777" target="_blank" rel="noopener">▸ real post · warosu archive</a>
@@ -379,6 +411,7 @@
 
   <div class="chan">
     <div class="meta"><span class="name">Anonymous</span> <span class="id">ID:mAr1nE</span> 09/15/26(Tue) <span class="no">No.58800001</span></div>
+    <div class="file"><div class="fileinfo">File: icon_of_the_marine.jpg (211 KB)</div><img src="memes/icon-of-the-marine.jpg" alt="icon of the marine" loading="lazy"></div>
     <p>they laughed at the stinky linkies for nine years.<br>
     now my bag pays me in LINK for existing.<br>
     <span class="gt">&gt;the market has become the marine</span></p>
@@ -401,6 +434,8 @@
     <div class="dossier">Exhibit C // Chain of Command</div>
     <h3>Know your <em>rank</em></h3>
   </div>
+  <div class="rank-flank">
+  <div class="tables">
   <div class="corps-label">Reserve Corps // what you hold in $LINK</div>
   <table>
     <tr><th>Holding</th><th>Rank</th><th>Notes</th></tr>
@@ -428,6 +463,12 @@
     <tr><td>50M+</td><td>Sergeant Major</td><td>5% of supply. your LINK stack compounds itself</td></tr>
     <tr class="final-rank"><td>100M+</td><td>Commandant</td><td>10% of everything. sergey-tier conviction. the payroll answers to you</td></tr>
   </table>
+  </div>
+  <aside>
+    <figure class="field-photo"><img src="memes/recruitment-poster.jpg" alt="uncle sergey wants you" loading="lazy"><figcaption>RECRUITMENT NOTICE — uncle sergey wants YOU on the payroll.</figcaption></figure>
+    <figure class="field-photo r" style="margin-top:34px"><img src="memes/saint-sergey.jpg" alt="saint sergey" loading="lazy"><figcaption>EVIDENCE 001 — the visionary. plaid shirt confirmed authentic.</figcaption></figure>
+  </aside>
+  </div>
   <div class="mission" style="margin-top:44px">
     <div class="order">Standing Order No. 1</div>
     <h4>Rise up the <em>rankings</em></h4>
@@ -453,6 +494,7 @@
       <div class="step"><div class="n">02</div><h5>Hold the line</h5><p>marines do not sell. you have trained your whole life for this step.</p></div>
       <div class="step"><div class="n">03</div><h5>Collect</h5><p>$LINK reflections accumulate in your wallet while you sleep, post, and stack.</p></div>
     </div>
+    <figure class="field-photo r" style="margin:34px auto 0"><img src="memes/goodnight-cube.jpg" alt="goodnight cube" loading="lazy"><figcaption>sleep well, marine. the payroll runs the night shift.</figcaption></figure>
   </div>
 </section>
 
