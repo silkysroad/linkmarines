@@ -306,7 +306,7 @@
 <body>
 
 <div class="tape"><div class="tape-inner">
-  <span id="tape-a">4,782+ LINK PAID TO MARINES · MY LINKY STAYS SUPER STINKY · 1000 EOY · NOT SELLING · SERGEY IS A VISIONARY · GOD PROTOCOL · ORACLES RUN EVERYTHING · STINKY LINKIES AND PROUD · SEMPER FIDELITY · ACCUMULATE ·&nbsp;</span><span id="tape-b">4,782+ LINK PAID TO MARINES · MY LINKY STAYS SUPER STINKY · 1000 EOY · NOT SELLING · SERGEY IS A VISIONARY · GOD PROTOCOL · ORACLES RUN EVERYTHING · STINKY LINKIES AND PROUD · SEMPER FIDELITY · ACCUMULATE ·&nbsp;</span>
+  <span id="tape-a">5,591+ LINK PAID TO MARINES · MY LINKY STAYS SUPER STINKY · 1000 EOY · NOT SELLING · SERGEY IS A VISIONARY · GOD PROTOCOL · ORACLES RUN EVERYTHING · STINKY LINKIES AND PROUD · SEMPER FIDELITY · ACCUMULATE ·&nbsp;</span><span id="tape-b">5,591+ LINK PAID TO MARINES · MY LINKY STAYS SUPER STINKY · 1000 EOY · NOT SELLING · SERGEY IS A VISIONARY · GOD PROTOCOL · ORACLES RUN EVERYTHING · STINKY LINKIES AND PROUD · SEMPER FIDELITY · ACCUMULATE ·&nbsp;</span>
 </div></div>
 
 <div class="hero">
@@ -385,20 +385,20 @@
   </div>
   <div class="paygrid">
     <div class="paycard hero-stat">
-      <div class="val" id="stat-link">4,782</div>
+      <div class="val" id="stat-link">5,591</div>
       <div class="lbl">$LINK distributed to holders</div>
-      <div class="usd" id="stat-usd">≈ $52,990 USD</div>
+      <div class="usd" id="stat-usd">≈ $61,813 USD</div>
     </div>
-    <div class="paycard"><div class="val" id="stat-payouts">23,655</div><div class="lbl">individual payouts</div></div>
-    <div class="paycard"><div class="val" id="stat-holders">1,900</div><div class="lbl">marines on payroll</div></div>
+    <div class="paycard"><div class="val" id="stat-payouts">30,696</div><div class="lbl">individual payouts</div></div>
+    <div class="paycard"><div class="val" id="stat-holders">2,158</div><div class="lbl">marines on payroll</div></div>
     <div class="paycard"><div class="val" id="stat-last">24/7</div><div class="lbl" id="stat-last-lbl">distribution never sleeps</div></div>
-    <div class="paycard"><div class="val" id="stat-linkprice">$11.02</div><div class="lbl">$LINK spot price</div></div>
+    <div class="paycard"><div class="val" id="stat-linkprice">$11.05</div><div class="lbl">$LINK spot price</div></div>
   </div>
   <div class="paygrid" style="margin-top:16px">
-    <div class="paycard"><div class="val" id="stat-mcap">$119K</div><div class="lbl">market cap</div></div>
-    <div class="paycard"><div class="val" id="stat-vol">$176K</div><div class="lbl">24h volume</div></div>
-    <div class="paycard"><div class="val" id="stat-txns">2,265</div><div class="lbl">24h transactions</div></div>
-    <div class="paycard"><div class="val" id="stat-liq">1,272 LINK</div><div class="lbl">paired against $LINK itself</div></div>
+    <div class="paycard"><div class="val" id="stat-mcap">$334K</div><div class="lbl">market cap</div></div>
+    <div class="paycard"><div class="val" id="stat-vol">$249K</div><div class="lbl">24h volume</div></div>
+    <div class="paycard"><div class="val" id="stat-txns">2,613</div><div class="lbl">24h transactions</div></div>
+    <div class="paycard"><div class="val" id="stat-liq">2,160 LINK</div><div class="lbl">paired against $LINK itself</div></div>
   </div>
   <p class="pay-note">
     every cycle <b>market-buys real $LINK</b> and drops it in holders' wallets.<br>
@@ -760,7 +760,7 @@
   function load(){
     fetch(API).then(function(r){return r.json()}).then(apply)
       .catch(function(){
-        fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(API))
+        fetch('stats.json?t='+Date.now())
           .then(function(r){return r.json()}).then(apply).catch(function(){});
       });
   }
