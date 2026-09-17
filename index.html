@@ -101,6 +101,7 @@
   .cta-row a{
     text-decoration:none;font-weight:700;font-size:14px;letter-spacing:2px;padding:14px 26px;
     border:1px solid var(--link-blue);color:#fff;text-transform:uppercase;transition:.15s;
+    min-width:132px;text-align:center;
   }
   .cta-row a.primary{background:var(--link-blue)}
   .cta-row a:hover{background:var(--link-blue-bright);border-color:var(--link-blue-bright);box-shadow:0 0 24px rgba(74,122,255,.5)}
@@ -128,14 +129,16 @@
   .holes .h-label{font-family:'Special Elite',monospace;font-size:11px;color:#5b6c9e;letter-spacing:3px;text-transform:uppercase;width:100%;text-align:center;margin-bottom:2px}
 
   /* field footage */
-  .footage{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-  .footage figure{background:var(--panel);border:1px solid rgba(74,122,255,.35);padding:10px}
-  .footage video{width:100%;display:block;background:#000}
+  .footage{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
+  .footage figure{flex:0 1 340px;background:var(--panel);border:1px solid rgba(74,122,255,.35);padding:10px;display:flex;flex-direction:column}
+  .footage video{width:100%;display:block;background:#000;aspect-ratio:16/10;object-fit:contain}
+  .footage figcaption{margin-top:auto}
   .footage figcaption{font-family:'VT323',monospace;font-size:18px;color:var(--amber);padding:10px 4px 2px;letter-spacing:1px}
   .footage .src{display:inline-block;margin:6px 4px 2px;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--link-blue-bright);text-decoration:none;border:1px solid rgba(74,122,255,.35);padding:3px 9px;border-radius:2px;font-family:'VT323',monospace}
   .footage .src:hover{background:var(--link-blue);color:#fff}
 
   section{max-width:960px;margin:0 auto;padding:72px 24px}
+  section.wide{max-width:1220px}
   .sec-head{margin-bottom:44px}
   .sec-head .dossier{
     font-family:'Special Elite',monospace;font-size:12px;color:var(--red);letter-spacing:3px;text-transform:uppercase;
@@ -149,6 +152,11 @@
   /* timeline */
   .tl{border-left:2px solid var(--link-blue);margin-left:6px}
   .tl-item{position:relative;padding:0 0 42px 30px}
+  @media(min-width:900px){
+    .tl-item.has-photo{display:grid;grid-template-columns:minmax(0,1fr) 280px;grid-template-rows:auto auto auto 1fr;column-gap:48px}
+    .tl-item.has-photo > *{grid-column:1}
+    .tl-item.has-photo .field-photo{grid-column:2;grid-row:1/span 4;margin:4px 0 0}
+  }
   .tl-item::before{
     content:"";position:absolute;left:-8px;top:4px;width:14px;height:14px;background:var(--bg);
     border:2px solid var(--link-blue-bright);border-radius:50%;box-shadow:0 0 12px rgba(74,122,255,.8);
@@ -206,14 +214,14 @@
   .reflect .big em{color:var(--link-blue-bright);font-style:normal}
   .reflect p{margin-top:20px;font-size:14.5px;line-height:1.8;color:#9fb0e0;max-width:620px;margin-left:auto;margin-right:auto}
   .reflect p b{color:#fff}
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:34px;text-align:left}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:34px;text-align:left}
   .step{border:1px dashed rgba(74,122,255,.4);padding:18px}
   .step .n{font-family:'VT323',monospace;font-size:30px;color:var(--amber)}
   .step h5{color:#fff;font-size:13px;text-transform:uppercase;letter-spacing:1px;margin:6px 0}
   .step p{font-size:12.5px;color:#9fb0e0;margin:0;line-height:1.6}
 
   /* war pay stats */
-  .paygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+  .paygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
   .paycard{
     background:var(--panel);border:1px solid var(--link-blue);padding:26px 20px;text-align:center;
     box-shadow:0 0 30px rgba(42,90,218,.15);
@@ -238,10 +246,11 @@
   .mission p{font-size:14.5px;line-height:1.85;color:#9fb0e0;max-width:640px;margin:0 auto}
   .mission p b{color:#fff}
 
-  /* armory */
-  .armory{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+  /* armory — masonry columns so mixed aspect ratios pack tight, no dead space */
+  .armory{columns:4 230px;column-gap:16px}
   .armory figure{
     background:var(--panel);border:1px solid rgba(74,122,255,.35);padding:10px;transition:.15s;
+    break-inside:avoid;margin:0 0 16px;
   }
   .armory figure:hover{border-color:var(--link-blue-bright);box-shadow:0 0 24px rgba(74,122,255,.4);transform:translate(-2px,-2px)}
   .armory img{width:100%;display:block;filter:saturate(.95)}
@@ -385,7 +394,7 @@
     <div class="paycard"><div class="val" id="stat-last">24/7</div><div class="lbl" id="stat-last-lbl">distribution never sleeps</div></div>
     <div class="paycard"><div class="val" id="stat-linkprice">$11.02</div><div class="lbl">$LINK spot price</div></div>
   </div>
-  <div class="paygrid" style="margin-top:14px">
+  <div class="paygrid" style="margin-top:16px">
     <div class="paycard"><div class="val" id="stat-mcap">$119K</div><div class="lbl">market cap</div></div>
     <div class="paycard"><div class="val" id="stat-vol">$176K</div><div class="lbl">24h volume</div></div>
     <div class="paycard"><div class="val" id="stat-txns">2,265</div><div class="lbl">24h transactions</div></div>
@@ -408,25 +417,25 @@
       <h4>The ICO</h4>
       <p>$0.11. a whitepaper and a plaid shirt. the suits ignored it. <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=chainlink" target="_blank" rel="noopener"><b>/biz/ did not.</b></a></p>
     </div>
-    <div class="tl-item">
+    <div class="tl-item has-photo">
       <div class="date">OCT 2017</div>
       <h4>SIBOS. The First Breadcrumb.</h4>
       <p>sergey walks the <a href="https://blog.chain.link/chainlink-at-sibos/" target="_blank" rel="noopener">SWIFT stage</a> in the same shirt. only the threads noticed. the threads <b>never forgot</b>.</p>
       <figure class="field-photo"><img src="memes/swift-pepe-cubes.jpg" alt="pepe delivering cubes to swift" loading="lazy"><figcaption>EVIDENCE 002 — courier delivering cubes to SWIFT hq. unconfirmed.</figcaption></figure>
     </div>
-    <div class="tl-item">
+    <div class="tl-item has-photo">
       <div class="date">JAN 2018</div>
       <h4>AssBlaster Posts</h4>
       <p>a tripcode drops <a href="https://warosu.org/biz/thread/S5989877#p5991302" target="_blank" rel="noopener">prophecy after prophecy</a>. "a larp," they said. the calls printed. weeks later the sevens rolled: <a href="https://warosu.org/biz/thread/S7773242#p7777777" target="_blank" rel="noopener">No.7777777 — "MY LINKY STAYS SUPER STINKY $1000 EOY."</a></p>
       <figure class="field-photo r"><img src="memes/trump-signs-stinky.jpg" alt="executive order" loading="lazy"><figcaption>EVIDENCE 003 — the executive order. signed, sealed, checked.</figcaption></figure>
     </div>
-    <div class="tl-item">
+    <div class="tl-item has-photo">
       <div class="date">2018</div>
       <h4>Crypto Winter. Marines Don't Feel Cold.</h4>
       <p>everything bled. "stinky linkies" became a <b>rank insignia</b>. sergey ate <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=big+mac+sergey" target="_blank" rel="noopener">big macs</a>. marines ate the dip.</p>
       <figure class="field-photo r"><img src="memes/comfy-winter-pepe.jpg" alt="comfy winter pepe" loading="lazy"><figcaption>EVIDENCE 004 — recovered from the winter threads. subject reported "comfy."</figcaption></figure>
     </div>
-    <div class="tl-item">
+    <div class="tl-item has-photo">
       <div class="date">JUNE 2019</div>
       <h4>Google Blog. Coinbase Listing.</h4>
       <p>the first public "told you so": <a href="https://cloud.google.com/blog/products/data-analytics/building-hybrid-blockchain-cloud-applications-with-ethereum-and-google-cloud" target="_blank" rel="noopener">google's own blog</a> pings chainlink. coinbase lists. dads went quiet at thanksgiving.</p>
@@ -437,13 +446,13 @@
       <h4>DeFi Summer Runs On Chainlink</h4>
       <p>every protocol pings a chainlink feed. top 5 by market cap. <a href="https://www.bloomberg.com/news/articles/2020-08-17/-link-marines-are-making-an-obscure-cryptocurrency-red-hot" target="_blank" rel="noopener">bloomberg writes up the marines</a>. <a href="https://www.forbes.com/sites/michaeldelcastillo/2020/08/26/chainlink-and-the-return-of-the-crypto-hype-machine/" target="_blank" rel="noopener">forbes follows</a>. never crazy. <b>just early.</b></p>
     </div>
-    <div class="tl-item">
+    <div class="tl-item has-photo">
       <div class="date">MAY 2021</div>
       <h4>$52.88</h4>
       <p>from $0.11. some sold. <b>those were not marines.</b> a marine reads <a href="https://chain.link/cross-chain" target="_blank" rel="noopener">CCIP docs</a> at 3am and posts "comfy."</p>
       <figure class="field-photo"><img src="memes/pepe-fine-wine.jpg" alt="pepe fine wine" loading="lazy"><figcaption>EVIDENCE 007 — the bags, aged like fine wine. do not open.</figcaption></figure>
     </div>
-    <div class="tl-item">
+    <div class="tl-item has-photo">
       <div class="date">2022 → 2025</div>
       <h4>The Quiet Grind</h4>
       <p><a href="https://staking.chain.link" target="_blank" rel="noopener">staking</a> shipped. CCIP shipped. <a href="https://blog.chain.link/chainlink-swift-ccip-institutional-blockchain-interoperability/" target="_blank" rel="noopener">SWIFT again, for real this time</a>. the basement predicted the rails.</p>
@@ -526,7 +535,7 @@
   </div>
 </section>
 
-<section id="footage">
+<section id="footage" class="wide">
   <div class="sec-head">
     <div class="dossier">Exhibit C // Field Footage — Recovered Reels</div>
     <h3>Tapes from the <em>front</em></h3>
@@ -629,7 +638,7 @@
   </div>
 </section>
 
-<section id="armory">
+<section id="armory" class="wide">
   <div class="sec-head">
     <div class="dossier">Exhibit F // The Armory — Recovered Artifacts, 2017–2021</div>
     <h3>Nine years of <em>ammunition</em></h3>
