@@ -119,14 +119,29 @@
   .wall:hover .wall-row{animation-play-state:paused}
   @media(max-width:600px){.wall-row img{height:96px}}
 
-  /* rabbit holes chip strip */
-  .holes{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;padding:22px 16px 6px;max-width:960px;margin:0 auto}
-  .holes a{
-    font-family:'VT323',monospace;font-size:17px;letter-spacing:1px;text-decoration:none;
-    color:var(--amber);border:1px dashed rgba(255,210,63,.5);padding:6px 13px;border-radius:3px;transition:.15s;
+  /* rabbit holes — compact swipe index */
+  .holes{padding:18px 0 8px;max-width:1220px;margin:0 auto}
+  .holes .h-label{display:block;font-family:'Special Elite',monospace;font-size:11px;color:#5b6c9e;letter-spacing:3px;text-transform:uppercase;text-align:center;margin-bottom:10px}
+  .holes-row{
+    display:flex;gap:8px;overflow-x:auto;padding:2px 24px 8px;scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;width:max-content;max-width:100%;margin:0 auto;
   }
-  .holes a:hover{background:rgba(255,210,63,.1);border-color:var(--amber);box-shadow:0 0 16px rgba(255,210,63,.25)}
-  .holes .h-label{font-family:'Special Elite',monospace;font-size:11px;color:#5b6c9e;letter-spacing:3px;text-transform:uppercase;width:100%;text-align:center;margin-bottom:2px}
+  .holes-row::-webkit-scrollbar{display:none}
+  @media(max-width:899px){
+    .holes-row{
+      mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent);
+      -webkit-mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent);
+    }
+  }
+  @media(min-width:900px){
+    .holes-row{flex-wrap:wrap;justify-content:center;width:auto;max-width:1100px;overflow:visible;row-gap:8px}
+  }
+  .holes-row a{
+    flex:0 0 auto;white-space:nowrap;
+    font-family:'VT323',monospace;font-size:15px;letter-spacing:1px;text-decoration:none;
+    color:var(--amber);border:1px dashed rgba(255,210,63,.4);padding:4px 11px;border-radius:3px;transition:.15s;
+  }
+  .holes-row a:hover{background:rgba(255,210,63,.1);border-color:var(--amber);box-shadow:0 0 16px rgba(255,210,63,.25)}
 
   /* field footage */
   .footage{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
@@ -359,23 +374,27 @@
   </div>
 </div>
 <div class="holes">
-  <span class="h-label">▸ declassified — pick a rabbit hole, marine</span>
-  <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=stinky+linky" target="_blank" rel="noopener">my linky stays super stinky</a>
-  <a href="https://warosu.org/biz/thread/S7773242#p7777777" target="_blank" rel="noopener">the holy GET — No.7777777</a>
-  <a href="https://warosu.org/biz/thread/S5989877" target="_blank" rel="noopener">AB's final transmission: DON'T SELL</a>
-  <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=chainlink+god" target="_blank" rel="noopener">the chainlink god prophecies</a>
-  <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=1000+eoy" target="_blank" rel="noopener">$1000 EOY — say it back</a>
-  <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=pivotal+tracker" target="_blank" rel="noopener">the pivotal tracker stakeout</a>
-  <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=big+mac+sergey" target="_blank" rel="noopener">sergey's big mac budget</a>
-  <a href="https://research.chain.link/whitepaper-v1.pdf" target="_blank" rel="noopener">the scripture — whitepaper v1, sept 2017</a>
-  <a href="https://eprint.iacr.org/2016/168.pdf" target="_blank" rel="noopener">town crier — the cornell files, 2016</a>
-  <a href="https://cointelegraph.com/news/dubious-asset-manager-claims-to-short-chainlink-with-99-target" target="_blank" rel="noopener">"crypto's wirecard" — the great FUD op of 2020</a>
-  <a href="https://www.oraclenovel.com" target="_blank" rel="noopener">the professor wrote a novel about it</a>
-  <a href="https://www.bloomberg.com/news/articles/2020-08-17/-link-marines-are-making-an-obscure-cryptocurrency-red-hot" target="_blank" rel="noopener">bloomberg finds the basement — aug 2020</a>
-  <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=chainlink" target="_blank" rel="noopener">nine years of breadcrumbs</a>
-  <a href="https://boards.4chan.org/biz/catalog" target="_blank" rel="noopener">the front line — live</a>
-  <a href="https://chainlinkme.me" target="_blank" rel="noopener">the cosmic archive — 1,804 memes</a>
-  <a href="https://x.com/i/chat/group_join/g2100093244189344145/TOUJZmDBHI" target="_blank" rel="noopener" style="border-color:var(--amber);color:var(--amber)">⚔ the war room — comms open, report in</a>
+  <span class="h-label">▸ declassified index — swipe, pick a rabbit hole</span>
+  <div class="holes-row">
+    <a href="https://x.com/i/chat/group_join/g2100093244189344145/TOUJZmDBHI" target="_blank" rel="noopener">⚔ the war room</a>
+    <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=stinky+linky" target="_blank" rel="noopener">my linky stays super stinky</a>
+    <a href="https://warosu.org/biz/thread/S7773242#p7777777" target="_blank" rel="noopener">the holy GET — No.7777777</a>
+    <a href="https://warosu.org/biz/thread/S5989877" target="_blank" rel="noopener">AB: DON'T SELL</a>
+    <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=chainlink+god" target="_blank" rel="noopener">the chainlink god prophecies</a>
+    <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=1000+eoy" target="_blank" rel="noopener">$1000 EOY</a>
+    <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=big+mac+sergey" target="_blank" rel="noopener">sergey's big mac budget</a>
+    <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=pivotal+tracker" target="_blank" rel="noopener">the pivotal tracker stakeout</a>
+  </div>
+  <div class="holes-row">
+    <a href="https://research.chain.link/whitepaper-v1.pdf" target="_blank" rel="noopener">the scripture — whitepaper v1</a>
+    <a href="https://eprint.iacr.org/2016/168.pdf" target="_blank" rel="noopener">town crier — the cornell files</a>
+    <a href="https://cointelegraph.com/news/dubious-asset-manager-claims-to-short-chainlink-with-99-target" target="_blank" rel="noopener">"crypto's wirecard" — FUD op 2020</a>
+    <a href="https://www.oraclenovel.com" target="_blank" rel="noopener">the professor's novel</a>
+    <a href="https://www.bloomberg.com/news/articles/2020-08-17/-link-marines-are-making-an-obscure-cryptocurrency-red-hot" target="_blank" rel="noopener">bloomberg finds the basement</a>
+    <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=chainlink" target="_blank" rel="noopener">nine years of breadcrumbs</a>
+    <a href="https://boards.4chan.org/biz/catalog" target="_blank" rel="noopener">the front line — live</a>
+    <a href="https://chainlinkme.me" target="_blank" rel="noopener">the cosmic archive</a>
+  </div>
 </div>
 
 <section id="payroll">
