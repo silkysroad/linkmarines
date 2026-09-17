@@ -382,7 +382,8 @@
     </div>
     <div class="paycard"><div class="val" id="stat-payouts">23,655</div><div class="lbl">individual payouts</div></div>
     <div class="paycard"><div class="val" id="stat-holders">1,900</div><div class="lbl">marines on payroll</div></div>
-    <div class="paycard"><div class="val">24/7</div><div class="lbl">distribution never sleeps</div></div>
+    <div class="paycard"><div class="val" id="stat-last">24/7</div><div class="lbl" id="stat-last-lbl">distribution never sleeps</div></div>
+    <div class="paycard"><div class="val" id="stat-linkprice">$11.02</div><div class="lbl">$LINK spot price</div></div>
   </div>
   <div class="paygrid" style="margin-top:14px">
     <div class="paycard"><div class="val" id="stat-mcap">$119K</div><div class="lbl">market cap</div></div>
@@ -732,11 +733,20 @@
     document.getElementById('stat-usd').textContent='≈ $'+fmt(d.distributedUsd)+' USD';
     document.getElementById('stat-payouts').textContent=fmt(d.payoutCount);
     document.getElementById('stat-holders').textContent=fmt(d.holderCount);
+    if(d.quotePriceUsd)document.getElementById('stat-linkprice').textContent='$'+d.quotePriceUsd.toFixed(2);
+    if(d.lastPayoutAt){window.__lastPayout=new Date(d.lastPayoutAt).getTime();tickLast();}
     var line=fmt(d.distributedTokens)+'+ LINK PAID TO MARINES';
     ['tape-a','tape-b'].forEach(function(id){
       var el=document.getElementById(id);
       if(el)el.textContent=el.textContent.replace(/[\d,]+\+ LINK PAID TO MARINES/g,line);
     });
+  }
+  function tickLast(){
+    if(!window.__lastPayout)return;
+    var s=Math.max(0,Math.floor((Date.now()-window.__lastPayout)/1000));
+    var t=s<60?s+'s ago':s<3600?Math.floor(s/60)+'m ago':Math.floor(s/3600)+'h ago';
+    document.getElementById('stat-last').textContent=t;
+    document.getElementById('stat-last-lbl').textContent='since last payout fired';
   }
   function load(){
     fetch(API).then(function(r){return r.json()}).then(apply)
@@ -747,6 +757,7 @@
   }
   load();
   setInterval(load,60000);
+  setInterval(tickLast,10000);
 })();
 // live market stats — dexscreener public API (CORS-open)
 (function(){
