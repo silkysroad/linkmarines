@@ -54,8 +54,8 @@
 
   /* hero */
   .hero{
-    min-height:92vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
-    text-align:center;padding:60px 20px 40px;position:relative;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:54px 20px 34px;position:relative;
     background:
       radial-gradient(ellipse at 50% -20%,rgba(42,90,218,.35),transparent 60%),
       radial-gradient(ellipse at 80% 110%,rgba(42,90,218,.12),transparent 50%);
@@ -105,7 +105,35 @@
   .cta-row a.primary{background:var(--link-blue)}
   .cta-row a:hover{background:var(--link-blue-bright);border-color:var(--link-blue-bright);box-shadow:0 0 24px rgba(74,122,255,.5)}
 
-  section{max-width:960px;margin:0 auto;padding:90px 24px}
+  /* propaganda wall — scrolling meme marquee */
+  .wall{overflow:hidden;padding:10px 0 0;border-top:1px solid rgba(74,122,255,.2);border-bottom:1px solid rgba(74,122,255,.2);background:rgba(10,15,31,.6)}
+  .wall-row{display:flex;gap:10px;width:max-content;animation:wallscroll 70s linear infinite;margin-bottom:10px}
+  .wall-row.rev{animation-direction:reverse;animation-duration:84s}
+  .wall-row a{display:block;flex:0 0 auto;border:1px solid rgba(74,122,255,.35);background:var(--panel);padding:4px;transition:.15s}
+  .wall-row a:hover{border-color:var(--link-blue-bright);box-shadow:0 0 20px rgba(74,122,255,.55);transform:translateY(-3px)}
+  .wall-row img{height:140px;width:auto;display:block}
+  @keyframes wallscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .wall:hover .wall-row{animation-play-state:paused}
+  @media(max-width:600px){.wall-row img{height:96px}}
+
+  /* rabbit holes chip strip */
+  .holes{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;padding:22px 16px 6px;max-width:960px;margin:0 auto}
+  .holes a{
+    font-family:'VT323',monospace;font-size:17px;letter-spacing:1px;text-decoration:none;
+    color:var(--amber);border:1px dashed rgba(255,210,63,.5);padding:6px 13px;border-radius:3px;transition:.15s;
+  }
+  .holes a:hover{background:rgba(255,210,63,.1);border-color:var(--amber);box-shadow:0 0 16px rgba(255,210,63,.25)}
+  .holes .h-label{font-family:'Special Elite',monospace;font-size:11px;color:#5b6c9e;letter-spacing:3px;text-transform:uppercase;width:100%;text-align:center;margin-bottom:2px}
+
+  /* field footage */
+  .footage{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+  .footage figure{background:var(--panel);border:1px solid rgba(74,122,255,.35);padding:10px}
+  .footage video{width:100%;display:block;background:#000}
+  .footage figcaption{font-family:'VT323',monospace;font-size:18px;color:var(--amber);padding:10px 4px 2px;letter-spacing:1px}
+  .footage .src{display:inline-block;margin:6px 4px 2px;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--link-blue-bright);text-decoration:none;border:1px solid rgba(74,122,255,.35);padding:3px 9px;border-radius:2px;font-family:'VT323',monospace}
+  .footage .src:hover{background:var(--link-blue);color:#fff}
+
+  section{max-width:960px;margin:0 auto;padding:72px 24px}
   .sec-head{margin-bottom:44px}
   .sec-head .dossier{
     font-family:'Special Elite',monospace;font-size:12px;color:var(--red);letter-spacing:3px;text-transform:uppercase;
@@ -275,9 +303,7 @@
   <h1><span class="glitch" data-t="LINK MARINES">LINK MARINES</span></h1>
   <h2>$MARINE</h2>
   <p class="sub">
-    they called it a cult. the cult was <b>right</b>.<br>
-    nine years of holding, memeing, and eating FUD for breakfast.<br>
-    now the faithful get paid: hold <b>$MARINE</b>, receive reflections in <b>$LINK</b>.
+    the first cult that was <b>right</b>. hold <b>$MARINE</b>, get paid in <b>$LINK</b>.
   </p>
   <div class="ca">
     <span id="ca-text">F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK</span>
@@ -288,6 +314,46 @@
     <a href="https://dexscreener.com/solana/F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK" target="_blank" rel="noopener">Chart</a>
     <a href="https://x.com/TheMarinesX" target="_blank" rel="noopener">X</a>
   </div>
+</div>
+
+<div class="wall">
+  <div class="wall-row" id="wall-a">
+    <a href="#armory"><img src="memes/moonwalker-poster.jpg" alt="sergey nazarov's moonwalker" loading="eager"></a>
+    <a href="https://warosu.org/biz/thread/S7773242#p7777777" target="_blank" rel="noopener"><img src="memes/777-synthwave.jpg" alt="7777777"></a>
+    <a href="#armory"><img src="memes/serve-by-hodling.jpg" alt="you serve by hodling"></a>
+    <a href="#armory"><img src="memes/trump-signs-stinky.jpg" alt="executive order: my linky stays super stinky"></a>
+    <a href="#ranks"><img src="memes/recruitment-poster.jpg" alt="uncle sergey wants you"></a>
+    <a href="#armory"><img src="memes/liberty-777.jpg" alt="liberty 777"></a>
+    <a href="#armory"><img src="memes/chainlink-album.jpg" alt="chainlink, the album. $1000 EOY"></a>
+    <a href="#armory"><img src="memes/yes-chad.jpg" alt="yes."></a>
+    <a href="#armory"><img src="memes/sergey-1000-bill.jpg" alt="the $1000 federal reserve note"></a>
+    <a href="#armory"><img src="memes/last-supper-bigmacs.jpg" alt="the last supper, big macs"></a>
+    <a href="#armory"><img src="memes/oracles-baseball-card.jpg" alt="oracles rookie card"></a>
+    <a href="#lore"><img src="memes/saint-sergey.jpg" alt="saint sergey"></a>
+  </div>
+  <div class="wall-row rev" id="wall-b">
+    <a href="#armory"><img src="memes/all-in-this-together.jpg" alt="$1000 EOY we are all in this together"></a>
+    <a href="#armory"><img src="memes/mac-tonight.jpg" alt="make it mac tonight"></a>
+    <a href="#armory"><img src="memes/this-guy-links.jpg" alt="this guy links"></a>
+    <a href="#armory"><img src="memes/either-it-works.jpg" alt="either chainlink works or none of this works"></a>
+    <a href="#threads"><img src="memes/nypost-tonight.jpg" alt="chainlink v1.0 could be ready tonight, based scientists say"></a>
+    <a href="#armory"><img src="memes/stay-comfy-frens.jpg" alt="stay comfy my frens"></a>
+    <a href="#armory"><img src="memes/resistance-is-futile.jpg" alt="resistance is futile"></a>
+    <a href="#armory"><img src="memes/cube-courier.jpg" alt="cube courier"></a>
+    <a href="#armory"><img src="memes/national-emergency.jpg" alt="trump declares national emergency, partners with chainlink"></a>
+    <a href="#armory"><img src="memes/pepe-newspaper.jpg" alt="the news time: chainlink"></a>
+    <a href="#armory"><img src="memes/google-777.jpg" alt="$7.77 +7.77%"></a>
+    <a href="#armory"><img src="memes/tonight-poster.jpg" alt="tonight, the movie"></a>
+  </div>
+</div>
+<div class="holes">
+  <span class="h-label">▸ pick a rabbit hole, marine</span>
+  <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=chainlink" target="_blank" rel="noopener">/biz/ archives</a>
+  <a href="https://warosu.org/biz/thread/S5989877" target="_blank" rel="noopener">assblaster prophecies</a>
+  <a href="https://warosu.org/biz/thread/S7773242#p7777777" target="_blank" rel="noopener">the 7777777 GET</a>
+  <a href="https://www.bloomberg.com/news/articles/2020-08-17/-link-marines-are-making-an-obscure-cryptocurrency-red-hot" target="_blank" rel="noopener">bloomberg on the marines</a>
+  <a href="https://www.forbes.com/sites/michaeldelcastillo/2020/08/26/chainlink-and-the-return-of-the-crypto-hype-machine/" target="_blank" rel="noopener">forbes: hype machine</a>
+  <a href="https://chainlinkme.me" target="_blank" rel="noopener">1,800+ memes</a>
 </div>
 
 <section id="payroll">
@@ -312,9 +378,8 @@
     <div class="paycard"><div class="val" id="stat-liq">1,272 LINK</div><div class="lbl">paired against $LINK itself</div></div>
   </div>
   <p class="pay-note">
-    every distribution cycle <b>market-buys real $LINK</b> and drops it in holders' wallets.<br>
-    this is not a promise. it is a <span class="green">running ledger</span>. the marines are not just holding LINK anymore.<br>
-    <b>the marines are buying it. block after block. rising up the ranks.</b>
+    every cycle <b>market-buys real $LINK</b> and drops it in holders' wallets.<br>
+    not a promise. a <span class="green">running ledger</span>. <b>block after block.</b>
   </p>
 </section>
 
@@ -327,45 +392,48 @@
     <div class="tl-item">
       <div class="date">SEPT 2017</div>
       <h4>The ICO</h4>
-      <p>$0.11. a whitepaper about oracles and a man in a plaid shirt. the suits ignored it. <b>/biz/ did not.</b> in the basements of the internet, an army enlisted itself.</p>
+      <p>$0.11. a whitepaper and a plaid shirt. the suits ignored it. <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=chainlink" target="_blank" rel="noopener"><b>/biz/ did not.</b></a></p>
     </div>
     <div class="tl-item">
       <div class="date">OCT 2017</div>
       <h4>SIBOS. The First Breadcrumb.</h4>
-      <p>sergey walks the SWIFT stage in the same shirt. nobody outside the threads noticed. the threads <b>never forgot</b>. breadcrumb autism became a full time occupation.</p>
+      <p>sergey walks the <a href="https://blog.chain.link/chainlink-at-sibos/" target="_blank" rel="noopener">SWIFT stage</a> in the same shirt. only the threads noticed. the threads <b>never forgot</b>.</p>
       <figure class="field-photo"><img src="memes/swift-pepe-cubes.jpg" alt="pepe delivering cubes to swift" loading="lazy"><figcaption>EVIDENCE 002 — courier delivering cubes to SWIFT hq. unconfirmed.</figcaption></figure>
     </div>
     <div class="tl-item">
       <div class="date">JAN 2018</div>
       <h4>AssBlaster Posts</h4>
-      <p>a tripcode claiming insider knowledge drops <a href="https://warosu.org/biz/thread/S5989877#p5991302" target="_blank" rel="noopener">prophecy after prophecy</a>. "a larp," they said. then the calls started printing. marines stopped asking questions and started <b>accumulating</b>. weeks later the sevens rolled: <a href="https://warosu.org/biz/thread/S7773242#p7777777" target="_blank" rel="noopener">No.7777777 — "MY LINKY STAYS SUPER STINKY $1000 EOY."</a></p>
+      <p>a tripcode drops <a href="https://warosu.org/biz/thread/S5989877#p5991302" target="_blank" rel="noopener">prophecy after prophecy</a>. "a larp," they said. the calls printed. weeks later the sevens rolled: <a href="https://warosu.org/biz/thread/S7773242#p7777777" target="_blank" rel="noopener">No.7777777 — "MY LINKY STAYS SUPER STINKY $1000 EOY."</a></p>
+      <figure class="field-photo r"><img src="memes/trump-signs-stinky.jpg" alt="executive order" loading="lazy"><figcaption>EVIDENCE 003 — the executive order. signed, sealed, checked.</figcaption></figure>
     </div>
     <div class="tl-item">
       <div class="date">2018</div>
       <h4>Crypto Winter. Marines Don't Feel Cold.</h4>
-      <p>everything bled. "stinky linkies" was meant as an insult. it became a <b>rank insignia</b>. sergey ate big macs. marines ate the dip.</p>
+      <p>everything bled. "stinky linkies" became a <b>rank insignia</b>. sergey ate <a href="https://warosu.org/biz/?task=search&ghost=false&search_text=big+mac+sergey" target="_blank" rel="noopener">big macs</a>. marines ate the dip.</p>
       <figure class="field-photo r"><img src="memes/comfy-winter-pepe.jpg" alt="comfy winter pepe" loading="lazy"><figcaption>EVIDENCE 004 — recovered from the winter threads. subject reported "comfy."</figcaption></figure>
     </div>
     <div class="tl-item">
       <div class="date">JUNE 2019</div>
       <h4>Google Blog. Coinbase Listing.</h4>
-      <p>the first public "told you so." the shirt was on stage at every conference on earth. 1000 EOY intensified. dads who called it a scam went quiet at thanksgiving.</p>
+      <p>the first public "told you so": <a href="https://cloud.google.com/blog/products/data-analytics/building-hybrid-blockchain-cloud-applications-with-ethereum-and-google-cloud" target="_blank" rel="noopener">google's own blog</a> pings chainlink. coinbase lists. dads went quiet at thanksgiving.</p>
+      <figure class="field-photo"><img src="memes/google-777.jpg" alt="$7.77" loading="lazy"><figcaption>EVIDENCE 005 — the day the ticker printed $7.77, up 7.77%. the machine memes back.</figcaption></figure>
     </div>
     <div class="tl-item">
       <div class="date">2020</div>
       <h4>DeFi Summer Runs On Chainlink</h4>
-      <p>every protocol you've ever heard of pings a chainlink feed to know what anything is worth. top 5 by market cap. the marines were never crazy. <b>just early.</b></p>
+      <p>every protocol pings a chainlink feed. top 5 by market cap. <a href="https://www.bloomberg.com/news/articles/2020-08-17/-link-marines-are-making-an-obscure-cryptocurrency-red-hot" target="_blank" rel="noopener">bloomberg writes up the marines</a>. <a href="https://www.forbes.com/sites/michaeldelcastillo/2020/08/26/chainlink-and-the-return-of-the-crypto-hype-machine/" target="_blank" rel="noopener">forbes follows</a>. never crazy. <b>just early.</b></p>
     </div>
     <div class="tl-item">
       <div class="date">MAY 2021</div>
       <h4>$52.88</h4>
-      <p>from $0.11. some sold. <b>those were not marines.</b> a marine does not sell. a marine reads CCIP documentation at 3am and posts "comfy" in the thread.</p>
+      <p>from $0.11. some sold. <b>those were not marines.</b> a marine reads <a href="https://chain.link/cross-chain" target="_blank" rel="noopener">CCIP docs</a> at 3am and posts "comfy."</p>
       <figure class="field-photo"><img src="memes/pepe-fine-wine.jpg" alt="pepe fine wine" loading="lazy"><figcaption>EVIDENCE 007 — the bags, aged like fine wine. do not open.</figcaption></figure>
     </div>
     <div class="tl-item">
       <div class="date">2022 → 2025</div>
       <h4>The Quiet Grind</h4>
-      <p>staking shipped. CCIP shipped. SWIFT again, for real this time. banks piloting the rails the basement predicted in 2017. marines kept stacking through it all.</p>
+      <p><a href="https://staking.chain.link" target="_blank" rel="noopener">staking</a> shipped. CCIP shipped. <a href="https://blog.chain.link/chainlink-swift-ccip-institutional-blockchain-interoperability/" target="_blank" rel="noopener">SWIFT again, for real this time</a>. the basement predicted the rails.</p>
+      <figure class="field-photo r"><img src="memes/either-it-works.jpg" alt="either chainlink works or none of this works" loading="lazy"><figcaption>EVIDENCE 009 — the thesis, in neon. either it works or none of this works.</figcaption></figure>
     </div>
     <div class="tl-item">
       <div class="date">NOW</div>
@@ -427,14 +495,60 @@
       <li><span class="d">FEB 10 2018</span><a href="https://warosu.org/biz/thread/7535721" target="_blank" rel="noopener">Google: "Sergey chain link" WHAT THE FUCK</a> — the autocomplete panic thread. we WERE the first search result. we were always the first search result.</li>
       <li><span class="d">FEB 18 2018</span><a href="https://warosu.org/biz/thread/S7773242#p7777777" target="_blank" rel="noopener">The 7777777 GET</a> — "MY LINKY STAYS SUPER STINKY $1000 EOY." seven sevens, checked and blessed. the prophecy has a post number.</li>
       <li><span class="d">SEP 05 2018</span><a href="https://warosu.org/biz/thread/10961547" target="_blank" rel="noopener">"Someone very close to the chainlink team here. AMA"</a> — deep crypto winter and the larps kept coming. marines interrogated every one.</li>
-      <li><span class="d">JAN 2019</span><a href="https://warosu.org/biz/thread/11680047" target="_blank" rel="noopener">ASSBLASTERSARY</a> — one year of AB, every majestic larp compiled by the anons of the International Federation of Film Critics Forum. thank you for your service.</li>
+      <li><span class="d">JAN 2019</span><a href="https://warosu.org/biz/thread/11680047" target="_blank" rel="noopener">ASSBLASTERSARY</a> — one year of AB, every majestic larp compiled. thank you for your service.</li>
+      <li><span class="d">ANY DAY</span><a href="https://warosu.org/biz/?task=search&ghost=false&search_text=chainlink" target="_blank" rel="noopener">the full /biz/ archive</a> — every chainlink thread ever posted. enter at your own risk. exit is not guaranteed.</li>
     </ul>
+  </div>
+
+  <div class="texts" style="margin-top:22px">
+    <h5>⬡ Press Clippings — When The Suits Noticed</h5>
+    <ul>
+      <li><span class="d">JUN 13 2019</span><a href="https://cloud.google.com/blog/products/data-analytics/building-hybrid-blockchain-cloud-applications-with-ethereum-and-google-cloud" target="_blank" rel="noopener">Google Cloud blog: hybrid blockchain applications with Chainlink</a> — google wrote about us before your broker knew the ticker.</li>
+      <li><span class="d">AUG 17 2020</span><a href="https://www.bloomberg.com/news/articles/2020-08-17/-link-marines-are-making-an-obscure-cryptocurrency-red-hot" target="_blank" rel="noopener">Bloomberg: "'Link Marines' Are Making an Obscure Cryptocurrency Red Hot"</a> — the terminal crowd discovers the basement. nine years late, still early.</li>
+      <li><span class="d">AUG 21 2020</span><a href="https://finance.yahoo.com/news/first-mover-chainlink-marines-hodling-114704152.html" target="_blank" rel="noopener">CoinDesk First Mover: "Chainlink 'Marines' Are HODLing and Here's Why You Should Care"</a> — they cared. briefly. we never stopped.</li>
+      <li><span class="d">AUG 26 2020</span><a href="https://www.forbes.com/sites/michaeldelcastillo/2020/08/26/chainlink-and-the-return-of-the-crypto-hype-machine/" target="_blank" rel="noopener">Forbes: "Chainlink And The Return Of The Crypto Hype Machine"</a> — they called it hype. the hype now secures half of DeFi.</li>
+      <li><span class="d">SEP 2023</span><a href="https://blog.chain.link/chainlink-swift-ccip-institutional-blockchain-interoperability/" target="_blank" rel="noopener">SWIFT × Chainlink CCIP</a> — the 2017 breadcrumb, fully baked. the plaid shirt was right the whole time.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="footage">
+  <div class="sec-head">
+    <div class="dossier">Exhibit C // Field Footage — Recovered Reels</div>
+    <h3>Tapes from the <em>front</em></h3>
+  </div>
+  <div class="footage">
+    <figure>
+      <video controls preload="none" poster="videos/poster-drakelinked.jpg" src="videos/drakelinked.mp4"></video>
+      <figcaption>&gt;the airborne division</figcaption><br>
+      <a class="src" href="https://x.com/drakelinked/status/1863706447529300436" target="_blank" rel="noopener">▸ original transmission · @drakelinked</a>
+    </figure>
+    <figure>
+      <video controls preload="none" poster="videos/poster-HodlerPete.jpg" src="videos/HodlerPete.mp4"></video>
+      <figcaption>&gt;comfy holds the line</figcaption><br>
+      <a class="src" href="https://x.com/HodlerPete/status/1289181203887558658" target="_blank" rel="noopener">▸ original transmission · @HodlerPete</a>
+    </figure>
+    <figure>
+      <video controls preload="none" poster="videos/poster-gammichan.jpg" src="videos/gammichan.mp4"></video>
+      <figcaption>&gt;the vision, painted</figcaption><br>
+      <a class="src" href="https://x.com/gammichan/status/1863643987896090987" target="_blank" rel="noopener">▸ original transmission · @gammichan</a>
+    </figure>
+    <figure>
+      <video controls preload="none" poster="videos/poster-AmbBret.jpg" src="videos/AmbBret.mp4"></video>
+      <figcaption>&gt;the cube rides at dawn</figcaption><br>
+      <a class="src" href="https://x.com/AmbBret/status/1863650558759813486" target="_blank" rel="noopener">▸ original transmission · @AmbBret</a>
+    </figure>
+    <figure>
+      <video controls preload="none" poster="videos/poster-psychopompish.jpg" src="videos/psychopompish.mp4"></video>
+      <figcaption>&gt;i bought a bag of legacy</figcaption><br>
+      <a class="src" href="https://x.com/psychopompish/status/1863756108311179613" target="_blank" rel="noopener">▸ original transmission · @psychopompish</a>
+    </figure>
   </div>
 </section>
 
 <section id="ranks">
   <div class="sec-head">
-    <div class="dossier">Exhibit C // Chain of Command</div>
+    <div class="dossier">Exhibit D // Chain of Command</div>
     <h3>Know your <em>rank</em></h3>
   </div>
   <div class="rank-flank">
@@ -479,21 +593,19 @@
     <h4>Rise up the <em>rankings</em></h4>
     <p>
       the mission was never the memecoin. the mission is the <b>rank table above</b>.
-      every $MARINE reflection lands as real $LINK in your wallet. your stack grows without you lifting a finger.
       boot becomes private. private becomes corporal. <b>the payroll promotes you while you sleep.</b>
-      nine years of holding the line, and now the line holds you up.
     </p>
   </div>
 </section>
 
 <section id="reflections">
   <div class="sec-head">
-    <div class="dossier">Exhibit D // The Mechanism</div>
+    <div class="dossier">Exhibit E // The Mechanism</div>
     <h3>Reflections, paid in <em>$LINK</em></h3>
   </div>
   <div class="reflect">
     <div class="big">Hold <em>$MARINE</em>.<br>Get paid <em>$LINK</em>.</div>
-    <p>every trade feeds the reflection pool. the pool pays holders in <b>chainlink</b>, automatically, straight to your wallet. no staking. no claiming. no forms. nine years of conviction, finally on payroll.</p>
+    <p>every trade feeds the pool. the pool pays holders in <b>chainlink</b>, automatically. no staking. no claiming. no forms.</p>
     <div class="steps">
       <div class="step"><div class="n">01</div><h5>Enlist</h5><p>buy $MARINE on stonkfun. any amount. rank is earned, not bought.</p></div>
       <div class="step"><div class="n">02</div><h5>Hold the line</h5><p>marines do not sell. you have trained your whole life for this step.</p></div>
@@ -505,7 +617,7 @@
 
 <section id="armory">
   <div class="sec-head">
-    <div class="dossier">Exhibit E // The Armory — Recovered Artifacts, 2017–2021</div>
+    <div class="dossier">Exhibit F // The Armory — Recovered Artifacts, 2017–2021</div>
     <h3>Nine years of <em>ammunition</em></h3>
   </div>
   <div class="corps-label" style="margin-bottom:18px">Recruitment Bureau // propaganda recovered from the front</div>
@@ -538,6 +650,39 @@
     <figure><img src="memes/chad-link-marine.jpg" alt="the chad link marine" loading="lazy"><figcaption>&gt;the chad link marine</figcaption></figure>
     <figure><img src="memes/codex-link-marines.jpg" alt="codex link marines" loading="lazy"><figcaption>&gt;codex astartes, oracle chapter</figcaption></figure>
     <figure><img src="memes/saluting-marine.jpg" alt="saluting marine" loading="lazy"><figcaption>&gt;o7</figcaption></figure>
+    <figure><img src="memes/moonwalker-poster.jpg" alt="sergey nazarov's moonwalker" loading="lazy"><figcaption>&gt;moonwalker (1988, colorized)</figcaption></figure>
+    <figure><img src="memes/liberty-777.jpg" alt="liberty 777" loading="lazy"><figcaption>&gt;give me your tired, your poor, your no-linkers</figcaption></figure>
+    <figure><img src="memes/sergey-1000-bill.jpg" alt="$1000 federal reserve note" loading="lazy"><figcaption>&gt;legal tender, 2029</figcaption></figure>
+    <figure><img src="memes/777-synthwave.jpg" alt="7777777 synthwave" loading="lazy"><figcaption>&gt;the digits, in neon</figcaption></figure>
+    <figure><img src="memes/trump-signs-stinky.jpg" alt="the executive order" loading="lazy"><figcaption>&gt;my linky stays super stinky. signed into law</figcaption></figure>
+    <figure><img src="memes/oracles-baseball-card.jpg" alt="oracles rookie card" loading="lazy"><figcaption>&gt;rookie card, 777 base</figcaption></figure>
+    <figure><img src="memes/biz-street-linkers.jpg" alt="distracted by the cube" loading="lazy"><figcaption>&gt;/biz/ walks past</figcaption></figure>
+    <figure><img src="memes/nypost-tonight.jpg" alt="based scientists" loading="lazy"><figcaption>&gt;based scientists say tonight</figcaption></figure>
+    <figure><img src="memes/google-777.jpg" alt="$7.77 up 7.77%" loading="lazy"><figcaption>&gt;the machine memes back</figcaption></figure>
+    <figure><img src="memes/cube-courier.jpg" alt="cube courier" loading="lazy"><figcaption>&gt;special delivery</figcaption></figure>
+    <figure><img src="memes/cube-painter.jpg" alt="cube painter" loading="lazy"><figcaption>&gt;paint me like one of your oracles</figcaption></figure>
+    <figure><img src="memes/last-supper-bigmacs.jpg" alt="the last supper" loading="lazy"><figcaption>&gt;the last supper. big macs for all</figcaption></figure>
+    <figure><img src="memes/whale-alert-bigmac.jpg" alt="whale alert" loading="lazy"><figcaption>&gt;800,000 big macs on the move</figcaption></figure>
+    <figure><img src="memes/mac-tonight.jpg" alt="mac tonight" loading="lazy"><figcaption>&gt;make it mac tonight</figcaption></figure>
+    <figure><img src="memes/sergey-bigmac-stage.jpg" alt="sergey, big mac, stage" loading="lazy"><figcaption>&gt;keynote catering, self-provided</figcaption></figure>
+    <figure><img src="memes/yes-chad.jpg" alt="yes." loading="lazy"><figcaption>&gt;yes.</figcaption></figure>
+    <figure><img src="memes/virgin-vs-chad.jpg" alt="virgin btc maxi vs chad link holder" loading="lazy"><figcaption>&gt;the eternal comparison</figcaption></figure>
+    <figure><img src="memes/oracles-much-greater.jpg" alt="my oracles are much greater than yours" loading="lazy"><figcaption>&gt;my oracles are much greater than yours</figcaption></figure>
+    <figure><img src="memes/renaissance-sergey.jpg" alt="renaissance sergey" loading="lazy"><figcaption>&gt;oil on canvas, 1587</figcaption></figure>
+    <figure><img src="memes/made-of-cheese.jpg" alt="theoretically we are all made of cheese" loading="lazy"><figcaption>&gt;theoretically we are all made of cheese</figcaption></figure>
+    <figure><img src="memes/pepe-hugs-the-box.jpg" alt="pepe hugs the box" loading="lazy"><figcaption>&gt;never letting go</figcaption></figure>
+    <figure><img src="memes/stay-comfy-frens.jpg" alt="stay comfy my frens" loading="lazy"><figcaption>&gt;stay comfy my frens</figcaption></figure>
+    <figure><img src="memes/sergey-blanket.jpg" alt="sergey in a blanket" loading="lazy"><figcaption>&gt;commander, off duty</figcaption></figure>
+    <figure><img src="memes/pepe-newspaper.jpg" alt="the news time: chainlink" loading="lazy"><figcaption>&gt;reading the morning FUD</figcaption></figure>
+    <figure><img src="memes/all-in-this-together.jpg" alt="we are all in this together" loading="lazy"><figcaption>&gt;$1000 EOY. we are all in this together</figcaption></figure>
+    <figure><img src="memes/chainlink-album.jpg" alt="chainlink, the album" loading="lazy"><figcaption>&gt;debut album. $1,000 EOY</figcaption></figure>
+    <figure><img src="memes/this-guy-links.jpg" alt="this guy links" loading="lazy"><figcaption>&gt;this guy links</figcaption></figure>
+    <figure><img src="memes/serve-by-hodling.jpg" alt="you serve by hodling" loading="lazy"><figcaption>&gt;you serve by hodling</figcaption></figure>
+    <figure><img src="memes/national-emergency.jpg" alt="national emergency" loading="lazy"><figcaption>&gt;breaking: partners with chainlink</figcaption></figure>
+    <figure><img src="memes/equality-equity-chainlink.jpg" alt="equality equity chainlink" loading="lazy"><figcaption>&gt;equality. equity. chainlink</figcaption></figure>
+    <figure><img src="memes/either-it-works.jpg" alt="either chainlink works or none of this works" loading="lazy"><figcaption>&gt;the whole thesis in neon</figcaption></figure>
+    <figure><img src="memes/resistance-is-futile.jpg" alt="resistance is futile" loading="lazy"><figcaption>&gt;your project will get assimilated</figcaption></figure>
+    <figure><img src="memes/tonight-poster.jpg" alt="tonight, the movie" loading="lazy"><figcaption>&gt;chainlinked presents: TONIGHT</figcaption></figure>
   </div>
   <p class="armory-credit">additional artifacts recovered from <a href="https://chainlinkme.me" target="_blank" rel="noopener">chainlinkme.me</a> — the cosmic archive. 1,800+ memes by linkmarines, for chainlink.</p>
 </section>
@@ -611,6 +756,11 @@
   load();
   setInterval(load,60000);
 })();
+// seamless propaganda wall loop
+['wall-a','wall-b'].forEach(function(id){
+  var row=document.getElementById(id);
+  if(row)row.innerHTML+=row.innerHTML;
+});
 function copyCA(btn){
   navigator.clipboard.writeText(document.getElementById('ca-text').textContent).then(()=>{
     const t=btn.textContent;btn.textContent='COPIED ✓';setTimeout(()=>btn.textContent=t,1500);
