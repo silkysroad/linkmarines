@@ -166,23 +166,70 @@ tr.whale td{background:rgba(74,122,255,.08)}
 #payMsg.err{color:var(--red)}#payMsg.ok{color:var(--green)}
 #audioGate{position:fixed;right:12px;bottom:40px;z-index:40;font-size:11px;background:#000c;border:1px solid var(--amber);color:var(--amber);padding:5px 9px;cursor:pointer;display:none}
 
-/* ---------- 16:9 stage (desktop + OBS) ---------- */
+/* ---------- 16:9 stage (desktop + OBS) ----------
+   Built to be read off a stream on a phone, not a monitor: the 1920x1080 stage is
+   usually shown at ~45% (phone landscape) or ~20% (portrait). Nothing on it goes
+   below 18px, headline numbers are 60px+, and low-value detail is dropped. */
 html.fit,html.fit body{width:100%;height:100%;overflow:hidden;background:#000}
-html.fit #stage{position:absolute;width:1920px;height:1080px;min-height:0;transform-origin:0 0;font-size:14px}
-html.fit main{overflow:hidden}
-html.fit .col.left{display:grid;grid-template-rows:minmax(0,1fr) 400px}
+html.fit #stage{position:absolute;width:1920px;height:1080px;min-height:0;transform-origin:0 0;font-size:20px;background-size:48px 48px}
+html.fit .fx{display:none!important}
+html.fit header{padding:8px 24px;gap:24px}
+html.fit header img{width:54px;height:54px}
+html.fit .brand{font-size:54px}html.fit .brand small{font-size:26px;color:var(--amber)}
+html.fit .live{font-size:20px;padding:4px 14px;gap:10px}html.fit .live i{width:12px;height:12px}
+html.fit .btn{font-size:21px;padding:10px 20px}
+html.fit .tape-bar .lbl{font-size:30px;padding:0 18px;gap:12px}
+html.fit .tape-bar .lbl button{font-size:24px;padding:0 10px}
+html.fit .track{padding:9px 0}
+html.fit .tk{font-size:24px;gap:10px;margin-right:56px}html.fit .tk img{width:32px;height:32px}
+html.fit .stats{grid-template-columns:1.35fr 1.55fr 1fr 1.15fr 1fr 1fr}
+html.fit .stat{padding:12px 20px}
+html.fit .stat label{font-size:18px;letter-spacing:1.5px}
+html.fit .stat b{font-size:64px;line-height:1}
+html.fit .stat.hero b{font-size:70px}
+html.fit #pPending{font-size:64px!important}
+html.fit .stat span{font-size:19px}
+html.fit .stat.pulse .st{font-size:17px;padding:1px 8px}
+html.fit .bar{height:18px;margin:8px 0 6px}
+html.fit .pmeta{font-size:16px;gap:10px}
+html.fit main{overflow:hidden;grid-template-columns:minmax(0,1fr) 600px}
+html.fit .panel{padding:14px 22px}
+html.fit .ph{margin-bottom:10px}
+html.fit .ph h2{font-size:38px}html.fit .ph .meta{font-size:18px}
+html.fit .tabs button{font-size:20px;padding:4px 14px}
+html.fit .legend{font-size:20px}html.fit .legend i{width:26px;height:4px}
+html.fit .col.left{display:grid;grid-template-rows:minmax(0,1fr) 350px}
 html.fit .chartP{min-height:0}
 html.fit #chartWrap{flex:1;height:auto;min-height:0}
-html.fit .lower{min-height:0}
+html.fit .lower{min-height:0;grid-template-columns:minmax(0,1fr) 500px}
 html.fit .lower .panel{overflow:hidden}
+html.fit table{font-size:24px}html.fit th{font-size:17px;padding:4px 10px}html.fit td{padding:5px 10px}
+html.fit .tag{font-size:15px;padding:0 6px}
 html.fit .lower .ads{display:flex;flex-direction:column}
-html.fit .slots{flex:1;min-height:0}
+html.fit .slots{flex:1;min-height:0;gap:10px}
+html.fit .board{min-height:0}
+html.fit .slots .board{padding:6px 10px}html.fit .board .vt{font-size:42px!important}html.fit #slot1 .vt{font-size:62px!important}html.fit .board .slot{font-size:17px}html.fit .board .price{font-size:19px}
+html.fit .board.sold .head{font-size:48px}html.fit .board.sold .sub{font-size:21px}
+html.fit .board.sold .by,html.fit .board.sold .left,html.fit .board.sold .buy{font-size:16px}
+html.fit .board.sold{padding:22px 16px 30px}
+html.fit .priceline{font-size:22px;margin-top:10px;padding-top:10px}
 html.fit .col.comms{display:flex;flex-direction:column}
-html.fit .feed{min-height:0}
+html.fit .warroom b{font-size:40px}html.fit .warroom .dim{font-size:18px!important}
+html.fit .feed{min-height:0;overflow:hidden}
+html.fit .ads .ph .meta{display:none}
 html.fit #xfeed{max-height:none}
-html.fit .bill{flex:none;height:230px;display:flex;flex-direction:column}
+html.fit .post{grid-template-columns:48px 1fr;gap:14px;padding:14px 0}
+html.fit .post img{width:48px;height:48px}
+html.fit .post .who{font-size:19px;gap:10px}
+html.fit .post .txt{font-size:22px;line-height:1.35;-webkit-line-clamp:3}
+html.fit .post.m{border-left-width:4px;padding-left:12px;margin-left:-16px}
+html.fit .bill{flex:none;height:270px;display:flex;flex-direction:column}
 html.fit .bill .board{flex:1}
-html.fit .stat b{font-size:36px}html.fit .stat.hero b{font-size:42px}
+html.fit .bill .board.sold .head{font-size:62px}
+html.fit .src{font-size:16px;padding:6px 24px}
+html.fit #ttsPop{min-width:900px;max-width:1500px;padding:32px 44px;border-width:4px}
+html.fit #ttsPop .from{font-size:26px}html.fit #ttsPop .msg{font-size:84px}
+html.fit #tip{font-size:20px;padding:10px 14px}
 
 @media (max-width:999px){
   html,body,#stage{max-width:100vw;overflow-x:hidden}main>*,.lower>*,.col>*,.stats>*{min-width:0}.tape-bar{max-width:100vw}.tape-bar .track{max-width:none}
@@ -199,12 +246,12 @@ html.fit .stat b{font-size:36px}html.fit .stat.hero b{font-size:42px}
 
 <header>
   <a href="../"><img src="../logo.png" alt="Marines"></a>
-  <div class="brand">THE WAR ROOM<small>$LINK WAITING ROOM</small></div>
+  <div class="brand">THE WAR ROOM<small>$1000 LINK WAITING ROOM</small></div>
   <span class="live" id="live"><i></i><span id="liveTxt">LIVE</span></span>
   <nav>
-    <a class="btn" href="https://dexscreener.com/solana/bnkyfw796xxq9uq9kmyox9iqsgxnjw7sfcscvwvdicua" target="_blank" rel="noopener">CHART</a>
-    <a class="btn" href="https://x.com/TheMarinesX" target="_blank" rel="noopener">X</a>
-    <a class="btn" href="../">HQ</a>
+    <a class="btn fx" href="https://dexscreener.com/solana/bnkyfw796xxq9uq9kmyox9iqsgxnjw7sfcscvwvdicua" target="_blank" rel="noopener">CHART</a>
+    <a class="btn fx" href="https://x.com/TheMarinesX" target="_blank" rel="noopener">X</a>
+    <a class="btn fx" href="../">HQ</a>
     <button class="btn tts" id="ttsBtn">🔊 BUY TTS</button>
     <a class="btn primary" href="https://jup.ag/swap/SOL-F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK" target="_blank" rel="noopener">ENLIST · BUY $MARINE</a>
   </nav>
@@ -230,7 +277,7 @@ html.fit .stat b{font-size:36px}html.fit .stat.hero b{font-size:42px}
   <div class="stat"><label>Payouts sent</label><b id="sPayouts">—</b><span class="dim" id="sHolders">&nbsp;</span><span class="dim" id="pMin" style="display:block">&nbsp;</span></div>
   <div class="stat"><label>$MARINE</label><b id="sPrice">—</b><span id="sChg">&nbsp;</span></div>
   <div class="stat"><label>Market cap</label><b id="sMcap">—</b><span class="dim" id="sLiq">&nbsp;</span></div>
-  <div class="stat"><label>24h volume</label><b id="sVol">—</b><span class="dim" id="sTx">&nbsp;</span></div>
+  <div class="stat fx"><label>24h volume</label><b id="sVol">—</b><span class="dim" id="sTx">&nbsp;</span></div>
   <div class="stat"><label>$LINK</label><b id="sLink">—</b><span id="sLinkChg">&nbsp;</span></div>
 </section>
 
@@ -250,12 +297,12 @@ html.fit .stat b{font-size:36px}html.fit .stat.hero b{font-size:42px}
     <div class="lower">
       <section class="panel">
         <div class="ph"><h2>THE TAPE</h2>
-          <span class="meta hide-sm">$MARINE/LINK pool · large = $2,500+</span>
+          <span class="meta hide-sm fx">$MARINE/LINK pool · large = $2,500+</span>
           <div class="tabs" id="tapeF"><button data-min="0" class="on">ALL</button><button data-min="100">$100+</button></div>
         </div>
         <div style="overflow-x:auto">
         <table id="trades">
-          <thead><tr><th>Time</th><th>Side</th><th class="r">USD</th><th class="r">$MARINE</th><th class="r">Price</th><th class="r hide-sm">Wallet</th></tr></thead>
+          <thead><tr><th>Time</th><th>Side</th><th class="r">USD</th><th class="r">$MARINE</th><th class="r fx">Price</th><th class="r hide-sm">Wallet</th></tr></thead>
           <tbody><tr><td colspan="6" class="dim">loading tape…</td></tr></tbody>
         </table>
         </div>
@@ -289,7 +336,7 @@ html.fit .stat b{font-size:36px}html.fit .stat.hero b{font-size:42px}
   </div>
 </main>
 
-<div class="src">Data: stonkfun (distributions) · thestonkboard.com (APY, modeled, not a promise) · GeckoTerminal (chart, tape) · DexScreener (market) · X (cashtag posts, scam-filtered). Nothing here is financial advice.</div>
+<div class="src"><span class="fx">Data: stonkfun (distributions) · thestonkboard.com (APY) · GeckoTerminal (chart, tape) · DexScreener (market) · X (cashtag posts, scam-filtered). </span>APY figures are modeled by thestonkboard.com, not a promise. Nothing here is financial advice.</div>
 
 </div>
 
@@ -371,7 +418,7 @@ async function loadRewards(){
   $('sHolders').textContent=num(r.holderCount)+' holders';
   const p=Math.min(1,(r.pendingUsd||0)/(r.minDistributionUsd||1));
   $('pPending').textContent=num(r.pendingTokens,2)+' LINK';
-  $('pPendingUsd').textContent=usd(r.pendingUsd,0)+(r.pendingTaxUsd?' · '+usd(r.pendingTaxUsd,0)+' tax to swap':'');
+  $('pPendingUsd').innerHTML=usd(r.pendingUsd,0)+(r.pendingTaxUsd?'<span class="fx"> · '+usd(r.pendingTaxUsd,0)+' tax to swap</span>':'');
   $('pBar').querySelector('i').style.width=(p*100).toFixed(1)+'%';
   $('pBar').classList.toggle('ready',p>=1);
   $('pPct').textContent=(p*100).toFixed(0)+'% loaded';
@@ -379,7 +426,7 @@ async function loadRewards(){
   $('pState').textContent=p>=1?'ARMED':'LOADING';$('pState').classList.toggle('armed',p>=1);
   $('pMin').textContent='hold '+usd(r.minHoldingUsd,0)+'+ to receive · tax '+(r.transferTaxBps/100).toFixed(1)+'%';
   const w=r.window24h,w7=r.window7d;
-  $('s24').innerHTML=w&&w.coveredSec>=3600?'<span class="up">+'+num(w.tokens,1)+' LINK</span> <span class="dim">'+(w.complete?'last 24h':'in '+ago(Date.now()-w.coveredSec*1000))+(w7&&w7.complete?' · '+num(w7.tokens,0)+' last 7d':'')+'</span>':'<span class="dim">24h total: tracking…</span>';
+  $('s24').innerHTML=w&&w.coveredSec>=3600&&w.tokens>=0.05?'<span class="up">+'+num(Math.max(0,w.tokens),1)+' LINK</span> <span class="dim">'+(w.complete?'last 24h':'in '+ago(Date.now()-w.coveredSec*1000))+(w7&&w7.complete?' · '+num(w7.tokens,0)+' last 7d':'')+'</span>':'<span class="dim">24h total: tracking…</span>';
   tickLast();
   const stale=Date.now()/1000-r.snapshotAt>1800;
   $('live').classList.toggle('stale',stale);$('liveTxt').textContent=stale?'DELAYED':'LIVE';
@@ -431,25 +478,27 @@ function draw(){
   if(!W||!H)return;
   c.width=W*dpr;c.height=H*dpr;const x=c.getContext('2d');x.scale(dpr,dpr);x.clearRect(0,0,W,H);
   if(!series||series.length<2)return;
-  const pad={l:78,r:58,t:10,b:26},w=W-pad.l-pad.r,h=H-pad.t-pad.b;
+  const FIT=document.documentElement.classList.contains('fit'),CF=FIT?20:11;
+  const pad={l:CF*7,r:CF*5.3,t:FIT?14:10,b:CF*2.8},w=W-pad.l-pad.r,h=H-pad.t-pad.b;
   const ms=series.map(p=>p.m),ls=series.map(p=>p.l);
-  const A=nice(Math.min(...ms),Math.max(...ms)),B=nice(Math.min(...ls),Math.max(...ls));
+  const nt=FIT?Math.max(2,Math.min(5,Math.floor(h/55))):5;
+  const A=nice(Math.min(...ms),Math.max(...ms),nt),B=nice(Math.min(...ls),Math.max(...ls),nt);
   const t0=series[0].t,t1=series[series.length-1].t;
   const X=t=>pad.l+(t-t0)/(t1-t0)*w,YA=v=>pad.t+h-(v-A.lo)/(A.hi-A.lo)*h,YB=v=>pad.t+h-(v-B.lo)/(B.hi-B.lo)*h;
-  x.font='11px IBM Plex Mono';x.lineWidth=1;
+  x.font=CF+'px IBM Plex Mono';x.lineWidth=1;
   x.textAlign='right';x.textBaseline='middle';
   A.t.forEach(v=>{const y=YA(v);x.strokeStyle='rgba(42,90,218,.12)';x.beginPath();x.moveTo(pad.l,y);x.lineTo(pad.l+w,y);x.stroke();x.fillStyle='#4a7aff';x.fillText(fmtTick(v,A.step),pad.l-8,y)});
   x.textAlign='left';B.t.forEach(v=>{x.fillStyle='#c9a52f';x.fillText(fmtTick(v,B.step),pad.l+w+8,YB(v))});
   x.textAlign='center';x.textBaseline='top';x.fillStyle='#5d6a8f';
-  const span=t1-t0,n=Math.max(2,Math.floor(w/110));
+  const span=t1-t0,n=Math.max(2,Math.floor(w/(CF*11)));
   for(let i=0;i<=n;i++){const t=t0+span*i/n,d=new Date(t);
     const lab=span<=36*3600e3?d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+(span<=8*86400e3?' '+d.toLocaleTimeString('en-US',{hour:'numeric'}):'');
     x.fillText(lab,X(t),pad.t+h+8)}
   const g=x.createLinearGradient(0,pad.t,0,pad.t+h);g.addColorStop(0,'rgba(74,122,255,.35)');g.addColorStop(1,'rgba(74,122,255,0)');
   x.beginPath();series.forEach((p,i)=>i?x.lineTo(X(p.t),YA(p.m)):x.moveTo(X(p.t),YA(p.m)));
   x.lineTo(X(t1),pad.t+h);x.lineTo(X(t0),pad.t+h);x.closePath();x.fillStyle=g;x.fill();
-  x.beginPath();series.forEach((p,i)=>i?x.lineTo(X(p.t),YA(p.m)):x.moveTo(X(p.t),YA(p.m)));x.strokeStyle='#4a7aff';x.lineWidth=2;x.stroke();
-  x.beginPath();series.forEach((p,i)=>i?x.lineTo(X(p.t),YB(p.l)):x.moveTo(X(p.t),YB(p.l)));x.strokeStyle='rgba(255,210,63,.8)';x.lineWidth=1.25;x.setLineDash([4,3]);x.stroke();x.setLineDash([]);
+  x.beginPath();series.forEach((p,i)=>i?x.lineTo(X(p.t),YA(p.m)):x.moveTo(X(p.t),YA(p.m)));x.strokeStyle='#4a7aff';x.lineWidth=FIT?4:2;x.stroke();
+  x.beginPath();series.forEach((p,i)=>i?x.lineTo(X(p.t),YB(p.l)):x.moveTo(X(p.t),YB(p.l)));x.strokeStyle='rgba(255,210,63,.8)';x.lineWidth=FIT?3:1.25;x.setLineDash(FIT?[9,6]:[4,3]);x.stroke();x.setLineDash([]);
   if(hover!=null){const p=series[hover],hx=X(p.t);x.strokeStyle='rgba(255,255,255,.25)';x.lineWidth=1;x.beginPath();x.moveTo(hx,pad.t);x.lineTo(hx,pad.t+h);x.stroke();
     [[YA(p.m),'#4a7aff'],[YB(p.l),'#ffd23f']].forEach(([y,col])=>{x.fillStyle=col;x.beginPath();x.arc(hx,y,3.5,0,7);x.fill()});
     const tip=$('tip');tip.style.display='block';
@@ -469,14 +518,14 @@ $('tf').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)re
 // ---------- tape ----------
 let seen=new Set(),tapeLoaded=false,tapeMin=0,tapeRaw=[];
 function renderTape(){
-  const rows=(document.documentElement.classList.contains('fit')?12:15);
+  const rows=(document.documentElement.classList.contains('fit')?5:15);
   const list=tapeRaw.filter(a=>+a.volume_in_usd>=tapeMin).slice(0,rows).map(a=>{
     const buy=a.to_token_address===MARINE;
     const amt=+(buy?a.to_token_amount:a.from_token_amount),price=+(buy?a.price_to_in_usd:a.price_from_in_usd),v=+a.volume_in_usd;
     const fresh=!seen.has(a.tx_hash);seen.add(a.tx_hash);
     return`<tr class="${v>=WHALE?'whale':''}"${fresh&&tapeLoaded?'':' style="animation:none"'}><td class="dim">${ago(Date.parse(a.block_timestamp))}</td>
       <td class="${buy?'up':'dn'}">${buy?'BUY':'SELL'}${v>=WHALE?'<span class="tag">LARGE</span>':''}</td>
-      <td class="r">${usd(v)}</td><td class="r">${compact(amt,'')}</td><td class="r dim">${px(price)}</td>
+      <td class="r">${usd(v)}</td><td class="r">${compact(amt,'')}</td><td class="r dim fx">${px(price)}</td>
       <td class="r hide-sm"><a href="https://solscan.io/tx/${a.tx_hash}" target="_blank" rel="noopener">${short(a.tx_from_address)}</a></td></tr>`});
   tapeLoaded=true;$('trades').tBodies[0].innerHTML=list.join('')||`<tr><td colspan="6" class="dim">quiet on the line${tapeMin?' (no $'+tapeMin+'+ trades in the last 300)':''}</td></tr>`;
 }
