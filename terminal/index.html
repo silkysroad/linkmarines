@@ -178,19 +178,19 @@ html.fit header img{width:54px;height:54px}
 html.fit .brand{font-size:54px}html.fit .brand small{font-size:26px;color:var(--amber)}
 html.fit .live{font-size:20px;padding:4px 14px;gap:10px}html.fit .live i{width:12px;height:12px}
 html.fit .btn{font-size:21px;padding:10px 20px}
-html.fit .tape-bar .lbl{font-size:30px;padding:0 18px;gap:12px}
-html.fit .tape-bar .lbl button{font-size:24px;padding:0 10px}
-html.fit .track{padding:9px 0}
-html.fit .tk{font-size:24px;gap:10px;margin-right:56px}html.fit .tk img{width:32px;height:32px}
+html.fit .tape-bar .lbl{font-size:25px;padding:0 16px;gap:10px}
+html.fit .tape-bar .lbl button{font-size:20px;padding:0 9px}
+html.fit .track{padding:5px 0}
+html.fit .tk{font-size:21px;gap:9px;margin-right:50px}html.fit .tk img{width:26px;height:26px}
 html.fit .stats{grid-template-columns:1.35fr 1.55fr 1fr 1.15fr 1fr 1fr}
-html.fit .stat{padding:12px 20px}
-html.fit .stat label{font-size:18px;letter-spacing:1.5px}
-html.fit .stat b{font-size:64px;line-height:1}
-html.fit .stat.hero b{font-size:70px}
-html.fit #pPending{font-size:64px!important}
-html.fit .stat span{font-size:19px}
+html.fit .stat{padding:8px 20px}
+html.fit .stat label{font-size:16px;letter-spacing:1.5px}
+html.fit .stat b{font-size:52px;line-height:1}
+html.fit .stat.hero b{font-size:58px}
+html.fit #pPending{font-size:52px!important}
+html.fit .stat span{font-size:17px}
 html.fit .stat.pulse .st{font-size:17px;padding:1px 8px}
-html.fit .bar{height:18px;margin:8px 0 6px}
+html.fit .bar{height:14px;margin:6px 0 4px}
 html.fit .pmeta{font-size:16px;gap:10px}
 html.fit main{overflow:hidden;grid-template-columns:minmax(0,1fr) 600px}
 html.fit .panel{padding:14px 22px}
@@ -208,7 +208,7 @@ html.fit .tag{font-size:15px;padding:0 6px}
 html.fit .lower .ads{display:flex;flex-direction:column}
 html.fit .slots{flex:1;min-height:0;gap:10px}
 html.fit .board{min-height:0}
-html.fit .slots .board{padding:6px 10px}html.fit .board .vt{font-size:42px!important}html.fit #slot1 .vt{font-size:62px!important}html.fit .board .slot{font-size:17px}html.fit .board .price{font-size:19px}
+html.fit .slots .board{padding:6px 10px}html.fit .board .vt{font-size:36px!important}html.fit #slot1 .vt{font-size:62px!important}html.fit .board .slot{font-size:17px}html.fit .board .price{font-size:19px}
 html.fit .board.sold .head{font-size:48px}html.fit .board.sold .sub{font-size:21px}
 html.fit .board.sold .by,html.fit .board.sold .left,html.fit .board.sold .buy{font-size:16px}
 html.fit .board.sold{padding:22px 16px 30px}
@@ -526,7 +526,7 @@ function renderTape(){
     return`<tr class="${v>=WHALE?'whale':''}"${fresh&&tapeLoaded?'':' style="animation:none"'}><td class="dim">${ago(Date.parse(a.block_timestamp))}</td>
       <td class="${buy?'up':'dn'}">${buy?'BUY':'SELL'}${v>=WHALE?'<span class="tag">LARGE</span>':''}</td>
       <td class="r">${usd(v)}</td><td class="r">${compact(amt,'')}</td><td class="r dim fx">${px(price)}</td>
-      <td class="r hide-sm"><a href="https://solscan.io/tx/${a.tx_hash}" target="_blank" rel="noopener">${short(a.tx_from_address)}</a></td></tr>`});
+      <td class="r hide-sm"><a href="https://solscan.io/tx/${a.tx_hash}" target="_blank" rel="noopener">${(a.tx_from_address||'').slice(0,4)}</a></td></tr>`});
   tapeLoaded=true;$('trades').tBodies[0].innerHTML=list.join('')||`<tr><td colspan="6" class="dim">quiet on the line${tapeMin?' (no $'+tapeMin+'+ trades in the last 300)':''}</td></tr>`;
 }
 async function loadTrades(){try{const d=await j(GT+'/trades');tapeRaw=d.data.map(t=>t.attributes);renderTape()}catch(e){}}
