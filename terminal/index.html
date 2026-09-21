@@ -262,20 +262,22 @@ async function loadMarket(){
 
 // ---------- chart ----------
 const TF={'1d':'minute?aggregate=15&limit=96','7d':'hour?aggregate=1&limit=168','all':'hour?aggregate=4&limit=500'};
-let tf='7d',series=null;
+// all three timeframes come from terminal/chart.json (snapshotted every 10 min), so
+// switching is instant. Live GeckoTerminal is only a fallback if the snapshot is missing.
+let tf='7d',series=null,CH={};
+function setSeries(){const raw=CH[tf];if(!raw||!raw.length)return false;
+  series=raw.map(([t,m,l])=>({t:t*1000,m,l}));hover=null;draw();
+  const lc=series.filter(p=>p.l);if(lc.length>1){const a=lc[0].l,b=lc[lc.length-1].l;$('sLinkChg').innerHTML=pct((b-a)/a*100)+' <span class="dim">'+({'1d':'24h','7d':'7d','all':'all'})[tf]+'</span>'}
+  return true}
+async function loadLive(k){
+  const [m,l]=await Promise.all([j(`${GT}/ohlcv/${TF[k]}&token=quote`),j(`${GT}/ohlcv/${TF[k]}&token=base`)]);
+  const L=new Map(l.data.attributes.ohlcv_list.map(c=>[c[0],c[4]]));let last=null;
+  const pts=m.data.attributes.ohlcv_list.slice().reverse().map(c=>{if(L.has(c[0]))last=L.get(c[0]);return[c[0],c[4],last]});
+  const f=pts.find(p=>p[2]!=null)?.[2];pts.forEach(p=>{if(p[2]==null)p[2]=f});CH[k]=pts}
 async function loadChart(){
-  try{
-    // GeckoTerminal lists LINK as base on this pool: token=quote -> MARINE, token=base -> LINK
-    const [m,l]=await Promise.all([j(`${GT}/ohlcv/${TF[tf]}&token=quote`),j(`${GT}/ohlcv/${TF[tf]}&token=base`)]);
-    const M=m.data.attributes.ohlcv_list.map(c=>[c[0]*1000,c[4]]).reverse();
-    const L=new Map(l.data.attributes.ohlcv_list.map(c=>[c[0]*1000,c[4]]));
-    // carry LINK forward on candles where it didn't trade
-    let last=null;const pts=M.map(([t,v])=>{if(L.has(t))last=L.get(t);return{t,m:v,l:last}});
-    const firstL=pts.find(p=>p.l!=null)?.l;pts.forEach(p=>{if(p.l==null)p.l=firstL});
-    series=pts;draw();
-    const lc=pts.filter(p=>p.l);if(lc.length>1){const a=lc[0].l,b=lc[lc.length-1].l;$('sLinkChg').innerHTML=pct((b-a)/a*100)+' <span class="dim">'+({'1d':'24h','7d':'7d','all':'all'})[tf]+'</span>'}
-  }catch(e){}
-}
+  try{const d=await j('chart.json?'+Date.now());if(d&&d['7d'])CH=d}catch(e){}
+  if(!CH[tf]){try{await loadLive(tf)}catch(e){}}
+  setSeries()}
 function nice(min,max,count=5){ // clean axis ticks: 1/2/2.5/5 × 10^n
   if(min===max){min*=.95;max*=1.05}
   const raw=(max-min)/count,mag=Math.pow(10,Math.floor(Math.log10(raw)));
@@ -327,7 +329,7 @@ $('chart').addEventListener('mousemove',e=>{if(!series||!draw.geom)return;const{
   let bi=0,bd=Infinity;series.forEach((p,i)=>{const d=Math.abs(p.t-t);if(d<bd){bd=d;bi=i}});hover=bi;draw()});
 $('chart').addEventListener('mouseleave',()=>{hover=null;draw()});
 $('tf').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
-  [...$('tf').children].forEach(x=>x.classList.toggle('on',x===b));tf=b.dataset.tf;loadChart()});
+  [...$('tf').children].forEach(x=>x.classList.toggle('on',x===b));tf=b.dataset.tf;if(!setSeries())loadChart()});
 addEventListener('resize',draw);
 
 // ---------- tape ----------
