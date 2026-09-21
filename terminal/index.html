@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>THE WAR ROOM · $MARINE × $LINK</title>
+<meta name="description" content="Live $MARINE terminal. LINK distributed to holders, next pulse, price, tape.">
+<meta property="og:title" content="THE WAR ROOM · $MARINE × $LINK">
+<meta property="og:description" content="Live terminal: LINK distributed to $MARINE holders, next pulse, price, tape.">
+<meta property="og:image" content="https://themarines.link/banner.png">
+<link rel="icon" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04060f;--panel:#0a0f1f;--panel2:#0d1428;--line:#1a2444;--dim:#5d6a8f;--txt:#c9d3ee;
+  --blue:#2A5ADA;--blue2:#4a7aff;--green:#39ff6a;--red:#ff3355;--amber:#ffd23f;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--txt);font:13px/1.4 'IBM Plex Mono',monospace}
+body{min-height:100vh;display:flex;flex-direction:column;
+  background-image:linear-gradient(rgba(42,90,218,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(42,90,218,.05) 1px,transparent 1px);
+  background-size:28px 28px}
+a{color:var(--blue2);text-decoration:none}a:hover{text-decoration:underline}
+.vt{font-family:'VT323',monospace;letter-spacing:.5px}
+.up{color:var(--green)}.dn{color:var(--red)}.am{color:var(--amber)}.dim{color:var(--dim)}
+
+header{display:flex;align-items:center;gap:18px;padding:10px 16px;border-bottom:1px solid var(--line);background:rgba(4,6,15,.92);position:sticky;top:0;z-index:5}
+header img{width:34px;height:34px;image-rendering:pixelated}
+.brand{font-family:'VT323';font-size:34px;line-height:1;color:#fff}
+.brand small{display:block;font-size:17px;color:var(--blue2)}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--green);border:1px solid rgba(57,255,106,.35);padding:2px 8px}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--green);animation:blink 1.4s infinite}
+.live.stale{color:var(--amber);border-color:rgba(255,210,63,.4)}.live.stale i{background:var(--amber)}
+@keyframes blink{50%{opacity:.2}}
+header nav{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);padding:6px 12px;color:var(--txt);font-size:12px;background:var(--panel)}
+.btn:hover{border-color:var(--blue2);text-decoration:none}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+
+.stats{display:grid;grid-template-columns:repeat(6,1fr);border-bottom:1px solid var(--line)}
+.stat{padding:12px 16px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat label{display:block;font-size:10px;letter-spacing:1.5px;color:var(--dim);text-transform:uppercase}
+.stat b{display:block;font-family:'VT323';font-size:32px;font-weight:400;color:#fff;line-height:1.05;white-space:nowrap}
+.stat span{font-size:11px}
+.stat.hero b{color:var(--blue2);font-size:38px}
+
+main{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:1px;background:var(--line)}
+.col{display:flex;flex-direction:column;gap:1px}
+.panel{background:var(--panel);padding:14px 16px}
+.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:10px}
+.ph h2{font-family:'VT323';font-weight:400;font-size:22px;color:#fff;letter-spacing:1px}
+.ph .meta{font-size:10px;color:var(--dim);letter-spacing:1px;text-transform:uppercase}
+.tabs{display:flex;gap:4px}
+.tabs button{background:transparent;border:1px solid var(--line);color:var(--dim);font:inherit;font-size:11px;padding:3px 9px;cursor:pointer}
+.tabs button.on{color:#fff;border-color:var(--blue2);background:rgba(42,90,218,.2)}
+.legend{display:flex;gap:16px;font-size:11px;margin-bottom:6px}
+.legend i{display:inline-block;width:14px;height:2px;vertical-align:middle;margin-right:6px}
+#chartWrap{position:relative;height:360px}
+#chart{width:100%;height:100%;display:block}
+#tip{position:absolute;pointer-events:none;background:#000d;border:1px solid var(--line);padding:6px 8px;font-size:11px;display:none;white-space:nowrap}
+
+.pulse .bar{height:14px;border:1px solid var(--line);background:#050914;position:relative;overflow:hidden;margin:10px 0 6px}
+.pulse .bar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--blue),var(--blue2));transition:width .6s}
+.pulse .bar.ready i{background:linear-gradient(90deg,#1c9c42,var(--green));animation:blink 1.2s infinite}
+.big{font-family:'VT323';font-size:40px;line-height:1;color:#fff}
+.kv{display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:12px;margin-top:10px}
+.kv dt{color:var(--dim)}.kv dd{text-align:right;color:#fff}
+.note{font-size:10.5px;color:var(--dim);margin-top:10px;line-height:1.5}
+
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{font-size:10px;letter-spacing:1px;color:var(--dim);text-align:left;font-weight:400;padding:4px 6px;border-bottom:1px solid var(--line);text-transform:uppercase}
+td{padding:5px 6px;border-bottom:1px solid rgba(26,36,68,.6);white-space:nowrap}
+td.r,th.r{text-align:right}
+tr.whale td{background:rgba(74,122,255,.08)}
+.tag{font-size:9px;border:1px solid var(--blue2);color:var(--blue2);padding:0 4px;margin-left:6px;letter-spacing:1px}
+#trades tbody tr{animation:fade .5s}
+@keyframes fade{from{background:rgba(74,122,255,.25)}}
+
+.board{border:1px dashed #2a3a6a;padding:18px;text-align:center;background:repeating-linear-gradient(45deg,#0a0f1f,#0a0f1f 10px,#0b1224 10px,#0b1224 20px)}
+.board .vt{font-size:26px;color:#fff}
+
+footer{border-top:1px solid var(--line);background:#02030a;overflow:hidden;white-space:nowrap;position:relative}
+footer .lbl{position:absolute;left:0;top:0;bottom:0;z-index:2;background:var(--blue);color:#fff;font-family:'VT323';font-size:18px;padding:6px 12px;display:flex;align-items:center}
+.track{display:inline-block;padding:8px 0 8px 100%;animation:scroll 70s linear infinite}
+footer:hover .track{animation-play-state:paused}
+.tk{display:inline-flex;align-items:center;gap:8px;margin-right:34px;font-size:12px}
+.tk img{width:18px;height:18px;border-radius:50%;object-fit:cover;background:#111}
+.tk b{color:#fff}.tk .q{color:var(--dim)}
+@keyframes scroll{to{transform:translateX(-100%)}}
+.src{font-size:10px;color:var(--dim);padding:6px 16px;background:#02030a;border-top:1px solid var(--line)}
+
+@media (max-width:1100px){.stats{grid-template-columns:repeat(3,1fr)}.stat:nth-child(3){border-right:0}.stat{border-bottom:1px solid var(--line)}main{grid-template-columns:1fr}}
+@media (max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.stat{border-right:1px solid var(--line)!important}.stat:nth-child(2n){border-right:0!important}header nav .btn:not(.primary){display:none}#chartWrap{height:260px}.brand{font-size:24px}.brand small{font-size:14px}header{gap:10px}.stat.hero b{font-size:30px}.hide-sm{display:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../"><img src="../logo.png" alt="Marines"></a>
+  <div class="brand">THE WAR ROOM<small>$LINK WAITING ROOM</small></div>
+  <span class="live" id="live"><i></i><span id="liveTxt">LIVE</span></span>
+  <nav>
+    <a class="btn" href="https://dexscreener.com/solana/bnkyfw796xxq9uq9kmyox9iqsgxnjw7sfcscvwvdicua" target="_blank" rel="noopener">CHART</a>
+    <a class="btn" href="https://x.com/TheMarinesX" target="_blank" rel="noopener">X</a>
+    <a class="btn" href="../">HQ</a>
+    <a class="btn primary" href="https://jup.ag/swap/SOL-F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK" target="_blank" rel="noopener">ENLIST · BUY $MARINE</a>
+  </nav>
+</header>
+
+<section class="stats">
+  <div class="stat hero"><label>LINK distributed to holders</label><b id="sDist">—</b><span class="dim" id="sDistUsd">&nbsp;</span></div>
+  <div class="stat"><label>Payouts sent</label><b id="sPayouts">—</b><span class="dim" id="sHolders">&nbsp;</span></div>
+  <div class="stat"><label>$MARINE</label><b id="sPrice">—</b><span id="sChg">&nbsp;</span></div>
+  <div class="stat"><label>Market cap</label><b id="sMcap">—</b><span class="dim" id="sLiq">&nbsp;</span></div>
+  <div class="stat"><label>24h volume</label><b id="sVol">—</b><span class="dim" id="sTx">&nbsp;</span></div>
+  <div class="stat"><label>$LINK</label><b id="sLink">—</b><span id="sLinkChg">&nbsp;</span></div>
+</section>
+
+<main>
+  <div class="col">
+    <section class="panel">
+      <div class="ph">
+        <h2>$MARINE × $LINK</h2>
+        <div class="tabs" id="tf">
+          <button data-tf="1d">24H</button><button data-tf="7d" class="on">7D</button><button data-tf="all">ALL</button>
+        </div>
+      </div>
+      <div class="legend"><span><i style="background:var(--blue2)"></i>$MARINE (USD, left)</span><span><i style="background:var(--amber)"></i>$LINK (USD, right)</span></div>
+      <div id="chartWrap"><canvas id="chart"></canvas><div id="tip"></div></div>
+    </section>
+
+    <section class="panel">
+      <div class="ph"><h2>THE TAPE</h2><span class="meta">$MARINE/LINK pool · large = $2,500+</span></div>
+      <div style="overflow-x:auto">
+      <table id="trades">
+        <thead><tr><th>Time</th><th>Side</th><th class="r">USD</th><th class="r">$MARINE</th><th class="r">Price</th><th class="r hide-sm">Wallet</th></tr></thead>
+        <tbody><tr><td colspan="6" class="dim">loading tape…</td></tr></tbody>
+      </table>
+      </div>
+    </section>
+  </div>
+
+  <div class="col">
+    <section class="panel pulse">
+      <div class="ph"><h2>NEXT PULSE</h2><span class="meta" id="pState">—</span></div>
+      <div class="big" id="pPending">—</div>
+      <div class="dim" id="pPendingUsd">&nbsp;</div>
+      <div class="bar" id="pBar"><i style="width:0"></i></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px" class="dim"><span id="pPct">0%</span><span id="pThr">threshold —</span></div>
+      <dl class="kv">
+        <dt>Last pulse</dt><dd id="pLast">—</dd>
+        <dt>Tax queued (not yet swapped)</dt><dd id="pTax">—</dd>
+        <dt>Transfer tax</dt><dd id="pTaxRate">—</dd>
+        <dt>Min. holding to receive</dt><dd id="pMin">—</dd>
+      </dl>
+      <p class="note">A pulse sends when pending LINK clears stonkfun's minimum distribution size. Timing depends on volume, so it's shown as progress to the threshold rather than a clock.</p>
+    </section>
+
+    <section class="panel">
+      <div class="ph"><h2>PAYROLL LEDGER</h2><span class="meta">distributed</span></div>
+      <dl class="kv" style="margin-top:0">
+        <dt>Last 24h</dt><dd id="w24">—</dd>
+        <dt>Last 7d</dt><dd id="w7">—</dd>
+        <dt>All time</dt><dd id="wAll">—</dd>
+        <dt>Holders</dt><dd id="wHold">—</dd>
+      </dl>
+      <p class="note" id="wNote"></p>
+    </section>
+
+    <section class="panel">
+      <div class="ph"><h2>BILLBOARD</h2><span class="meta">slot 01</span></div>
+      <div class="board">
+        <div class="vt">SLOT OPEN</div>
+        <div class="dim" style="font-size:11px;margin-top:6px">Your banner here. DM <a href="https://x.com/TheMarinesX" target="_blank" rel="noopener">@TheMarinesX</a></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="ph"><h2>ORDERS</h2></div>
+      <p style="font-size:12px;line-height:1.6">Hold <b class="am">$MARINE</b>. Get paid in <b style="color:var(--blue2)">$LINK</b>. No claiming, no staking. It lands in your wallet.</p>
+      <p class="note">Contract: <span id="ca" style="color:var(--txt);cursor:pointer;word-break:break-all" title="click to copy">F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK</span></p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="lbl">STONKFUN TOP 10</div>
+  <div class="track" id="ticker"><span class="tk dim">loading…</span></div>
+</footer>
+<div class="src">Data: stonkfun (distributions, snapshot every 10 min) · GeckoTerminal (chart, tape) · DexScreener (market). Nothing here is financial advice.</div>
+
+<script>
+const MARINE='F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK';
+const POOL='BnkYfw796XXq9UQ9kMYoX9iqSgXnjw7sFCsCVWVDiCUa';
+const GT='https://api.geckoterminal.com/api/v2/networks/solana/pools/'+POOL;
+const WHALE=2500;
+const $=id=>document.getElementById(id);
+
+// ---------- formatting ----------
+const usd=(n,d)=>n==null||isNaN(n)?'—':'$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:d??2,maximumFractionDigits:d??2});
+function compact(n,pre='$'){if(n==null||isNaN(n))return'—';const a=Math.abs(n);
+  if(a>=1e9)return pre+(n/1e9).toFixed(2)+'B';if(a>=1e6)return pre+(n/1e6).toFixed(2)+'M';
+  if(a>=1e3)return pre+(n/1e3).toFixed(1)+'K';return pre+n.toFixed(a<1?4:2)}
+function px(n){if(n==null||isNaN(n)||n===0)return'—';if(n>=1)return'$'+n.toFixed(2);
+  const z=Math.floor(-Math.log10(n));return'$'+n.toFixed(Math.min(z+4,12))}
+const num=(n,d=0)=>n==null?'—':Number(n).toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:d});
+const pct=n=>n==null?'':`<span class="${n>=0?'up':'dn'}">${n>=0?'▲':'▼'} ${Math.abs(n).toFixed(2)}%</span>`;
+function ago(t){const s=Math.max(0,(Date.now()-t)/1000);if(s<60)return Math.floor(s)+'s';if(s<3600)return Math.floor(s/60)+'m';
+  if(s<86400)return Math.floor(s/3600)+'h '+Math.floor(s%3600/60)+'m';return Math.floor(s/86400)+'d '+Math.floor(s%86400/3600)+'h'}
+const short=a=>a?a.slice(0,4)+'…'+a.slice(-4):'';
+async function j(u){const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw new Error(r.status);return r.json()}
+
+// ---------- rewards snapshot (same-origin) ----------
+let rewards=null;
+async function loadRewards(){
+  try{rewards=await j('rewards.json?'+Date.now());}catch(e){return}
+  const r=rewards;
+  $('sDist').textContent=num(r.distributedTokens,1)+' LINK';
+  $('sDistUsd').textContent='≈ '+usd(r.distributedUsd,0)+' at today\'s LINK price';
+  $('sPayouts').textContent=num(r.payoutCount);
+  $('sHolders').textContent=num(r.holderCount)+' holders';
+  const p=Math.min(1,(r.pendingUsd||0)/(r.minDistributionUsd||1));
+  $('pPending').textContent=num(r.pendingTokens,2)+' LINK';
+  $('pPendingUsd').textContent=usd(r.pendingUsd)+' pending';
+  $('pBar').querySelector('i').style.width=(p*100).toFixed(1)+'%';
+  $('pBar').classList.toggle('ready',p>=1);
+  $('pPct').textContent=(p*100).toFixed(0)+'% loaded';
+  $('pThr').textContent='threshold '+usd(r.minDistributionUsd,0);
+  $('pState').textContent=p>=1?'ARMED':'LOADING';
+  $('pTax').textContent=usd(r.pendingTaxUsd,0);
+  $('pTaxRate').textContent=(r.transferTaxBps/100).toFixed(1)+'%';
+  $('pMin').textContent=usd(r.minHoldingUsd,0)+' of $MARINE';
+  $('wAll').textContent=num(r.distributedTokens,1)+' LINK';
+  $('wHold').textContent=num(r.holderCount);
+  const w=(x,label)=>{if(!x||x.coveredSec<3600)return'<span class="dim">collecting…</span>';
+    const s=num(x.tokens,1)+' LINK · '+usd(x.usd,0);return x.complete?s:s+' <span class="dim">('+ago(Date.now()-x.coveredSec*1000)+' tracked)</span>'};
+  $('w24').innerHTML=w(r.window24h);$('w7').innerHTML=w(r.window7d);
+  $('wNote').textContent='Ledger snapshot '+ago(r.snapshotAt*1000)+' ago. USD at LINK price when counted.';
+  tickLast();
+  const stale=Date.now()/1000-r.snapshotAt>1800;
+  $('live').classList.toggle('stale',stale);$('liveTxt').textContent=stale?'DELAYED':'LIVE';
+}
+function tickLast(){if(rewards&&rewards.lastPayoutAt)$('pLast').textContent=ago(Date.parse(rewards.lastPayoutAt))+' ago'}
+
+// ---------- market (DexScreener) ----------
+let marinePx=null;
+async function loadMarket(){
+  try{
+    const d=await j('https://api.dexscreener.com/latest/dex/pairs/solana/'+POOL);
+    const p=d.pair||(d.pairs||[])[0];if(!p)return;
+    marinePx=+p.priceUsd;
+    $('sPrice').textContent=px(marinePx);$('sChg').innerHTML=pct(p.priceChange?.h24)+' <span class="dim">24h</span>';
+    $('sMcap').textContent=compact(p.marketCap||p.fdv);$('sLiq').textContent='liq '+compact(p.liquidity?.usd);
+    $('sVol').textContent=compact(p.volume?.h24);
+    const t=p.txns?.h24||{};$('sTx').textContent=num(t.buys)+' buys / '+num(t.sells)+' sells';
+    const linkPx=marinePx/(+p.priceNative);
+    if(isFinite(linkPx))$('sLink').textContent='$'+linkPx.toFixed(2);
+  }catch(e){}
+}
+
+// ---------- chart ----------
+const TF={'1d':'minute?aggregate=15&limit=96','7d':'hour?aggregate=1&limit=168','all':'hour?aggregate=4&limit=500'};
+let tf='7d',series=null;
+async function loadChart(){
+  try{
+    // GeckoTerminal lists LINK as base on this pool: token=quote -> MARINE, token=base -> LINK
+    const [m,l]=await Promise.all([j(`${GT}/ohlcv/${TF[tf]}&token=quote`),j(`${GT}/ohlcv/${TF[tf]}&token=base`)]);
+    const M=m.data.attributes.ohlcv_list.map(c=>[c[0]*1000,c[4]]).reverse();
+    const L=new Map(l.data.attributes.ohlcv_list.map(c=>[c[0]*1000,c[4]]));
+    // carry LINK forward on candles where it didn't trade
+    let last=null;const pts=M.map(([t,v])=>{if(L.has(t))last=L.get(t);return{t,m:v,l:last}});
+    const firstL=pts.find(p=>p.l!=null)?.l;pts.forEach(p=>{if(p.l==null)p.l=firstL});
+    series=pts;draw();
+    const lc=pts.filter(p=>p.l);if(lc.length>1){const a=lc[0].l,b=lc[lc.length-1].l;$('sLinkChg').innerHTML=pct((b-a)/a*100)+' <span class="dim">'+({'1d':'24h','7d':'7d','all':'all'})[tf]+'</span>'}
+  }catch(e){}
+}
+function nice(min,max,count=5){ // clean axis ticks: 1/2/2.5/5 × 10^n
+  if(min===max){min*=.95;max*=1.05}
+  const raw=(max-min)/count,mag=Math.pow(10,Math.floor(Math.log10(raw)));
+  const step=[1,2,2.5,5,10].map(s=>s*mag).find(s=>s>=raw);
+  const lo=Math.floor(min/step)*step,hi=Math.ceil(max/step)*step,t=[];
+  for(let v=lo;v<=hi+step/2;v+=step)t.push(+v.toPrecision(12));
+  return{lo,hi,t,step}}
+function fmtTick(v,step){if(v>=1)return'$'+v.toFixed(step<1?2:0);const d=Math.max(0,-Math.floor(Math.log10(step)));return'$'+v.toFixed(d)}
+function draw(){
+  const c=$('chart'),dpr=window.devicePixelRatio||1,W=c.clientWidth,H=c.clientHeight;
+  c.width=W*dpr;c.height=H*dpr;const x=c.getContext('2d');x.scale(dpr,dpr);x.clearRect(0,0,W,H);
+  if(!series||series.length<2)return;
+  const pad={l:78,r:58,t:10,b:26},w=W-pad.l-pad.r,h=H-pad.t-pad.b;
+  const ms=series.map(p=>p.m),ls=series.map(p=>p.l);
+  const A=nice(Math.min(...ms),Math.max(...ms)),B=nice(Math.min(...ls),Math.max(...ls));
+  const t0=series[0].t,t1=series[series.length-1].t;
+  const X=t=>pad.l+(t-t0)/(t1-t0)*w,YA=v=>pad.t+h-(v-A.lo)/(A.hi-A.lo)*h,YB=v=>pad.t+h-(v-B.lo)/(B.hi-B.lo)*h;
+  x.font='11px IBM Plex Mono';x.lineWidth=1;
+  // grid + left axis (MARINE)
+  x.textAlign='right';x.textBaseline='middle';
+  A.t.forEach(v=>{const y=YA(v);x.strokeStyle='rgba(42,90,218,.12)';x.beginPath();x.moveTo(pad.l,y);x.lineTo(pad.l+w,y);x.stroke();x.fillStyle='#4a7aff';x.fillText(fmtTick(v,A.step),pad.l-8,y)});
+  // right axis (LINK)
+  x.textAlign='left';B.t.forEach(v=>{x.fillStyle='#c9a52f';x.fillText(fmtTick(v,B.step),pad.l+w+8,YB(v))});
+  // time axis
+  x.textAlign='center';x.textBaseline='top';x.fillStyle='#5d6a8f';
+  const span=t1-t0,n=Math.max(2,Math.floor(w/110));
+  for(let i=0;i<=n;i++){const t=t0+span*i/n,d=new Date(t);
+    const lab=span<=36*3600e3?d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+(span<=8*86400e3?' '+d.toLocaleTimeString('en-US',{hour:'numeric'}):'');
+    x.fillText(lab,X(t),pad.t+h+8)}
+  // MARINE area
+  const g=x.createLinearGradient(0,pad.t,0,pad.t+h);g.addColorStop(0,'rgba(74,122,255,.35)');g.addColorStop(1,'rgba(74,122,255,0)');
+  x.beginPath();series.forEach((p,i)=>i?x.lineTo(X(p.t),YA(p.m)):x.moveTo(X(p.t),YA(p.m)));
+  x.lineTo(X(t1),pad.t+h);x.lineTo(X(t0),pad.t+h);x.closePath();x.fillStyle=g;x.fill();
+  x.beginPath();series.forEach((p,i)=>i?x.lineTo(X(p.t),YA(p.m)):x.moveTo(X(p.t),YA(p.m)));x.strokeStyle='#4a7aff';x.lineWidth=2;x.stroke();
+  // LINK line
+  x.beginPath();series.forEach((p,i)=>i?x.lineTo(X(p.t),YB(p.l)):x.moveTo(X(p.t),YB(p.l)));x.strokeStyle='rgba(255,210,63,.8)';x.lineWidth=1.25;x.setLineDash([4,3]);x.stroke();x.setLineDash([]);
+  // hover
+  if(hover!=null){const p=series[hover],hx=X(p.t);x.strokeStyle='rgba(255,255,255,.25)';x.lineWidth=1;x.beginPath();x.moveTo(hx,pad.t);x.lineTo(hx,pad.t+h);x.stroke();
+    [[YA(p.m),'#4a7aff'],[YB(p.l),'#ffd23f']].forEach(([y,col])=>{x.fillStyle=col;x.beginPath();x.arc(hx,y,3.5,0,7);x.fill()});
+    const tip=$('tip');tip.style.display='block';
+    tip.innerHTML=new Date(p.t).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+'<br><span style="color:#4a7aff">MARINE '+px(p.m)+'</span><br><span style="color:#ffd23f">LINK $'+p.l.toFixed(2)+'</span>';
+    tip.style.left=Math.min(hx+12,W-tip.offsetWidth-4)+'px';tip.style.top='14px';
+  }else $('tip').style.display='none';
+  draw.geom={pad,w,t0,t1};
+}
+let hover=null;
+$('chart').addEventListener('mousemove',e=>{if(!series||!draw.geom)return;const{pad,w,t0,t1}=draw.geom;
+  const r=e.target.getBoundingClientRect(),t=t0+(e.clientX-r.left-pad.l)/w*(t1-t0);
+  let bi=0,bd=Infinity;series.forEach((p,i)=>{const d=Math.abs(p.t-t);if(d<bd){bd=d;bi=i}});hover=bi;draw()});
+$('chart').addEventListener('mouseleave',()=>{hover=null;draw()});
+$('tf').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  [...$('tf').children].forEach(x=>x.classList.toggle('on',x===b));tf=b.dataset.tf;loadChart()});
+addEventListener('resize',draw);
+
+// ---------- tape ----------
+let seen=new Set(),tapeLoaded=false;
+async function loadTrades(){
+  try{
+    const d=await j(GT+'/trades');
+    const rows=d.data.map(t=>t.attributes).slice(0,15).map(a=>{
+      const buy=a.to_token_address===MARINE; // bought MARINE
+      const amt=+(buy?a.to_token_amount:a.from_token_amount),price=+(buy?a.price_to_in_usd:a.price_from_in_usd),v=+a.volume_in_usd;
+      const fresh=!seen.has(a.tx_hash);seen.add(a.tx_hash);
+      return`<tr class="${v>=WHALE?'whale':''}"${fresh&&tapeLoaded?'':' style="animation:none"'}><td class="dim">${ago(Date.parse(a.block_timestamp))}</td>
+        <td class="${buy?'up':'dn'}">${buy?'BUY':'SELL'}${v>=WHALE?'<span class="tag">LARGE</span>':''}</td>
+        <td class="r">${usd(v)}</td><td class="r">${compact(amt,'')}</td><td class="r dim">${px(price)}</td>
+        <td class="r hide-sm"><a href="https://solscan.io/tx/${a.tx_hash}" target="_blank" rel="noopener">${short(a.tx_from_address)}</a></td></tr>`});
+    tapeLoaded=true;$('trades').tBodies[0].innerHTML=rows.join('')||'<tr><td colspan="6" class="dim">quiet on the line</td></tr>';
+  }catch(e){}
+}
+
+// ---------- ticker ----------
+async function loadTicker(){
+  try{
+    const d=await j('tokens.json?'+Date.now());
+    const html=d.tokens.map((t,i)=>`<a class="tk" href="https://dexscreener.com/solana/${t.mint}" target="_blank" rel="noopener">
+      <span class="dim">#${i+1}</span>${t.image?`<img src="${t.image}" alt="" loading="lazy" onerror="this.remove()">`:''}
+      <b>$${t.symbol}</b><span class="q">/${t.quote}</span>
+      <span>vol ${compact(t.vol24)}</span>${t.chg24!=null?pct(t.chg24):''}
+      ${t.paidUsd?`<span class="dim">· ${compact(t.paidUsd)} paid out</span>`:''}</a>`).join('');
+    $('ticker').innerHTML=html+html;
+  }catch(e){}
+}
+
+$('ca').onclick=()=>{navigator.clipboard?.writeText(MARINE);$('ca').style.color='var(--green)';setTimeout(()=>$('ca').style.color='',900)};
+
+loadRewards();loadMarket();loadChart();loadTrades();loadTicker();
+setInterval(loadTrades,20000);setInterval(loadMarket,30000);setInterval(loadRewards,60000);
+setInterval(loadChart,120000);setInterval(loadTicker,300000);setInterval(tickLast,1000);
+</script>
+</body>
+</html>
