@@ -231,6 +231,8 @@ html.fit #ttsPop{min-width:900px;max-width:1500px;padding:32px 44px;border-width
 html.fit #ttsPop .from{font-size:26px}html.fit #ttsPop .msg{font-size:84px}
 html.fit #tip{font-size:20px;padding:10px 14px}
 
+.moreStats,#mbar{display:none}
+.ph .chev{display:none}
 @media (max-width:999px){
   html,body,#stage{max-width:100vw;overflow-x:hidden}main>*,.lower>*,.col>*,.stats>*{min-width:0}.tape-bar{max-width:100vw}.tape-bar .track{max-width:none}
   .stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{border-bottom:1px solid var(--line)}.stat:nth-child(2n){border-right:0}
@@ -238,6 +240,32 @@ html.fit #tip{font-size:20px;padding:10px 14px}
   main{grid-template-columns:minmax(0,1fr)}.lower{grid-template-columns:minmax(0,1fr)}.ph{flex-wrap:wrap}.legend{display:none}header nav{margin-left:0}
   header nav .btn:not(.primary):not(.tts){display:none}#chartWrap{height:260px}.brand{font-size:24px}.brand small{font-size:14px}header{gap:10px;flex-wrap:wrap}
   .hide-sm{display:none}#ttsPop{min-width:0;width:92%}#ttsPop .msg{font-size:30px}
+  /* ---- mobile: collapsible sections, fewer things fighting for space ---- */
+  #stage{padding-bottom:64px}
+  header{padding:8px 12px;flex-wrap:nowrap}header img{width:28px;height:28px}header nav{display:none}
+  .brand{font-size:22px}.brand small{font-size:12px}.live{margin-left:auto;font-size:10px}
+  .tape-bar .lg{display:none}.tape-bar .lbl{font-size:15px;padding:0 8px;gap:5px}.tape-bar .lbl button{font-size:13px;padding:0 5px}
+  .track{padding:5px 0}.tk{font-size:11px;margin-right:22px}.tk img{width:15px;height:15px}
+  .stat{padding:8px 12px}.stat b{font-size:26px}.stat.hero b{font-size:32px}
+  .stats .xtra{display:none}.stats.open .xtra{display:block}
+  .moreStats{display:block;grid-column:span 2;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--blue2);font:inherit;font-size:11px;letter-spacing:1.5px;padding:8px;cursor:pointer}
+  main{display:flex;flex-direction:column}.col,.lower{display:contents}
+  .chartP{order:1}.tapeP{order:2}.bill{order:3}.feed{order:4}.ads{order:5}.wrP{display:none}
+  .panel{padding:10px 12px}
+  .acc>.ph{cursor:pointer;margin-bottom:8px;flex-wrap:nowrap;user-select:none;-webkit-tap-highlight-color:transparent}
+  .acc>.ph h2{font-size:20px;display:flex;align-items:center;gap:8px}
+  .ph .chev{display:inline-block;font-family:'IBM Plex Mono';font-size:12px;color:var(--dim);transition:transform .2s}
+  .acc.shut>.ph{margin-bottom:0}.acc.shut>.ph .chev{transform:rotate(-90deg)}
+  .acc.shut>:not(.ph){display:none!important}
+  .acc.shut>.ph .tabs,.acc.shut>.ph .meta{display:none}
+  .ads>.ph .meta{display:none}
+  #chartWrap{height:230px}
+  #xfeed{max-height:460px;overflow-y:auto}
+  .post .txt{-webkit-line-clamp:3}
+  .board{min-height:90px}.bill .board.sold .head,.board.sold .head{font-size:30px}
+  .src .fx{display:none}.src{padding:6px 12px}
+  #mbar{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:6px;position:fixed;left:0;right:0;bottom:0;z-index:45;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(4,6,15,.96);border-top:1px solid var(--line);backdrop-filter:blur(6px)}
+  #mbar .btn{text-align:center;padding:11px 6px;font-size:12px;text-decoration:none}
 }
 </style>
 </head>
@@ -258,11 +286,11 @@ html.fit #tip{font-size:20px;padding:10px 14px}
 </header>
 
 <div class="tape-bar top">
-  <div class="lbl">STONK BOARD TOP 10 APY <button data-k="apy3d" class="on">3D</button><button data-k="apy24h">24H</button></div>
+  <div class="lbl">STONK<span class="lg">&nbsp;BOARD TOP 10</span>&nbsp;APY <button data-k="apy3d" class="on">3D</button><button data-k="apy24h">24H</button></div>
   <div class="track" id="boardTicker"><span class="tk dim">loading…</span></div>
 </div>
 <div class="tape-bar vol">
-  <div class="lbl">STONKFUN TOP 10 · 24H VOL</div>
+  <div class="lbl">STONKFUN<span class="lg">&nbsp;TOP 10 · 24H</span>&nbsp;VOL</div>
   <div class="track" id="ticker"><span class="tk dim">loading…</span></div>
 </div>
 
@@ -274,16 +302,17 @@ html.fit #tip{font-size:20px;padding:10px 14px}
     <div class="bar" id="pBar"><i style="width:0"></i></div>
     <div class="pmeta"><span id="pPct">0%</span><span id="pLast">last —</span><span id="pThr">min —</span></div>
   </div>
-  <div class="stat"><label>Payouts sent</label><b id="sPayouts">—</b><span class="dim" id="sHolders">&nbsp;</span><span class="dim" id="pMin" style="display:block">&nbsp;</span></div>
+  <div class="stat xtra"><label>Payouts sent</label><b id="sPayouts">—</b><span class="dim" id="sHolders">&nbsp;</span><span class="dim" id="pMin" style="display:block">&nbsp;</span></div>
   <div class="stat"><label>$MARINE</label><b id="sPrice">—</b><span id="sChg">&nbsp;</span></div>
   <div class="stat"><label>Market cap</label><b id="sMcap">—</b><span class="dim" id="sLiq">&nbsp;</span></div>
-  <div class="stat fx"><label>24h volume</label><b id="sVol">—</b><span class="dim" id="sTx">&nbsp;</span></div>
-  <div class="stat"><label>$LINK</label><b id="sLink">—</b><span id="sLinkChg">&nbsp;</span></div>
+  <div class="stat fx xtra"><label>24h volume</label><b id="sVol">—</b><span class="dim" id="sTx">&nbsp;</span></div>
+  <div class="stat xtra"><label>$LINK</label><b id="sLink">—</b><span id="sLinkChg">&nbsp;</span></div>
+  <button class="moreStats" id="moreStats" type="button">MORE STATS ▾</button>
 </section>
 
 <main>
   <div class="col left">
-    <section class="panel chartP">
+    <section class="panel chartP acc" data-acc="chart" data-def="1">
       <div class="ph">
         <h2>$MARINE × $LINK</h2>
         <div class="legend" style="margin:0"><span><i style="background:var(--blue2)"></i>$MARINE (left)</span><span><i style="background:var(--amber)"></i>$LINK (right)</span></div>
@@ -295,7 +324,7 @@ html.fit #tip{font-size:20px;padding:10px 14px}
     </section>
 
     <div class="lower">
-      <section class="panel">
+      <section class="panel tapeP acc" data-acc="tape" data-def="1">
         <div class="ph"><h2>THE TAPE</h2>
           <span class="meta hide-sm fx">$MARINE/LINK pool · large = $2,500+</span>
           <div class="tabs" id="tapeF"><button data-min="0" class="on">ALL</button><button data-min="100">$100+</button></div>
@@ -307,7 +336,7 @@ html.fit #tip{font-size:20px;padding:10px 14px}
         </table>
         </div>
       </section>
-      <section class="panel ads">
+      <section class="panel ads acc" data-acc="ads" data-def="0">
         <div class="ph"><h2>AD SPACE</h2><span class="meta" id="adMeta">paid on-chain · live in ~2 min</span></div>
         <div class="slots">
           <div class="board" data-slot="2" id="slot2"></div>
@@ -319,17 +348,17 @@ html.fit #tip{font-size:20px;padding:10px 14px}
   </div>
 
   <div class="col comms">
-    <section class="panel warroom">
+    <section class="panel warroom wrP">
       <div><b>THE WAR ROOM CHAT</b><span class="dim" style="font-size:11px">live on X · calls, alerts, orders</span></div>
       <a class="btn primary" href="https://x.com/i/chat/group_join/g2100093244189344145/C2cWaUPPPt" target="_blank" rel="noopener">JOIN ⚔</a>
     </section>
-    <section class="panel feed">
+    <section class="panel feed acc" data-acc="intel" data-def="0">
       <div class="ph"><h2>INTEL · X</h2>
         <div class="tabs feedtabs" id="xf"><button data-f="all" class="on">ALL</button><button data-f="marine">$MARINE</button><button data-f="link">$LINK</button></div>
       </div>
       <div id="xfeed"><div id="xlist"><div class="dim">loading posts…</div></div></div>
     </section>
-    <section class="panel bill">
+    <section class="panel bill acc" data-acc="bill" data-def="1">
       <div class="ph"><h2>BILLBOARD</h2><span class="meta">slot 01 · prime</span></div>
       <div class="board" data-slot="1" id="slot1"></div>
     </section>
@@ -340,6 +369,7 @@ html.fit #tip{font-size:20px;padding:10px 14px}
 
 </div>
 
+<nav id="mbar"><a class="btn primary" href="https://jup.ag/swap/SOL-F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK" target="_blank" rel="noopener">BUY $MARINE</a><button class="btn tts" data-buy="t">🔊 TTS</button><a class="btn" href="https://x.com/i/chat/group_join/g2100093244189344145/C2cWaUPPPt" target="_blank" rel="noopener">⚔ CHAT</a></nav>
 <div id="ttsPop"><div class="from" id="ttsFrom"></div><div class="msg" id="ttsMsg"></div></div>
 <div id="audioGate">🔊 click to enable TTS audio</div>
 <div id="ttsModal"><div class="box">
@@ -518,7 +548,7 @@ $('tf').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)re
 // ---------- tape ----------
 let seen=new Set(),tapeLoaded=false,tapeMin=0,tapeRaw=[];
 function renderTape(){
-  const rows=(document.documentElement.classList.contains('fit')?5:15);
+  const rows=(document.documentElement.classList.contains('fit')?5:8);
   const list=tapeRaw.filter(a=>+a.volume_in_usd>=tapeMin).slice(0,rows).map(a=>{
     const buy=a.to_token_address===MARINE;
     const amt=+(buy?a.to_token_amount:a.from_token_amount),price=+(buy?a.price_to_in_usd:a.price_from_in_usd),v=+a.volume_in_usd;
@@ -678,6 +708,17 @@ function watchReceipt(sig){let n=0;const t=setInterval(async()=>{if(++n>40)retur
   try{const d=await j('receipts.json?'+Date.now()),r=(d.items||[]).find(i=>i.sig===sig);if(!r)return;clearInterval(t);
     say({live:'✅ Live. Look at the screen.',held:'Held for a mod to review. You\'ll be refunded if it\'s rejected.',underpaid:'Payment came in short ('+esc(r.note)+'). DM @TheMarinesX.',rejected:'Rejected by a mod. DM @TheMarinesX for a refund.'}[r.status]||r.status,r.status==='live'?'ok':'err');loadAds();loadTTS()}catch(e){}},8000)}
 
+// ---------- mobile: collapsible sections ----------
+const accSt=JSON.parse(localStorage.getItem('wrAcc')||'{}');
+document.querySelectorAll('.acc').forEach(sec=>{
+  const k=sec.dataset.acc,ph=sec.querySelector(':scope>.ph'),h=ph.querySelector('h2');
+  h.insertAdjacentHTML('afterbegin','<span class="chev">▾</span>');
+  const open=k in accSt?accSt[k]:sec.dataset.def==='1';sec.classList.toggle('shut',!open);
+  ph.addEventListener('click',e=>{if(document.documentElement.classList.contains('fit')||e.target.closest('button,a,select'))return;
+    const shut=sec.classList.toggle('shut');accSt[k]=!shut;localStorage.setItem('wrAcc',JSON.stringify(accSt));
+    if(!shut){requestAnimationFrame(()=>{draw();rollFeed()})}});
+});
+$('moreStats').addEventListener('click',()=>{const o=document.querySelector('.stats').classList.toggle('open');$('moreStats').textContent=o?'LESS ▴':'MORE STATS ▾'});
 addEventListener('resize',fit);
 fit();
 loadRewards();loadMarket();loadChart();loadTrades();loadTicker();loadBoard();loadFeed();loadTTS();loadPay();loadAds();
