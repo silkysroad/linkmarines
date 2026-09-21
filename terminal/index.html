@@ -147,6 +147,28 @@ tr.whale td{background:rgba(74,122,255,.08)}
 #ttsPop.show{opacity:1;transform:translate(-50%,0) scale(1)}
 #ttsPop .from{font-size:13px;color:var(--amber);letter-spacing:2px;text-transform:uppercase}
 #ttsPop .msg{font-family:'VT323';font-size:44px;line-height:1.05;color:#fff;margin-top:6px;word-break:break-word}
+.board.sold.img{padding:0;overflow:hidden;background:#000}
+.board.sold.img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.board.sold.img .by,.board.sold.img .left,.board.sold.img .buy{background:#000c;padding:1px 5px;z-index:2}
+#iPrev{display:none;margin-top:8px;max-height:140px;max-width:100%;border:1px solid var(--line)}
+#buyPop{position:fixed;left:50%;bottom:16%;transform:translate(-50%,30px);opacity:0;pointer-events:none;z-index:55;transition:all .35s cubic-bezier(.2,1.4,.4,1);
+  background:linear-gradient(135deg,#06240f,#0a0f1f);border:3px solid var(--green);box-shadow:0 0 50px rgba(57,255,106,.4);padding:18px 44px;text-align:center;min-width:600px}
+#buyPop.show{opacity:1;transform:translate(-50%,0)}
+#buyPop .t{font-size:20px;letter-spacing:4px;color:var(--green)}
+#buyPop .v{font-family:'VT323';font-size:104px;line-height:1;color:#fff}
+#buyPop .w{font-size:18px;color:var(--dim);letter-spacing:1px}
+#buyPop.big{border-color:var(--amber);box-shadow:0 0 60px rgba(255,210,63,.5);background:linear-gradient(135deg,#2a2106,#0a0f1f)}
+#buyPop.big .t{color:var(--amber)}
+#pulseTO{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;
+  background:radial-gradient(circle at center,rgba(42,90,218,.55),rgba(4,6,15,.96) 65%);pointer-events:none}
+#pulseTO.show{display:flex;animation:pto 12s ease forwards}
+@keyframes pto{0%{opacity:0}4%{opacity:1}90%{opacity:1}100%{opacity:0}}
+#pulseTO .k{font-size:22px;letter-spacing:8px;color:var(--amber)}
+#pulseTO .n{font-family:'VT323';font-size:180px;line-height:.95;color:#fff;text-shadow:0 0 40px var(--blue2);animation:pnum 1.2s ease infinite alternate}
+@keyframes pnum{to{text-shadow:0 0 90px var(--blue2),0 0 20px #fff}}
+#pulseTO .s{font-family:'VT323';font-size:48px;color:var(--green);margin-top:6px}
+#pulseTO .d{font-size:16px;color:var(--txt);letter-spacing:2px;margin-top:14px}
+@media (max-width:700px){#buyPop{min-width:0;width:88%;padding:12px 16px}#buyPop .t{font-size:13px}#buyPop .v{font-size:52px}#buyPop .w{font-size:12px}#pulseTO{padding:0 18px}#pulseTO .k{font-size:15px;letter-spacing:5px}#pulseTO .n{font-size:68px}#pulseTO .s{font-size:24px}#pulseTO .d{font-size:12px}}
 #ttsModal{position:fixed;inset:0;background:#000b;z-index:60;display:none;align-items:center;justify-content:center}
 #ttsModal.show{display:flex}
 #ttsModal .box{background:var(--panel);border:1px solid var(--amber);padding:22px;max-width:460px;width:92%}
@@ -371,10 +393,12 @@ html.fit #tip{font-size:20px;padding:10px 14px}
 
 <nav id="mbar"><a class="btn primary" href="https://jup.ag/swap/SOL-F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK" target="_blank" rel="noopener">BUY $MARINE</a><button class="btn tts" data-buy="t">🔊 TTS</button><a class="btn" href="https://x.com/i/chat/group_join/g2100093244189344145/C2cWaUPPPt" target="_blank" rel="noopener">⚔ CHAT</a></nav>
 <div id="ttsPop"><div class="from" id="ttsFrom"></div><div class="msg" id="ttsMsg"></div></div>
+<div id="buyPop"><div class="t" id="bpT">NEW RECRUIT</div><div class="v" id="bpV"></div><div class="w" id="bpW"></div></div>
+<div id="pulseTO"><div class="k">⚡ PULSE FIRED ⚡</div><div class="n" id="ptN"></div><div class="s" id="ptS"></div><div class="d" id="ptD"></div></div>
 <div id="audioGate">🔊 click to enable TTS audio</div>
 <div id="ttsModal"><div class="box">
   <h3>ON SCREEN · ON STREAM</h3>
-  <div class="kind" id="kind"><button data-k="t" class="on">🔊 TTS</button><button data-k="a">📢 BILLBOARD</button></div>
+  <div class="kind" id="kind"><button data-k="t" class="on">🔊 TTS</button><button data-k="a">📢 BILLBOARD</button><button data-k="i">🖼 IMAGE AD</button></div>
   <label class="f">Your name / X handle</label><input id="fFrom" maxlength="24" placeholder="@you">
   <div id="kT">
     <label class="f">Message · read out loud</label>
@@ -382,8 +406,10 @@ html.fit #tip{font-size:20px;padding:10px 14px}
     <p class="dim" id="ttsCount" style="margin-top:4px;text-align:right">0/200</p>
   </div>
   <div id="kA" style="display:none">
-    <label class="f">Headline</label><input id="fHead" maxlength="36" placeholder="BIG TEXT, 36 max">
-    <label class="f">Sub line</label><input id="fSub" maxlength="70" placeholder="smaller text, 70 max">
+    <div id="kAt"><label class="f">Headline</label><input id="fHead" maxlength="36" placeholder="BIG TEXT, 36 max">
+    <label class="f">Sub line</label><input id="fSub" maxlength="70" placeholder="smaller text, 70 max"></div>
+    <div id="kAi" style="display:none"><label class="f">Image · PNG / JPG / WEBP, under 3 MB, wide works best</label>
+    <input id="fImg" type="file" accept="image/png,image/jpeg,image/webp"><img id="iPrev" alt=""></div>
     <div class="grid2">
       <div><label class="f">Slot</label><select id="fSlot"></select></div>
       <div><label class="f">Time</label><select id="fBlocks"></select></div>
@@ -394,7 +420,7 @@ html.fit #tip{font-size:20px;padding:10px 14px}
     <div><label class="f">Pay with</label><select id="fTok"><option value="usdc">USDC</option><option value="sol">SOL</option></select></div>
     <div style="text-align:right"><div class="dim" style="font-size:10px;letter-spacing:1.5px">TOTAL</div><div class="total" id="fTotal">—</div></div>
   </div>
-  <p style="font-size:11px" class="dim">Text only. No links, no contract addresses, nothing hateful. Anything that trips the filter is held for a mod and refunded if rejected. Paid on Solana; it goes live automatically once the payment confirms.</p>
+  <p style="font-size:11px" class="dim" id="rules">Text only. No links, no contract addresses, nothing hateful. Anything that trips the filter is held for a mod and refunded if rejected. Paid on Solana; it goes live automatically once the payment confirms.</p>
   <div id="payMsg"></div>
   <div class="acts"><button class="btn" id="ttsClose">CLOSE</button><a class="btn" id="payLink" href="#">OPEN IN WALLET APP</a><button class="btn primary" id="payBtn">PAY WITH WALLET</button></div>
 </div></div>
@@ -438,10 +464,18 @@ const short=a=>a?a.slice(0,4)+'…'+a.slice(-4):'';
 async function j(u){const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw new Error(r.status);return r.json()}
 
 // ---------- rewards snapshot (same-origin) ----------
-let rewards=null;
+let rewards=null,prevR=null;
+function pulseTakeover(tok,usdv,holders,total){$('ptN').textContent='+'+num(tok,tok<10?2:1)+' LINK';
+  $('ptS').textContent=(usdv>0?'≈ '+usd(usdv,0)+' ':'')+'paid to '+num(holders)+' $MARINE holders';
+  $('ptD').textContent=num(total,0)+' LINK distributed all time · hold $MARINE, get paid in $LINK';
+  const el=$('pulseTO');el.classList.remove('show');void el.offsetWidth;el.classList.add('show');beep(true);setTimeout(()=>beep(true),600);
+  setTimeout(()=>{el.classList.remove('show');nextBuy()},12000)}
 async function loadRewards(){
   try{rewards=await j('rewards.json?'+Date.now());}catch(e){return}
   const r=rewards;
+  if(prevR&&r.lastPayoutAt&&r.lastPayoutAt!==prevR.lastPayoutAt&&r.distributedTokens>prevR.distributedTokens)
+    pulseTakeover(r.distributedTokens-prevR.distributedTokens,(r.distributedUsd||0)-(prevR.distributedUsd||0),r.holderCount,r.distributedTokens);
+  prevR=r;
   $('sDist').textContent=num(r.distributedTokens,1)+' LINK';
   $('sDistUsd').textContent='≈ '+usd(r.distributedUsd,0)+' at today\'s LINK price';
   $('sPayouts').textContent=num(r.payoutCount);
@@ -559,7 +593,20 @@ function renderTape(){
       <td class="r hide-sm"><a href="https://solscan.io/tx/${a.tx_hash}" target="_blank" rel="noopener">${(a.tx_from_address||'').slice(0,4)}</a></td></tr>`});
   tapeLoaded=true;$('trades').tBodies[0].innerHTML=list.join('')||`<tr><td colspan="6" class="dim">quiet on the line${tapeMin?' (no $'+tapeMin+'+ trades in the last 300)':''}</td></tr>`;
 }
-async function loadTrades(){try{const d=await j(GT+'/trades');tapeRaw=d.data.map(t=>t.attributes);renderTape()}catch(e){}}
+// buy alerts: every new $MARINE buy >= $100 pops on screen with a sound
+const BUYMIN=100,alerted=new Set();let tradesBoot=true,bpQ=[],bpBusy=false,actx=null;
+function beep(big){try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();const t=actx.currentTime;
+  (big?[523,659,784,1047]:[659,988]).forEach((f,i)=>{const o=actx.createOscillator(),g=actx.createGain();o.type='square';o.frequency.value=f;
+    g.gain.setValueAtTime(.0001,t+i*.11);g.gain.exponentialRampToValueAtTime(.08,t+i*.11+.02);g.gain.exponentialRampToValueAtTime(.0001,t+i*.11+.16);
+    o.connect(g).connect(actx.destination);o.start(t+i*.11);o.stop(t+i*.11+.18)})}catch(e){}}
+function checkBuys(list){const fresh=[];list.forEach(a=>{if(alerted.has(a.tx_hash))return;alerted.add(a.tx_hash);
+  if(!tradesBoot&&a.to_token_address===MARINE&&+a.volume_in_usd>=BUYMIN)fresh.push(a)});tradesBoot=false;
+  fresh.reverse().forEach(a=>bpQ.push({v:+a.volume_in_usd,amt:+a.to_token_amount,w:(a.tx_from_address||'').slice(0,4)}));nextBuy()}
+function nextBuy(){if(bpBusy||!bpQ.length||$('pulseTO').classList.contains('show'))return;const b=bpQ.shift();bpBusy=true;const big=b.v>=WHALE;
+  $('buyPop').classList.toggle('big',big);$('bpT').textContent=big?'🚨 LARGE BUY 🚨':'🟢 NEW RECRUIT';$('bpV').textContent='+'+usd(b.v,0);
+  $('bpW').textContent=compact(b.amt,'')+' $MARINE · '+b.w;$('buyPop').classList.add('show');beep(big);
+  setTimeout(()=>{$('buyPop').classList.remove('show');setTimeout(()=>{bpBusy=false;nextBuy()},500)},bpQ.length>3?2500:5000)}
+async function loadTrades(){try{const d=await j(GT+'/trades');tapeRaw=d.data.map(t=>t.attributes);renderTape();checkBuys(tapeRaw)}catch(e){}}
 $('tapeF').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
   [...$('tapeF').children].forEach(x=>x.classList.toggle('on',x===b));tapeMin=+b.dataset.min;renderTape()});
 
@@ -567,7 +614,7 @@ $('tapeF').addEventListener('click',e=>{const b=e.target.closest('button');if(!b
 async function loadTicker(){
   try{
     const d=await j('tokens.json?'+Date.now());
-    const html=d.tokens.map((t,i)=>`<a class="tk" href="https://dexscreener.com/solana/${esc(t.mint)}" target="_blank" rel="noopener">
+    const html=d.tokens.map((t,i)=>`<a class="tk" href="${esc(tokLink(t.mint))}" target="_blank" rel="noopener">
       <span class="dim">#${i+1}</span>${t.image?`<img src="${esc(t.image)}" alt="" loading="lazy" onerror="this.remove()">`:''}
       <b>$${esc(t.symbol)}</b><span class="q">/${esc(t.quote)}</span>
       <span>vol ${compact(t.vol24)}</span>${t.chg24!=null?pct(t.chg24):''}
@@ -635,36 +682,49 @@ const TOKEN='TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',ATAP='ATokenGPvbdGVxr1
 const SLOTN={'1':'SLOT 01 · PRIME','2':'SLOT 02','3':'SLOT 03'};
 const BADC=/(https?:\/\/|www\.|\.(com|xyz|io|net|org|gg|fun|app|link|ly|me|so)\b|t\.me|discord\.gg|\b[1-9A-HJ-NP-Za-km-z]{32,44}\b)/i;
 const fld=v=>v.replace(/[|\n\r]/g,'/').replace(/\s+/g,' ').trim();
+function tokLink(m){return PAY&&PAY.tokenLink?PAY.tokenLink.replace('{mint}',m):'https://dexscreener.com/solana/'+m}
 async function loadPay(){try{PAY=await j('pay.json?'+Date.now());$('ttsPrice').textContent='$'+PAY.prices.tts;renderAds()}catch(e){}}
 async function loadAds(){try{ADS=await j('ads.json?'+Date.now());renderAds()}catch(e){}}
 function curAd(k){const n=Date.now()/1000;return(ADS.slots?.[k]||[]).find(a=>a.start<=n&&a.end>n)}
 function queueEnd(k){const n=Date.now()/1000;return Math.max(n,...(ADS.slots?.[k]||[]).map(a=>a.end))}
 function renderAds(){['1','2','3'].forEach(k=>{const el=$('slot'+k);if(!el)return;const a=curAd(k),pr=PAY?'$'+PAY.prices.slots[k]+' / '+PAY.blockMinutes+' MIN':'';
-  el.classList.toggle('sold',!!a);
-  el.innerHTML=a?`<span class="buy">${SLOTN[k]} · ${pr}</span><div class="head">${esc(a.head)}</div>${a.sub?`<div class="sub">${esc(a.sub)}</div>`:''}<span class="by">— ${esc(a.from)}</span><span class="left">${Math.ceil((a.end-Date.now()/1000)/60)}m left</span>`
+  el.classList.toggle('sold',!!a);el.classList.toggle('img',!!(a&&a.img));
+  el.innerHTML=a&&a.img?`<img src="${esc(a.img)}" alt=""><span class="buy">${SLOTN[k]}</span><span class="by">— ${esc(a.from)}</span><span class="left">${Math.ceil((a.end-Date.now()/1000)/60)}m left</span>`:a?`<span class="buy">${SLOTN[k]} · ${pr}</span><div class="head">${esc(a.head)}</div>${a.sub?`<div class="sub">${esc(a.sub)}</div>`:''}<span class="by">— ${esc(a.from)}</span><span class="left">${Math.ceil((a.end-Date.now()/1000)/60)}m left</span>`
     :`<span class="slot">${SLOTN[k]}</span><span class="vt" style="font-size:${k==='1'?34:26}px">SLOT OPEN</span><span class="price">${pr||'—'} · CLICK TO BUY</span>`})}
 function fillSlotSel(){if(!PAY)return;$('fSlot').innerHTML=['1','2','3'].map(k=>`<option value="${k}">${SLOTN[k]} · $${PAY.prices.slots[k]}/${PAY.blockMinutes}m</option>`).join('');
   $('fBlocks').innerHTML=Array.from({length:PAY.maxBlocks},(_,i)=>`<option value="${i+1}">${(i+1)*PAY.blockMinutes} min</option>`).join('')}
+let imgId=null,imgBusy=false;
 function usdTotal(){if(!PAY)return 0;return kind==='t'?PAY.prices.tts:PAY.prices.slots[$('fSlot').value]*(+$('fBlocks').value||1)}
 async function getSolPx(){try{const d=await j('https://lite-api.jup.ag/price/v3?ids=So11111111111111111111111111111111111111112');solPx=d['So11111111111111111111111111111111111111112'].usdPrice}catch(e){}}
 function amount(){const u=usdTotal();if($('fTok').value==='usdc')return{ui:u,txt:'$'+u+' USDC'};
   if(!solPx)return null;const sol=Math.ceil(u/solPx*1.02*1e4)/1e4;return{ui:sol,txt:sol+' SOL (≈$'+u+')'}}
 function memo(){const f=fld($('fFrom').value)||'anon';
+  if(kind==='i')return`WR|i|${$('fSlot').value}|${$('fBlocks').value}|${f}|${imgId||''}`;
   return kind==='t'?`WR|t|${f}|${fld($('ttsText').value)}`:`WR|a|${$('fSlot').value}|${$('fBlocks').value}|${f}|${fld($('fHead').value)}|${fld($('fSub').value)}`}
-function check(){const txt=kind==='t'?$('ttsText').value:$('fHead').value+' '+$('fSub').value;
+function check(){if(kind==='i'){if(imgBusy)return'image still uploading…';if(!imgId)return'pick an image';
+    if(BADC.test($('fFrom').value))return'no links or contract addresses';return''}
+  const txt=kind==='t'?$('ttsText').value:$('fHead').value+' '+$('fSub').value;
   if(!(kind==='t'?$('ttsText').value.trim():$('fHead').value.trim()))return kind==='t'?'write a message':'write a headline';
   if(BADC.test(txt+' '+$('fFrom').value))return'no links or contract addresses';return''}
 function refresh(){const a=amount();$('fTotal').textContent=a?a.txt:'…';
-  if(kind==='a'&&PAY){const k=$('fSlot').value,w=queueEnd(k)-Date.now()/1000;$('slotQ').textContent=w>30?'Slot is booked for '+Math.ceil(w/60)+' more min. Yours starts right after.':'Slot is open. Yours starts as soon as payment confirms.'}
+  if(kind!=='t'&&PAY){const k=$('fSlot').value,w=queueEnd(k)-Date.now()/1000;$('slotQ').textContent=w>30?'Slot is booked for '+Math.ceil(w/60)+' more min. Yours starts right after.':'Slot is open. Yours starts as soon as payment confirms.'}
   const L=$('payLink');if(PAY&&PAY.treasury&&a){L.href=`solana:${PAY.treasury}?amount=${a.ui}${$('fTok').value==='usdc'?'&spl-token='+PAY.usdcMint:''}&memo=${encodeURIComponent(memo())}&label=${encodeURIComponent('The War Room')}&message=${encodeURIComponent(kind==='t'?'TTS on stream':'Billboard')}`}
   const off=!PAY||!PAY.treasury;$('payBtn').disabled=off;L.style.display=off?'none':'';
   if(off)say('Checkout opens shortly. Until then DM <a href="https://x.com/TheMarinesX" target="_blank" rel="noopener">@TheMarinesX</a>.','')}
 function say(h,c){$('payMsg').innerHTML=h;$('payMsg').className=c||''}
 function openBuy(k,slot){kind=k;fillSlotSel();if(slot)$('fSlot').value=slot;
-  [...$('kind').children].forEach(b=>b.classList.toggle('on',b.dataset.k===k));$('kT').style.display=k==='t'?'':'none';$('kA').style.display=k==='a'?'':'none';
+  [...$('kind').children].forEach(b=>b.classList.toggle('on',b.dataset.k===k));$('kT').style.display=k==='t'?'':'none';$('kA').style.display=k!=='t'?'':'none';
+  $('kAt').style.display=k==='a'?'':'none';$('kAi').style.display=k==='i'?'':'none';
+  $('rules').textContent=k==='i'?'Every image is checked by a mod before it goes on screen, usually within minutes. Nothing NSFW, hateful, or scammy (no QR codes, links or contract addresses in the image). If it\'s rejected you get refunded. Paid on Solana.':'Text only. No links, no contract addresses, nothing hateful. Anything that trips the filter is held for a mod and refunded if rejected. Paid on Solana; it goes live automatically once the payment confirms.';
   say('');$('ttsModal').classList.add('show');getSolPx().then(refresh);refresh()}
 $('kind').onclick=e=>{const b=e.target.closest('button');if(b)openBuy(b.dataset.k)};
 ['fSlot','fBlocks','fTok','fFrom','fHead','fSub','ttsText'].forEach(id=>$(id).addEventListener('input',()=>{refresh();if($('payMsg').className==='err')say('')}));
+$('fImg').addEventListener('change',async()=>{const f=$('fImg').files[0];imgId=null;$('iPrev').style.display='none';if(!f)return refresh();
+  if(f.size>3*1024*1024)return say('Image must be under 3 MB.','err');
+  if(!PAY||!PAY.upload)return say('Image upload is offline right now. Try again in a few minutes.','err');
+  $('iPrev').src=URL.createObjectURL(f);$('iPrev').style.display='block';imgBusy=true;say('Uploading image…');
+  try{const r=await fetch(PAY.upload+'/img',{method:'POST',body:f});const d=await r.json();if(!r.ok||!d.id)throw new Error(d.error||r.status);imgId=d.id;say('Image ready. Pay to submit it for review.','ok')}
+  catch(e){say('Upload failed: '+esc(e.message||e),'err')}imgBusy=false;refresh()});
 $('ttsText').addEventListener('input',()=>$('ttsCount').textContent=$('ttsText').value.length+'/200');
 $('ttsBtn').onclick=()=>openBuy('t');
 document.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>openBuy(b.dataset.buy));
@@ -706,7 +766,7 @@ $('payBtn').onclick=async()=>{const m=check();if(m)return say(m,'err');
   b.disabled=false};
 function watchReceipt(sig){let n=0;const t=setInterval(async()=>{if(++n>40)return clearInterval(t);
   try{const d=await j('receipts.json?'+Date.now()),r=(d.items||[]).find(i=>i.sig===sig);if(!r)return;clearInterval(t);
-    say({live:'✅ Live. Look at the screen.',held:'Held for a mod to review. You\'ll be refunded if it\'s rejected.',underpaid:'Payment came in short ('+esc(r.note)+'). DM @TheMarinesX.',rejected:'Rejected by a mod. DM @TheMarinesX for a refund.'}[r.status]||r.status,r.status==='live'?'ok':'err');loadAds();loadTTS()}catch(e){}},8000)}
+    say({live:'✅ Live. Look at the screen.',held:r.kind==='i'?'Paid. Your image is with a mod for approval, usually within minutes. Refunded if rejected.':'Held for a mod to review. You\'ll be refunded if it\'s rejected.',underpaid:'Payment came in short ('+esc(r.note)+'). DM @TheMarinesX.',rejected:'Rejected by a mod. DM @TheMarinesX for a refund.'}[r.status]||r.status,r.status==='live'?'ok':'err');loadAds();loadTTS()}catch(e){}},8000)}
 
 // ---------- mobile: collapsible sections ----------
 const accSt=JSON.parse(localStorage.getItem('wrAcc')||'{}');
@@ -727,6 +787,9 @@ setInterval(loadTrades,20000);setInterval(loadMarket,30000);setInterval(loadRewa
 setInterval(loadChart,120000);setInterval(loadTicker,300000);setInterval(loadBoard,300000);
 setInterval(loadFeed,120000);setInterval(loadTTS,10000);setInterval(tickLast,1000);
 document.fonts?.ready.then(()=>{draw();rollFeed()});
+{const dm=new URLSearchParams(location.search).get('demo');if(dm)setTimeout(()=>{
+  if(dm==='pulse')pulseTakeover(29.4,391,2439,6555.2);
+  else{bpQ.push({v:dm==='bigbuy'?3120:240,amt:dm==='bigbuy'?2.1e6:162000,w:'Dem0'});nextBuy()}},2500)}
 </script>
 </body>
 </html>
