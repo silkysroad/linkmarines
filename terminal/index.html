@@ -18,14 +18,14 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--bg);color:var(--txt);font:13px/1.4 'IBM Plex Mono',monospace}
-body{min-height:100vh;display:flex;flex-direction:column;
+#stage{min-height:100vh;display:flex;flex-direction:column;
   background-image:linear-gradient(rgba(42,90,218,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(42,90,218,.05) 1px,transparent 1px);
-  background-size:28px 28px}
+  background-size:28px 28px;background-color:var(--bg)}
 a{color:var(--blue2);text-decoration:none}a:hover{text-decoration:underline}
 .vt{font-family:'VT323',monospace;letter-spacing:.5px}
 .up{color:var(--green)}.dn{color:var(--red)}.am{color:var(--amber)}.dim{color:var(--dim)}
 
-header{display:flex;align-items:center;gap:18px;padding:10px 16px;border-bottom:1px solid var(--line);background:rgba(4,6,15,.92);position:sticky;top:0;z-index:5}
+header{display:flex;align-items:center;gap:18px;padding:9px 16px;border-bottom:1px solid var(--line);background:rgba(4,6,15,.92)}
 header img{width:34px;height:34px;image-rendering:pixelated}
 .brand{font-family:'VT323';font-size:34px;line-height:1;color:#fff}
 .brand small{display:block;font-size:17px;color:var(--blue2)}
@@ -34,68 +34,149 @@ header img{width:34px;height:34px;image-rendering:pixelated}
 .live.stale{color:var(--amber);border-color:rgba(255,210,63,.4)}.live.stale i{background:var(--amber)}
 @keyframes blink{50%{opacity:.2}}
 header nav{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
-.btn{border:1px solid var(--line);padding:6px 12px;color:var(--txt);font-size:12px;background:var(--panel)}
+.btn{border:1px solid var(--line);padding:6px 12px;color:var(--txt);font:inherit;font-size:12px;background:var(--panel);cursor:pointer}
 .btn:hover{border-color:var(--blue2);text-decoration:none}
 .btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.tts{border-color:var(--amber);color:var(--amber)}
 
-.stats{display:grid;grid-template-columns:repeat(6,1fr);border-bottom:1px solid var(--line)}
-.stat{padding:12px 16px;border-right:1px solid var(--line)}
+/* tickers */
+.tape-bar{border-bottom:1px solid var(--line);background:#02030a;overflow:hidden;white-space:nowrap;position:relative;flex:none}
+.tape-bar.bottom{border-bottom:0;border-top:1px solid var(--line)}
+.tape-bar .lbl{box-shadow:12px 0 16px #02030a;position:absolute;left:0;top:0;bottom:0;z-index:2;background:var(--blue);color:#fff;font-family:'VT323';font-size:18px;padding:0 12px;display:flex;align-items:center;gap:8px}
+.tape-bar.top .lbl{background:#6b3cff}
+.tape-bar .lbl button{background:#0005;border:1px solid #fff4;color:#fff;font:inherit;font-size:15px;padding:0 6px;cursor:pointer}
+.tape-bar .lbl button.on{background:#fff;color:#000}
+.track{display:inline-block;padding:7px 0 7px 0;animation:scroll linear infinite}
+.bottom .track{animation-duration:130s}
+.top .track{animation-duration:110s}
+.tape-bar:hover .track{animation-play-state:paused}
+.tk{display:inline-flex;align-items:center;gap:8px;margin-right:34px;font-size:12px;color:var(--txt)}
+.tk img{width:18px;height:18px;border-radius:50%;object-fit:cover;background:#111}
+.tk b{color:#fff}.tk .q{color:var(--dim)}.tk .apy{color:#b69cff}
+.tk.me b{color:var(--amber)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* stats row */
+.stats{display:grid;grid-template-columns:1.25fr 1.5fr 1fr 1fr 1fr 1fr 1fr;border-bottom:1px solid var(--line);flex:none}
+.stat{padding:10px 14px;border-right:1px solid var(--line);min-width:0}
 .stat:last-child{border-right:0}
-.stat label{display:block;font-size:10px;letter-spacing:1.5px;color:var(--dim);text-transform:uppercase}
+.stat label{display:block;font-size:10px;letter-spacing:1.5px;color:var(--dim);text-transform:uppercase;white-space:nowrap}
 .stat b{display:block;font-family:'VT323';font-size:32px;font-weight:400;color:#fff;line-height:1.05;white-space:nowrap}
-.stat span{font-size:11px}
+.stat span{font-size:11px;white-space:nowrap}
 .stat.hero b{color:var(--blue2);font-size:38px}
+.stat.pulse{background:rgba(42,90,218,.07)}
+.stat.pulse .row{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.stat.pulse .st{font-size:10px;letter-spacing:1.5px;border:1px solid var(--blue2);color:var(--blue2);padding:0 5px}
+.stat.pulse .st.armed{border-color:var(--green);color:var(--green);animation:blink 1.2s infinite}
+.bar{height:10px;border:1px solid var(--line);background:#050914;position:relative;overflow:hidden;margin:5px 0 3px}
+.bar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--blue),var(--blue2));transition:width .6s}
+.bar.ready i{background:linear-gradient(90deg,#1c9c42,var(--green));animation:blink 1.2s infinite}
+.pmeta{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim)}
 
-main{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:1px;background:var(--line)}
-.col{display:flex;flex-direction:column;gap:1px}
-.panel{background:var(--panel);padding:14px 16px}
-.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:10px}
-.ph h2{font-family:'VT323';font-weight:400;font-size:22px;color:#fff;letter-spacing:1px}
-.ph .meta{font-size:10px;color:var(--dim);letter-spacing:1px;text-transform:uppercase}
+/* main grid */
+main{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:1px;background:var(--line);min-height:0}
+.col{display:flex;flex-direction:column;gap:1px;min-height:0}
+.panel{background:var(--panel);padding:12px 16px;min-height:0}
+.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:10px}
+.ph h2{font-family:'VT323';font-weight:400;font-size:22px;color:#fff;letter-spacing:1px;white-space:nowrap}
+.ph .meta{font-size:10px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
 .tabs{display:flex;gap:4px}
 .tabs button{background:transparent;border:1px solid var(--line);color:var(--dim);font:inherit;font-size:11px;padding:3px 9px;cursor:pointer}
 .tabs button.on{color:#fff;border-color:var(--blue2);background:rgba(42,90,218,.2)}
 .legend{display:flex;gap:16px;font-size:11px;margin-bottom:6px}
 .legend i{display:inline-block;width:14px;height:2px;vertical-align:middle;margin-right:6px}
-#chartWrap{position:relative;height:360px}
+.chartP{display:flex;flex-direction:column}
+#chartWrap{position:relative;height:340px}
 #chart{width:100%;height:100%;display:block}
 #tip{position:absolute;pointer-events:none;background:#000d;border:1px solid var(--line);padding:6px 8px;font-size:11px;display:none;white-space:nowrap}
 
-.pulse .bar{height:14px;border:1px solid var(--line);background:#050914;position:relative;overflow:hidden;margin:10px 0 6px}
-.pulse .bar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--blue),var(--blue2));transition:width .6s}
-.pulse .bar.ready i{background:linear-gradient(90deg,#1c9c42,var(--green));animation:blink 1.2s infinite}
-.big{font-family:'VT323';font-size:40px;line-height:1;color:#fff}
-.kv{display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:12px;margin-top:10px}
+.lower{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:1px;background:var(--line)}
+.kv{display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:12px}
 .kv dt{color:var(--dim)}.kv dd{text-align:right;color:#fff}
-.note{font-size:10.5px;color:var(--dim);margin-top:10px;line-height:1.5}
+.note{font-size:10.5px;color:var(--dim);margin-top:8px;line-height:1.5}
 
 table{width:100%;border-collapse:collapse;font-size:12px}
 th{font-size:10px;letter-spacing:1px;color:var(--dim);text-align:left;font-weight:400;padding:4px 6px;border-bottom:1px solid var(--line);text-transform:uppercase}
-td{padding:5px 6px;border-bottom:1px solid rgba(26,36,68,.6);white-space:nowrap}
+td{padding:4px 6px;border-bottom:1px solid rgba(26,36,68,.6);white-space:nowrap}
 td.r,th.r{text-align:right}
 tr.whale td{background:rgba(74,122,255,.08)}
 .tag{font-size:9px;border:1px solid var(--blue2);color:var(--blue2);padding:0 4px;margin-left:6px;letter-spacing:1px}
 #trades tbody tr{animation:fade .5s}
 @keyframes fade{from{background:rgba(74,122,255,.25)}}
 
-.board{border:1px dashed #2a3a6a;padding:18px;text-align:center;background:repeating-linear-gradient(45deg,#0a0f1f,#0a0f1f 10px,#0b1224 10px,#0b1224 20px)}
-.board .vt{font-size:26px;color:#fff}
+.board{border:1px dashed #2a3a6a;padding:14px;text-align:center;background:repeating-linear-gradient(45deg,#0a0f1f,#0a0f1f 10px,#0b1224 10px,#0b1224 20px);display:flex;flex-direction:column;justify-content:center}
+.board .vt{font-size:24px;color:#fff;line-height:1}
+.board .slot{font-size:10px;letter-spacing:1.5px;color:var(--dim)}
+.slots{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 
-footer{border-top:1px solid var(--line);background:#02030a;overflow:hidden;white-space:nowrap;position:relative}
-footer .lbl{position:absolute;left:0;top:0;bottom:0;z-index:2;background:var(--blue);color:#fff;font-family:'VT323';font-size:18px;padding:6px 12px;display:flex;align-items:center}
-.track{display:inline-block;padding:8px 0 8px 100%;animation:scroll 70s linear infinite}
-footer:hover .track{animation-play-state:paused}
-.tk{display:inline-flex;align-items:center;gap:8px;margin-right:34px;font-size:12px}
-.tk img{width:18px;height:18px;border-radius:50%;object-fit:cover;background:#111}
-.tk b{color:#fff}.tk .q{color:var(--dim)}
-@keyframes scroll{to{transform:translateX(-100%)}}
-.src{font-size:10px;color:var(--dim);padding:6px 16px;background:#02030a;border-top:1px solid var(--line)}
+/* comms column */
+.warroom{display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(90deg,rgba(42,90,218,.25),rgba(42,90,218,.05))}
+.warroom b{font-family:'VT323';font-size:22px;color:#fff;font-weight:400;display:block;line-height:1}
+.feed{display:flex;flex-direction:column;flex:1}
+#xfeed{overflow:hidden;position:relative;flex:1;min-height:200px;max-height:520px}
+#xlist{display:flex;flex-direction:column}
+#xlist.roll{animation:vroll linear infinite}
+#xfeed:hover #xlist{animation-play-state:paused}
+@keyframes vroll{to{transform:translateY(-50%)}}
+.post{display:grid;grid-template-columns:32px 1fr;gap:9px;padding:9px 0;border-bottom:1px solid rgba(26,36,68,.7);color:var(--txt)}
+.post:hover{text-decoration:none;background:rgba(74,122,255,.05)}
+.post img{width:32px;height:32px;border-radius:50%;background:#111}
+.post .who{font-size:11px;display:flex;gap:6px;align-items:baseline;overflow:hidden;white-space:nowrap}
+.post .who b{color:#fff;font-weight:500;overflow:hidden;text-overflow:ellipsis}
+.post .txt{font-size:12px;line-height:1.45;word-break:break-word;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.post .txt .ct{color:var(--amber)}
+.post.m{border-left:2px solid var(--amber);padding-left:8px;margin-left:-10px}
+.feedtabs button{font-size:10px}
 
-@media (max-width:1100px){.stats{grid-template-columns:repeat(3,1fr)}.stat:nth-child(3){border-right:0}.stat{border-bottom:1px solid var(--line)}main{grid-template-columns:1fr}}
-@media (max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.stat{border-right:1px solid var(--line)!important}.stat:nth-child(2n){border-right:0!important}header nav .btn:not(.primary){display:none}#chartWrap{height:260px}.brand{font-size:24px}.brand small{font-size:14px}header{gap:10px}.stat.hero b{font-size:30px}.hide-sm{display:none}}
+.src{font-size:10px;color:var(--dim);padding:4px 16px;background:#02030a;border-top:1px solid var(--line);flex:none}
+
+/* TTS */
+#ttsPop{position:fixed;left:50%;top:22%;transform:translate(-50%,-20px) scale(.96);opacity:0;pointer-events:none;z-index:50;
+  min-width:520px;max-width:900px;background:#0a0f1fef;border:2px solid var(--amber);box-shadow:0 0 0 6px #000a,0 0 60px rgba(255,210,63,.35);padding:22px 28px;transition:all .35s}
+#ttsPop.show{opacity:1;transform:translate(-50%,0) scale(1)}
+#ttsPop .from{font-size:13px;color:var(--amber);letter-spacing:2px;text-transform:uppercase}
+#ttsPop .msg{font-family:'VT323';font-size:44px;line-height:1.05;color:#fff;margin-top:6px;word-break:break-word}
+#ttsModal{position:fixed;inset:0;background:#000b;z-index:60;display:none;align-items:center;justify-content:center}
+#ttsModal.show{display:flex}
+#ttsModal .box{background:var(--panel);border:1px solid var(--amber);padding:22px;max-width:460px;width:92%}
+#ttsModal h3{font-family:'VT323';font-size:30px;color:#fff;font-weight:400}
+#ttsModal p{font-size:12px;line-height:1.6;margin-top:10px}
+#ttsModal textarea{width:100%;margin-top:12px;background:#050914;border:1px solid var(--line);color:#fff;font:inherit;padding:8px;height:80px;resize:none}
+#ttsModal .acts{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+#audioGate{position:fixed;right:12px;bottom:40px;z-index:40;font-size:11px;background:#000c;border:1px solid var(--amber);color:var(--amber);padding:5px 9px;cursor:pointer;display:none}
+
+/* ---------- 16:9 stage (desktop + OBS) ---------- */
+html.fit,html.fit body{width:100%;height:100%;overflow:hidden;background:#000}
+html.fit #stage{position:absolute;width:1920px;height:1080px;min-height:0;transform-origin:0 0;font-size:14px}
+html.fit main{overflow:hidden}
+html.fit .col.left{display:grid;grid-template-rows:minmax(0,1fr) 400px}
+html.fit .chartP{min-height:0}
+html.fit #chartWrap{flex:1;height:auto;min-height:0}
+html.fit .lower{min-height:0}
+html.fit .lower .panel{overflow:hidden}
+html.fit .lower .right{display:flex;flex-direction:column;gap:1px;background:var(--line);min-height:0}
+html.fit .lower .right .panel{flex:none}
+html.fit .lower .right .ads{flex:1;display:flex;flex-direction:column}
+html.fit .slots{flex:1}
+html.fit .col.comms{display:flex;flex-direction:column}
+html.fit .feed{min-height:0}
+html.fit #xfeed{max-height:none}
+html.fit .bill{flex:none;height:190px;display:flex;flex-direction:column}
+html.fit .bill .board{flex:1}
+html.fit .stat b{font-size:36px}html.fit .stat.hero b{font-size:42px}
+
+@media (max-width:999px){
+  html,body,#stage{max-width:100vw;overflow-x:hidden}main>*,.lower>*,.col>*,.stats>*{min-width:0}.tape-bar{max-width:100vw}.tape-bar .track{max-width:none}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{border-bottom:1px solid var(--line)}.stat:nth-child(2n){border-right:0}
+  .stat.hero,.stat.pulse{grid-column:span 2;border-right:0}
+  main{grid-template-columns:minmax(0,1fr)}.lower{grid-template-columns:minmax(0,1fr)}.ph{flex-wrap:wrap}.legend{display:none}header nav{margin-left:0}
+  header nav .btn:not(.primary):not(.tts){display:none}#chartWrap{height:260px}.brand{font-size:24px}.brand small{font-size:14px}header{gap:10px;flex-wrap:wrap}
+  .hide-sm{display:none}#ttsPop{min-width:0;width:92%}#ttsPop .msg{font-size:30px}
+}
 </style>
 </head>
 <body>
+<div id="stage">
 
 <header>
   <a href="../"><img src="../logo.png" alt="Marines"></a>
@@ -105,12 +186,24 @@ footer:hover .track{animation-play-state:paused}
     <a class="btn" href="https://dexscreener.com/solana/bnkyfw796xxq9uq9kmyox9iqsgxnjw7sfcscvwvdicua" target="_blank" rel="noopener">CHART</a>
     <a class="btn" href="https://x.com/TheMarinesX" target="_blank" rel="noopener">X</a>
     <a class="btn" href="../">HQ</a>
+    <button class="btn tts" id="ttsBtn">🔊 BUY TTS</button>
     <a class="btn primary" href="https://jup.ag/swap/SOL-F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK" target="_blank" rel="noopener">ENLIST · BUY $MARINE</a>
   </nav>
 </header>
 
+<div class="tape-bar top">
+  <div class="lbl">STONK BOARD TOP 10 APY <button data-k="apy3d" class="on">3D</button><button data-k="apy24h">24H</button></div>
+  <div class="track" id="boardTicker"><span class="tk dim">loading…</span></div>
+</div>
+
 <section class="stats">
   <div class="stat hero"><label>LINK distributed to holders</label><b id="sDist">—</b><span class="dim" id="sDistUsd">&nbsp;</span></div>
+  <div class="stat pulse">
+    <div class="row"><label>Next pulse · pending</label><span class="st" id="pState">—</span></div>
+    <div class="row"><b id="pPending" style="font-size:30px">—</b><span class="dim" id="pPendingUsd"></span></div>
+    <div class="bar" id="pBar"><i style="width:0"></i></div>
+    <div class="pmeta"><span id="pPct">0%</span><span id="pLast">last —</span><span id="pThr">min —</span></div>
+  </div>
   <div class="stat"><label>Payouts sent</label><b id="sPayouts">—</b><span class="dim" id="sHolders">&nbsp;</span></div>
   <div class="stat"><label>$MARINE</label><b id="sPrice">—</b><span id="sChg">&nbsp;</span></div>
   <div class="stat"><label>Market cap</label><b id="sMcap">—</b><span class="dim" id="sLiq">&nbsp;</span></div>
@@ -119,77 +212,93 @@ footer:hover .track{animation-play-state:paused}
 </section>
 
 <main>
-  <div class="col">
-    <section class="panel">
+  <div class="col left">
+    <section class="panel chartP">
       <div class="ph">
         <h2>$MARINE × $LINK</h2>
+        <div class="legend" style="margin:0"><span><i style="background:var(--blue2)"></i>$MARINE (left)</span><span><i style="background:var(--amber)"></i>$LINK (right)</span></div>
         <div class="tabs" id="tf">
           <button data-tf="1d">24H</button><button data-tf="7d" class="on">7D</button><button data-tf="all">ALL</button>
         </div>
       </div>
-      <div class="legend"><span><i style="background:var(--blue2)"></i>$MARINE (USD, left)</span><span><i style="background:var(--amber)"></i>$LINK (USD, right)</span></div>
       <div id="chartWrap"><canvas id="chart"></canvas><div id="tip"></div></div>
     </section>
 
-    <section class="panel">
-      <div class="ph"><h2>THE TAPE</h2><span class="meta">$MARINE/LINK pool · large = $2,500+</span></div>
-      <div style="overflow-x:auto">
-      <table id="trades">
-        <thead><tr><th>Time</th><th>Side</th><th class="r">USD</th><th class="r">$MARINE</th><th class="r">Price</th><th class="r hide-sm">Wallet</th></tr></thead>
-        <tbody><tr><td colspan="6" class="dim">loading tape…</td></tr></tbody>
-      </table>
+    <div class="lower">
+      <section class="panel">
+        <div class="ph"><h2>THE TAPE</h2>
+          <span class="meta hide-sm">$MARINE/LINK pool · large = $2,500+</span>
+          <div class="tabs" id="tapeF"><button data-min="0" class="on">ALL</button><button data-min="100">$100+</button></div>
+        </div>
+        <div style="overflow-x:auto">
+        <table id="trades">
+          <thead><tr><th>Time</th><th>Side</th><th class="r">USD</th><th class="r">$MARINE</th><th class="r">Price</th><th class="r hide-sm">Wallet</th></tr></thead>
+          <tbody><tr><td colspan="6" class="dim">loading tape…</td></tr></tbody>
+        </table>
+        </div>
+      </section>
+      <div class="right">
+        <section class="panel">
+          <div class="ph"><h2>PAYROLL LEDGER</h2><span class="meta">LINK distributed</span></div>
+          <dl class="kv">
+            <dt>Last 24h</dt><dd id="w24">—</dd>
+            <dt>Last 7d</dt><dd id="w7">—</dd>
+            <dt>All time</dt><dd id="wAll">—</dd>
+            <dt>Tax queued · rate</dt><dd id="pTax">—</dd>
+            <dt>Min. holding to receive</dt><dd id="pMin">—</dd>
+          </dl>
+          <p class="note" id="wNote"></p>
+        </section>
+        <section class="panel ads">
+          <div class="ph"><h2>AD SPACE</h2><span class="meta">DM @TheMarinesX</span></div>
+          <div class="slots">
+            <a class="board" href="https://x.com/TheMarinesX" target="_blank" rel="noopener"><span class="slot">SLOT 02</span><span class="vt">OPEN</span></a>
+            <a class="board" href="https://x.com/TheMarinesX" target="_blank" rel="noopener"><span class="slot">SLOT 03</span><span class="vt">OPEN</span></a>
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
   </div>
 
-  <div class="col">
-    <section class="panel pulse">
-      <div class="ph"><h2>NEXT PULSE</h2><span class="meta" id="pState">—</span></div>
-      <div class="big" id="pPending">—</div>
-      <div class="dim" id="pPendingUsd">&nbsp;</div>
-      <div class="bar" id="pBar"><i style="width:0"></i></div>
-      <div style="display:flex;justify-content:space-between;font-size:11px" class="dim"><span id="pPct">0%</span><span id="pThr">threshold —</span></div>
-      <dl class="kv">
-        <dt>Last pulse</dt><dd id="pLast">—</dd>
-        <dt>Tax queued (not yet swapped)</dt><dd id="pTax">—</dd>
-        <dt>Transfer tax</dt><dd id="pTaxRate">—</dd>
-        <dt>Min. holding to receive</dt><dd id="pMin">—</dd>
-      </dl>
-      <p class="note">A pulse sends when pending LINK clears stonkfun's minimum distribution size. Timing depends on volume, so it's shown as progress to the threshold rather than a clock.</p>
+  <div class="col comms">
+    <section class="panel warroom">
+      <div><b>THE WAR ROOM CHAT</b><span class="dim" style="font-size:11px">live on X · calls, alerts, orders</span></div>
+      <a class="btn primary" href="https://x.com/i/chat/group_join/g2100093244189344145/C2cWaUPPPt" target="_blank" rel="noopener">JOIN ⚔</a>
     </section>
-
-    <section class="panel">
-      <div class="ph"><h2>PAYROLL LEDGER</h2><span class="meta">distributed</span></div>
-      <dl class="kv" style="margin-top:0">
-        <dt>Last 24h</dt><dd id="w24">—</dd>
-        <dt>Last 7d</dt><dd id="w7">—</dd>
-        <dt>All time</dt><dd id="wAll">—</dd>
-        <dt>Holders</dt><dd id="wHold">—</dd>
-      </dl>
-      <p class="note" id="wNote"></p>
-    </section>
-
-    <section class="panel">
-      <div class="ph"><h2>BILLBOARD</h2><span class="meta">slot 01</span></div>
-      <div class="board">
-        <div class="vt">SLOT OPEN</div>
-        <div class="dim" style="font-size:11px;margin-top:6px">Your banner here. DM <a href="https://x.com/TheMarinesX" target="_blank" rel="noopener">@TheMarinesX</a></div>
+    <section class="panel feed">
+      <div class="ph"><h2>INTEL · X</h2>
+        <div class="tabs feedtabs" id="xf"><button data-f="all" class="on">ALL</button><button data-f="marine">$MARINE</button><button data-f="link">$LINK</button></div>
       </div>
+      <div id="xfeed"><div id="xlist"><div class="dim">loading posts…</div></div></div>
     </section>
-
-    <section class="panel">
-      <div class="ph"><h2>ORDERS</h2></div>
-      <p style="font-size:12px;line-height:1.6">Hold <b class="am">$MARINE</b>. Get paid in <b style="color:var(--blue2)">$LINK</b>. No claiming, no staking. It lands in your wallet.</p>
-      <p class="note">Contract: <span id="ca" style="color:var(--txt);cursor:pointer;word-break:break-all" title="click to copy">F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK</span></p>
+    <section class="panel bill">
+      <div class="ph"><h2>BILLBOARD</h2><span class="meta">slot 01 · prime</span></div>
+      <a class="board" href="https://x.com/TheMarinesX" target="_blank" rel="noopener">
+        <div class="vt">SLOT OPEN</div>
+        <div class="dim" style="font-size:11px;margin-top:6px">Your banner on stream. DM @TheMarinesX</div>
+      </a>
     </section>
   </div>
 </main>
 
-<footer>
-  <div class="lbl">STONKFUN TOP 10</div>
+<div class="tape-bar bottom">
+  <div class="lbl">STONKFUN TOP 10 · 24H VOL</div>
   <div class="track" id="ticker"><span class="tk dim">loading…</span></div>
-</footer>
-<div class="src">Data: stonkfun (distributions, snapshot every 10 min) · GeckoTerminal (chart, tape) · DexScreener (market). Nothing here is financial advice.</div>
+</div>
+<div class="src">Data: stonkfun (distributions) · thestonkboard.com (APY, modeled, not a promise) · GeckoTerminal (chart, tape) · DexScreener (market) · X (cashtag posts, scam-filtered). Nothing here is financial advice.</div>
+
+</div>
+
+<div id="ttsPop"><div class="from" id="ttsFrom"></div><div class="msg" id="ttsMsg"></div></div>
+<div id="audioGate">🔊 click to enable TTS audio</div>
+<div id="ttsModal"><div class="box">
+  <h3>🔊 TTS ON STREAM</h3>
+  <p>Your message pops up on the War Room screen and gets read out live on stream. 200 characters max. No links, no contract addresses, nothing hateful. Mods can skip anything.</p>
+  <textarea id="ttsText" maxlength="200" placeholder="your message…"></textarea>
+  <p class="dim" id="ttsCount" style="margin-top:4px;text-align:right">0/200</p>
+  <p>Self-serve checkout is coming. For now: copy your message, DM <a href="https://x.com/TheMarinesX" target="_blank" rel="noopener">@TheMarinesX</a>, and it goes on screen once payment clears.</p>
+  <div class="acts"><button class="btn" id="ttsClose">CLOSE</button><button class="btn primary" id="ttsSend">COPY + OPEN DM</button></div>
+</div></div>
 
 <script>
 const MARINE='F8Sc8HoZvJcMrTY6vBsetTqGPv6XQmM2XgVAZo1sSTNK';
@@ -197,6 +306,21 @@ const POOL='BnkYfw796XXq9UQ9kMYoX9iqSgXnjw7sFCsCVWVDiCUa';
 const GT='https://api.geckoterminal.com/api/v2/networks/solana/pools/'+POOL;
 const WHALE=2500;
 const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+// ---------- 16:9 stage ----------
+// Desktop (and OBS browser source) always renders a fixed 1920x1080 stage scaled
+// to the window, so the stream layout is identical everywhere. Phones get the flowing layout.
+let S=1;
+function fit(){
+  const on=innerWidth>=1000&&!/[?&]flow\b/.test(location.search);
+  document.documentElement.classList.toggle('fit',on);
+  const st=$('stage');
+  if(on){S=Math.min(innerWidth/1920,innerHeight/1080);st.style.transform=`scale(${S})`;
+    st.style.left=((innerWidth-1920*S)/2)+'px';st.style.top=((innerHeight-1080*S)/2)+'px'}
+  else{S=1;st.style.transform='';st.style.left=st.style.top=''}
+  draw();rollFeed();
+}
 
 // ---------- formatting ----------
 const usd=(n,d)=>n==null||isNaN(n)?'—':'$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:d??2,maximumFractionDigits:d??2});
@@ -205,6 +329,8 @@ function compact(n,pre='$'){if(n==null||isNaN(n))return'—';const a=Math.abs(n)
   if(a>=1e3)return pre+(n/1e3).toFixed(1)+'K';return pre+n.toFixed(a<1?4:2)}
 function px(n){if(n==null||isNaN(n)||n===0)return'—';if(n>=1)return'$'+n.toFixed(2);
   const z=Math.floor(-Math.log10(n));return'$'+n.toFixed(Math.min(z+4,12))}
+function apyFmt(n){if(n==null||!isFinite(n))return'—';if(n>=1e12)return'>1T%';
+  if(n>=1e9)return(n/1e9).toFixed(1)+'B%';if(n>=1e6)return(n/1e6).toFixed(1)+'M%';if(n>=1e4)return(n/1e3).toFixed(0)+'K%';return n.toFixed(0)+'%'}
 const num=(n,d=0)=>n==null?'—':Number(n).toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:d});
 const pct=n=>n==null?'':`<span class="${n>=0?'up':'dn'}">${n>=0?'▲':'▼'} ${Math.abs(n).toFixed(2)}%</span>`;
 function ago(t){const s=Math.max(0,(Date.now()-t)/1000);if(s<60)return Math.floor(s)+'s';if(s<3600)return Math.floor(s/60)+'m';
@@ -223,26 +349,24 @@ async function loadRewards(){
   $('sHolders').textContent=num(r.holderCount)+' holders';
   const p=Math.min(1,(r.pendingUsd||0)/(r.minDistributionUsd||1));
   $('pPending').textContent=num(r.pendingTokens,2)+' LINK';
-  $('pPendingUsd').textContent=usd(r.pendingUsd)+' pending';
+  $('pPendingUsd').textContent=usd(r.pendingUsd,0);
   $('pBar').querySelector('i').style.width=(p*100).toFixed(1)+'%';
   $('pBar').classList.toggle('ready',p>=1);
   $('pPct').textContent=(p*100).toFixed(0)+'% loaded';
-  $('pThr').textContent='threshold '+usd(r.minDistributionUsd,0);
-  $('pState').textContent=p>=1?'ARMED':'LOADING';
-  $('pTax').textContent=usd(r.pendingTaxUsd,0);
-  $('pTaxRate').textContent=(r.transferTaxBps/100).toFixed(1)+'%';
+  $('pThr').textContent='min '+usd(r.minDistributionUsd,0);
+  $('pState').textContent=p>=1?'ARMED':'LOADING';$('pState').classList.toggle('armed',p>=1);
+  $('pTax').textContent=usd(r.pendingTaxUsd,0)+' · '+(r.transferTaxBps/100).toFixed(1)+'%';
   $('pMin').textContent=usd(r.minHoldingUsd,0)+' of $MARINE';
   $('wAll').textContent=num(r.distributedTokens,1)+' LINK';
-  $('wHold').textContent=num(r.holderCount);
-  const w=(x,label)=>{if(!x||x.coveredSec<3600)return'<span class="dim">collecting…</span>';
+  const w=x=>{if(!x||x.coveredSec<3600)return'<span class="dim">collecting…</span>';
     const s=num(x.tokens,1)+' LINK · '+usd(x.usd,0);return x.complete?s:s+' <span class="dim">('+ago(Date.now()-x.coveredSec*1000)+' tracked)</span>'};
   $('w24').innerHTML=w(r.window24h);$('w7').innerHTML=w(r.window7d);
-  $('wNote').textContent='Ledger snapshot '+ago(r.snapshotAt*1000)+' ago. USD at LINK price when counted.';
+  $('wNote').textContent='Snapshot '+ago(r.snapshotAt*1000)+' ago. A pulse sends when pending LINK clears stonkfun\'s minimum, so it\'s shown as progress, not a clock.';
   tickLast();
   const stale=Date.now()/1000-r.snapshotAt>1800;
   $('live').classList.toggle('stale',stale);$('liveTxt').textContent=stale?'DELAYED':'LIVE';
 }
-function tickLast(){if(rewards&&rewards.lastPayoutAt)$('pLast').textContent=ago(Date.parse(rewards.lastPayoutAt))+' ago'}
+function tickLast(){if(rewards&&rewards.lastPayoutAt)$('pLast').textContent='last '+ago(Date.parse(rewards.lastPayoutAt))+' ago'}
 
 // ---------- market (DexScreener) ----------
 let marinePx=null;
@@ -262,8 +386,6 @@ async function loadMarket(){
 
 // ---------- chart ----------
 const TF={'1d':'minute?aggregate=15&limit=96','7d':'hour?aggregate=1&limit=168','all':'hour?aggregate=4&limit=500'};
-// all three timeframes come from terminal/chart.json (snapshotted every 10 min), so
-// switching is instant. Live GeckoTerminal is only a fallback if the snapshot is missing.
 let tf='7d',series=null,CH={};
 function setSeries(){const raw=CH[tf];if(!raw||!raw.length)return false;
   series=raw.map(([t,m,l])=>({t:t*1000,m,l}));hover=null;draw();
@@ -278,7 +400,7 @@ async function loadChart(){
   try{const d=await j('chart.json?'+Date.now());if(d&&d['7d'])CH=d}catch(e){}
   if(!CH[tf]){try{await loadLive(tf)}catch(e){}}
   setSeries()}
-function nice(min,max,count=5){ // clean axis ticks: 1/2/2.5/5 × 10^n
+function nice(min,max,count=5){
   if(min===max){min*=.95;max*=1.05}
   const raw=(max-min)/count,mag=Math.pow(10,Math.floor(Math.log10(raw)));
   const step=[1,2,2.5,5,10].map(s=>s*mag).find(s=>s>=raw);
@@ -287,7 +409,8 @@ function nice(min,max,count=5){ // clean axis ticks: 1/2/2.5/5 × 10^n
   return{lo,hi,t,step}}
 function fmtTick(v,step){if(v>=1)return'$'+v.toFixed(step<1?2:0);const d=Math.max(0,-Math.floor(Math.log10(step)));return'$'+v.toFixed(d)}
 function draw(){
-  const c=$('chart'),dpr=window.devicePixelRatio||1,W=c.clientWidth,H=c.clientHeight;
+  const c=$('chart');if(!c)return;const dpr=(window.devicePixelRatio||1)*Math.max(1,S),W=c.clientWidth,H=c.clientHeight;
+  if(!W||!H)return;
   c.width=W*dpr;c.height=H*dpr;const x=c.getContext('2d');x.scale(dpr,dpr);x.clearRect(0,0,W,H);
   if(!series||series.length<2)return;
   const pad={l:78,r:58,t:10,b:26},w=W-pad.l-pad.r,h=H-pad.t-pad.b;
@@ -296,25 +419,19 @@ function draw(){
   const t0=series[0].t,t1=series[series.length-1].t;
   const X=t=>pad.l+(t-t0)/(t1-t0)*w,YA=v=>pad.t+h-(v-A.lo)/(A.hi-A.lo)*h,YB=v=>pad.t+h-(v-B.lo)/(B.hi-B.lo)*h;
   x.font='11px IBM Plex Mono';x.lineWidth=1;
-  // grid + left axis (MARINE)
   x.textAlign='right';x.textBaseline='middle';
   A.t.forEach(v=>{const y=YA(v);x.strokeStyle='rgba(42,90,218,.12)';x.beginPath();x.moveTo(pad.l,y);x.lineTo(pad.l+w,y);x.stroke();x.fillStyle='#4a7aff';x.fillText(fmtTick(v,A.step),pad.l-8,y)});
-  // right axis (LINK)
   x.textAlign='left';B.t.forEach(v=>{x.fillStyle='#c9a52f';x.fillText(fmtTick(v,B.step),pad.l+w+8,YB(v))});
-  // time axis
   x.textAlign='center';x.textBaseline='top';x.fillStyle='#5d6a8f';
   const span=t1-t0,n=Math.max(2,Math.floor(w/110));
   for(let i=0;i<=n;i++){const t=t0+span*i/n,d=new Date(t);
     const lab=span<=36*3600e3?d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+(span<=8*86400e3?' '+d.toLocaleTimeString('en-US',{hour:'numeric'}):'');
     x.fillText(lab,X(t),pad.t+h+8)}
-  // MARINE area
   const g=x.createLinearGradient(0,pad.t,0,pad.t+h);g.addColorStop(0,'rgba(74,122,255,.35)');g.addColorStop(1,'rgba(74,122,255,0)');
   x.beginPath();series.forEach((p,i)=>i?x.lineTo(X(p.t),YA(p.m)):x.moveTo(X(p.t),YA(p.m)));
   x.lineTo(X(t1),pad.t+h);x.lineTo(X(t0),pad.t+h);x.closePath();x.fillStyle=g;x.fill();
   x.beginPath();series.forEach((p,i)=>i?x.lineTo(X(p.t),YA(p.m)):x.moveTo(X(p.t),YA(p.m)));x.strokeStyle='#4a7aff';x.lineWidth=2;x.stroke();
-  // LINK line
   x.beginPath();series.forEach((p,i)=>i?x.lineTo(X(p.t),YB(p.l)):x.moveTo(X(p.t),YB(p.l)));x.strokeStyle='rgba(255,210,63,.8)';x.lineWidth=1.25;x.setLineDash([4,3]);x.stroke();x.setLineDash([]);
-  // hover
   if(hover!=null){const p=series[hover],hx=X(p.t);x.strokeStyle='rgba(255,255,255,.25)';x.lineWidth=1;x.beginPath();x.moveTo(hx,pad.t);x.lineTo(hx,pad.t+h);x.stroke();
     [[YA(p.m),'#4a7aff'],[YB(p.l),'#ffd23f']].forEach(([y,col])=>{x.fillStyle=col;x.beginPath();x.arc(hx,y,3.5,0,7);x.fill()});
     const tip=$('tip');tip.style.display='block';
@@ -325,48 +442,109 @@ function draw(){
 }
 let hover=null;
 $('chart').addEventListener('mousemove',e=>{if(!series||!draw.geom)return;const{pad,w,t0,t1}=draw.geom;
-  const r=e.target.getBoundingClientRect(),t=t0+(e.clientX-r.left-pad.l)/w*(t1-t0);
+  const r=e.target.getBoundingClientRect(),k=r.width/e.target.clientWidth,t=t0+((e.clientX-r.left)/k-pad.l)/w*(t1-t0);
   let bi=0,bd=Infinity;series.forEach((p,i)=>{const d=Math.abs(p.t-t);if(d<bd){bd=d;bi=i}});hover=bi;draw()});
 $('chart').addEventListener('mouseleave',()=>{hover=null;draw()});
 $('tf').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
   [...$('tf').children].forEach(x=>x.classList.toggle('on',x===b));tf=b.dataset.tf;if(!setSeries())loadChart()});
-addEventListener('resize',draw);
 
 // ---------- tape ----------
-let seen=new Set(),tapeLoaded=false;
-async function loadTrades(){
-  try{
-    const d=await j(GT+'/trades');
-    const rows=d.data.map(t=>t.attributes).slice(0,15).map(a=>{
-      const buy=a.to_token_address===MARINE; // bought MARINE
-      const amt=+(buy?a.to_token_amount:a.from_token_amount),price=+(buy?a.price_to_in_usd:a.price_from_in_usd),v=+a.volume_in_usd;
-      const fresh=!seen.has(a.tx_hash);seen.add(a.tx_hash);
-      return`<tr class="${v>=WHALE?'whale':''}"${fresh&&tapeLoaded?'':' style="animation:none"'}><td class="dim">${ago(Date.parse(a.block_timestamp))}</td>
-        <td class="${buy?'up':'dn'}">${buy?'BUY':'SELL'}${v>=WHALE?'<span class="tag">LARGE</span>':''}</td>
-        <td class="r">${usd(v)}</td><td class="r">${compact(amt,'')}</td><td class="r dim">${px(price)}</td>
-        <td class="r hide-sm"><a href="https://solscan.io/tx/${a.tx_hash}" target="_blank" rel="noopener">${short(a.tx_from_address)}</a></td></tr>`});
-    tapeLoaded=true;$('trades').tBodies[0].innerHTML=rows.join('')||'<tr><td colspan="6" class="dim">quiet on the line</td></tr>';
-  }catch(e){}
+let seen=new Set(),tapeLoaded=false,tapeMin=0,tapeRaw=[];
+function renderTape(){
+  const rows=(document.documentElement.classList.contains('fit')?12:15);
+  const list=tapeRaw.filter(a=>+a.volume_in_usd>=tapeMin).slice(0,rows).map(a=>{
+    const buy=a.to_token_address===MARINE;
+    const amt=+(buy?a.to_token_amount:a.from_token_amount),price=+(buy?a.price_to_in_usd:a.price_from_in_usd),v=+a.volume_in_usd;
+    const fresh=!seen.has(a.tx_hash);seen.add(a.tx_hash);
+    return`<tr class="${v>=WHALE?'whale':''}"${fresh&&tapeLoaded?'':' style="animation:none"'}><td class="dim">${ago(Date.parse(a.block_timestamp))}</td>
+      <td class="${buy?'up':'dn'}">${buy?'BUY':'SELL'}${v>=WHALE?'<span class="tag">LARGE</span>':''}</td>
+      <td class="r">${usd(v)}</td><td class="r">${compact(amt,'')}</td><td class="r dim">${px(price)}</td>
+      <td class="r hide-sm"><a href="https://solscan.io/tx/${a.tx_hash}" target="_blank" rel="noopener">${short(a.tx_from_address)}</a></td></tr>`});
+  tapeLoaded=true;$('trades').tBodies[0].innerHTML=list.join('')||`<tr><td colspan="6" class="dim">quiet on the line${tapeMin?' (no $'+tapeMin+'+ trades in the last 300)':''}</td></tr>`;
 }
+async function loadTrades(){try{const d=await j(GT+'/trades');tapeRaw=d.data.map(t=>t.attributes);renderTape()}catch(e){}}
+$('tapeF').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  [...$('tapeF').children].forEach(x=>x.classList.toggle('on',x===b));tapeMin=+b.dataset.min;renderTape()});
 
-// ---------- ticker ----------
+// ---------- bottom ticker: stonkfun top 10 by volume ----------
 async function loadTicker(){
   try{
     const d=await j('tokens.json?'+Date.now());
-    const html=d.tokens.map((t,i)=>`<a class="tk" href="https://dexscreener.com/solana/${t.mint}" target="_blank" rel="noopener">
-      <span class="dim">#${i+1}</span>${t.image?`<img src="${t.image}" alt="" loading="lazy" onerror="this.remove()">`:''}
-      <b>$${t.symbol}</b><span class="q">/${t.quote}</span>
+    const html=d.tokens.map((t,i)=>`<a class="tk" href="https://dexscreener.com/solana/${esc(t.mint)}" target="_blank" rel="noopener">
+      <span class="dim">#${i+1}</span>${t.image?`<img src="${esc(t.image)}" alt="" loading="lazy" onerror="this.remove()">`:''}
+      <b>$${esc(t.symbol)}</b><span class="q">/${esc(t.quote)}</span>
       <span>vol ${compact(t.vol24)}</span>${t.chg24!=null?pct(t.chg24):''}
       ${t.paidUsd?`<span class="dim">· ${compact(t.paidUsd)} paid out</span>`:''}</a>`).join('');
-    $('ticker').innerHTML=html+html;
+    setTrack('ticker',html,130);
   }catch(e){}
 }
+// keep scroll speed constant (px/sec) no matter how long the content is
+function setTrack(id,html,base){const el=$(id);el.innerHTML=html+html;
+  requestAnimationFrame(()=>{const w=el.scrollWidth/2;el.style.animationDuration=Math.max(base,w/45)+'s'})}
 
-$('ca').onclick=()=>{navigator.clipboard?.writeText(MARINE);$('ca').style.color='var(--green)';setTimeout(()=>$('ca').style.color='',900)};
+// ---------- top ticker: thestonkboard.com top 10 by APY ----------
+let board=null,boardKey='apy3d';
+function renderBoard(){if(!board)return;const L=board[boardKey]||[],lab=boardKey==='apy3d'?'3d':'24h';
+  let html=L.map((t,i)=>`<a class="tk" href="https://thestonkboard.com/" target="_blank" rel="noopener">
+    <span class="dim">#${i+1}</span>${t.logo?`<img src="${esc(t.logo)}" alt="" loading="lazy" onerror="this.remove()">`:''}
+    <b>$${esc(String(t.symbol).replace(/^\$/,''))}</b><span class="q">/${esc(t.quote)}</span>
+    <span class="apy">${apyFmt(t.apy)} APY ${lab}</span><span class="dim">mc ${compact(t.mcap)}</span></a>`).join('');
+  if(board.marine){const m=board.marine;html+=`<span class="tk me"><span class="dim">board #${m.rank}</span><b>$MARINE</b><span class="q">/LINK</span><span class="apy">${apyFmt(m[boardKey])} APY ${lab}</span></span>`}
+  setTrack('boardTicker',html,110)}
+async function loadBoard(){try{board=await j('board.json?'+Date.now());renderBoard()}catch(e){}}
+document.querySelector('.top .lbl').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  document.querySelectorAll('.top .lbl button').forEach(x=>x.classList.toggle('on',x===b));boardKey=b.dataset.k;renderBoard()});
+// on stream nobody clicks, so alternate 3D / 24H every few minutes
+setInterval(()=>{if(!document.documentElement.classList.contains('fit'))return;
+  const nx=boardKey==='apy3d'?'apy24h':'apy3d';document.querySelector(`.top .lbl button[data-k="${nx}"]`).click()},240000);
 
-loadRewards();loadMarket();loadChart();loadTrades();loadTicker();
+// ---------- X feed ----------
+let posts=[],xf='all';
+const hl=t=>esc(t).replace(/\$[A-Za-z]{2,10}\b/g,m=>`<span class="ct">${m}</span>`);
+function renderFeed(){
+  const L=posts.filter(p=>xf==='all'||(xf==='marine'?p.marine:!p.marine));
+  const html=L.map(p=>`<a class="post${p.marine?' m':''}" href="https://x.com/${esc(p.user)}/status/${esc(p.id)}" target="_blank" rel="noopener">
+    <img src="${esc(p.avatar||'')}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+    <div><div class="who"><b>${esc(p.name)}</b><span class="dim">@${esc(p.user)} · ${ago(Date.parse(p.at))}</span></div>
+    <div class="txt">${hl(p.text)}</div></div></a>`).join('')||'<div class="dim">no posts yet</div>';
+  $('xlist').innerHTML=html;$('xlist').dataset.one=html;rollFeed()}
+function rollFeed(){const box=$('xfeed'),l=$('xlist');if(!l.dataset.one)return;
+  l.classList.remove('roll');l.innerHTML=l.dataset.one;
+  if(document.documentElement.classList.contains('fit')&&l.scrollHeight>box.clientHeight+20){
+    l.innerHTML=l.dataset.one+l.dataset.one;l.style.animationDuration=(l.scrollHeight/2/22)+'s';l.classList.add('roll')}}
+async function loadFeed(){try{const d=await j('tweets.json?'+Date.now());posts=d.posts||[];renderFeed()}catch(e){}}
+$('xf').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  [...$('xf').children].forEach(x=>x.classList.toggle('on',x===b));xf=b.dataset.f;renderFeed()});
+
+// ---------- TTS: queue in tts.json, popped + read on screen ----------
+const played=new Set(JSON.parse(localStorage.getItem('ttsPlayed')||'[]'));const bootAt=Date.now()/1000-120;
+let ttsQ=[],ttsBusy=false,audioOk=false;
+async function loadTTS(){try{const d=await j('tts.json?'+Date.now());
+  (d.items||[]).forEach(i=>{if(i.at>=bootAt&&!played.has(i.id)&&!ttsQ.some(q=>q.id===i.id))ttsQ.push(i)});nextTTS()}catch(e){}}
+function nextTTS(){if(ttsBusy||!ttsQ.length)return;const i=ttsQ.shift();ttsBusy=true;
+  played.add(i.id);localStorage.setItem('ttsPlayed',JSON.stringify([...played].slice(-100)));
+  $('ttsFrom').textContent='🔊 '+i.from+' says';$('ttsMsg').textContent=i.text;$('ttsPop').classList.add('show');
+  let done=false;const end=()=>{if(done)return;done=true;setTimeout(()=>{$('ttsPop').classList.remove('show');setTimeout(()=>{ttsBusy=false;nextTTS()},800)},1500)};
+  try{const u=new SpeechSynthesisUtterance(i.from+' says: '+i.text);u.rate=1.02;u.onend=end;u.onerror=()=>{$('audioGate').style.display='block'};
+    speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}
+  setTimeout(end,Math.max(9000,i.text.length*85))}
+$('audioGate').onclick=()=>{try{speechSynthesis.speak(new SpeechSynthesisUtterance(' '))}catch(e){}$('audioGate').style.display='none'};
+addEventListener('pointerdown',()=>{audioOk=true;$('audioGate').style.display='none'},{once:true});
+$('ttsBtn').onclick=()=>{$('ttsModal').classList.add('show');$('ttsText').focus()};
+$('ttsClose').onclick=()=>$('ttsModal').classList.remove('show');
+$('ttsModal').onclick=e=>{if(e.target.id==='ttsModal')$('ttsModal').classList.remove('show')};
+$('ttsText').oninput=()=>$('ttsCount').textContent=$('ttsText').value.length+'/200';
+$('ttsSend').onclick=()=>{const t=$('ttsText').value.trim();if(t)navigator.clipboard?.writeText('TTS: '+t);
+  window.open('https://x.com/messages/compose?recipient_id=2095119649079697410&text='+encodeURIComponent('TTS request: '+t),'_blank');
+  $('ttsSend').textContent='COPIED ✓';setTimeout(()=>$('ttsSend').textContent='COPY + OPEN DM',1500)};
+
+addEventListener('resize',fit);
+fit();
+loadRewards();loadMarket();loadChart();loadTrades();loadTicker();loadBoard();loadFeed();loadTTS();
 setInterval(loadTrades,20000);setInterval(loadMarket,30000);setInterval(loadRewards,60000);
-setInterval(loadChart,120000);setInterval(loadTicker,300000);setInterval(tickLast,1000);
+setInterval(loadChart,120000);setInterval(loadTicker,300000);setInterval(loadBoard,300000);
+setInterval(loadFeed,120000);setInterval(loadTTS,10000);setInterval(tickLast,1000);
+document.fonts?.ready.then(()=>{draw();rollFeed()});
 </script>
 </body>
 </html>
