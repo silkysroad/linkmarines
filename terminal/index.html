@@ -277,7 +277,8 @@ html.fit #tip{font-size:20px;padding:10px 14px}
   .stats .xtra{display:none}.stats.open .xtra{display:block}
   .moreStats{display:block;grid-column:span 2;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--blue2);font:inherit;font-size:11px;letter-spacing:1.5px;padding:8px;cursor:pointer}
   main{display:flex;flex-direction:column}.col,.lower{display:contents}
-  .chartP{order:1}.tapeP{order:2}.bill{order:3}.feed{order:4}.ads{order:5}.wrP{display:none}
+  .chartP{order:1}.ads{order:2}.tapeP{order:3}.bill{order:4}.feed{order:5}
+  .ads>.ph{display:none}.ads .slots{gap:6px}.wrP{display:none}
   .panel{padding:10px 12px}
   .acc>.ph{cursor:pointer;margin-bottom:8px;flex-wrap:nowrap;user-select:none;-webkit-tap-highlight-color:transparent}
   .acc>.ph h2{font-size:20px;display:flex;align-items:center;gap:8px}
@@ -363,7 +364,7 @@ html.fit #tip{font-size:20px;padding:10px 14px}
         </table>
         </div>
       </section>
-      <section class="panel ads acc" data-acc="ads" data-def="0">
+      <section class="panel ads">
         <div class="ph"><h2>AD SPACE</h2><span class="meta" id="adMeta">paid on-chain · live in ~2 min</span></div>
         <div class="slots">
           <div class="board" data-slot="2" id="slot2"></div>
