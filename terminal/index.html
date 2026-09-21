@@ -147,6 +147,11 @@ tr.whale td{background:rgba(74,122,255,.08)}
 #ttsPop.show{opacity:1;transform:translate(-50%,0) scale(1)}
 #ttsPop .from{font-size:13px;color:var(--amber);letter-spacing:2px;text-transform:uppercase}
 #ttsPop .msg{font-family:'VT323';font-size:44px;line-height:1.05;color:#fff;margin-top:6px;word-break:break-word}
+.board.house{padding:0;overflow:hidden;background:#000;border:1px solid #2a3a6a}
+.board.house img{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;image-rendering:pixelated}
+.board.house .htag{position:absolute;right:0;bottom:0;z-index:2;background:#000d;color:var(--amber);font-size:10px;letter-spacing:1px;padding:2px 6px;border-top-left-radius:3px}
+.board.house:hover .htag{background:var(--amber);color:#000}
+html.fit .board.house{padding:0}html.fit .board.house .htag{font-size:13px;padding:1px 7px}
 .board.sold.img{padding:0;overflow:hidden;background:#000}
 .board.sold.img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .board.sold.img .by,.board.sold.img .left,.board.sold.img .buy{background:#000c;padding:1px 5px;z-index:2}
@@ -689,8 +694,10 @@ function curAd(k){const n=Date.now()/1000;return(ADS.slots?.[k]||[]).find(a=>a.s
 function queueEnd(k){const n=Date.now()/1000;return Math.max(n,...(ADS.slots?.[k]||[]).map(a=>a.end))}
 function renderAds(){['1','2','3'].forEach(k=>{const el=$('slot'+k);if(!el)return;const a=curAd(k),pr=PAY?'$'+PAY.prices.slots[k]+' / '+PAY.blockMinutes+' MIN':'';
   el.classList.toggle('sold',!!a);el.classList.toggle('img',!!(a&&a.img));
-  el.innerHTML=a&&a.img?`<img src="${esc(a.img)}" alt=""><span class="buy">${SLOTN[k]}</span><span class="by">— ${esc(a.from)}</span><span class="left">${Math.ceil((a.end-Date.now()/1000)/60)}m left</span>`:a?`<span class="buy">${SLOTN[k]} · ${pr}</span><div class="head">${esc(a.head)}</div>${a.sub?`<div class="sub">${esc(a.sub)}</div>`:''}<span class="by">— ${esc(a.from)}</span><span class="left">${Math.ceil((a.end-Date.now()/1000)/60)}m left</span>`
-    :`<span class="slot">${SLOTN[k]}</span><span class="vt" style="font-size:${k==='1'?34:26}px">SLOT OPEN</span><span class="price">${pr||'—'} · CLICK TO BUY</span>`})}
+  const html=a&&a.img?`<img src="${esc(a.img)}" alt=""><span class="buy">${SLOTN[k]}</span><span class="by">— ${esc(a.from)}</span><span class="left">${Math.ceil((a.end-Date.now()/1000)/60)}m left</span>`:a?`<span class="buy">${SLOTN[k]} · ${pr}</span><div class="head">${esc(a.head)}</div>${a.sub?`<div class="sub">${esc(a.sub)}</div>`:''}<span class="by">— ${esc(a.from)}</span><span class="left">${Math.ceil((a.end-Date.now()/1000)/60)}m left</span>`
+    :houseAd(k,pr);if(el._h!==html){el.innerHTML=html;el._h=html}el.classList.toggle('house',!a)})}
+const HOUSE={'1':['s1-better-call-sergey','s1-holding-alone','s1-plaid-motors'],'2':['s2-paper-hands','s2-youre-reading-this'],'3':['s3-bankers-hate','s3-sergey-associates']};
+function houseAd(k,pr){const L=HOUSE[k],i=Math.floor(Date.now()/20000+ +k)%L.length;return `<img src="house/${L[i]}.png" alt="ad space open"><span class="htag">${PAY?'$'+PAY.prices.slots[k]+'/'+PAY.blockMinutes+'M · ':''}BUY ▸</span>`}
 function fillSlotSel(){if(!PAY)return;$('fSlot').innerHTML=['1','2','3'].map(k=>`<option value="${k}">${SLOTN[k]} · $${PAY.prices.slots[k]}/${PAY.blockMinutes}m</option>`).join('');
   $('fBlocks').innerHTML=Array.from({length:PAY.maxBlocks},(_,i)=>`<option value="${i+1}">${(i+1)*PAY.blockMinutes} min</option>`).join('')}
 let imgId=null,imgBusy=false;
@@ -782,7 +789,7 @@ $('moreStats').addEventListener('click',()=>{const o=document.querySelector('.st
 addEventListener('resize',fit);
 fit();
 loadRewards();loadMarket();loadChart();loadTrades();loadTicker();loadBoard();loadFeed();loadTTS();loadPay();loadAds();
-setInterval(loadAds,15000);setInterval(loadPay,300000);setInterval(renderAds,20000);
+setInterval(loadAds,15000);setInterval(loadPay,300000);setTimeout(()=>{renderAds();setInterval(renderAds,20000)},20000-Date.now()%20000);
 setInterval(loadTrades,20000);setInterval(loadMarket,30000);setInterval(loadRewards,60000);
 setInterval(loadChart,120000);setInterval(loadTicker,300000);setInterval(loadBoard,300000);
 setInterval(loadFeed,120000);setInterval(loadTTS,10000);setInterval(tickLast,1000);
