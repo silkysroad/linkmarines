@@ -675,8 +675,9 @@ function nextTTS(){if(ttsBusy||!ttsQ.length)return;const i=ttsQ.shift();ttsBusy=
   played.add(i.id);localStorage.setItem('ttsPlayed',JSON.stringify([...played].slice(-100)));
   $('ttsFrom').textContent='🔊 '+i.from+' says';$('ttsMsg').textContent=i.text;$('ttsPop').classList.add('show');
   let done=false;const end=()=>{if(done)return;done=true;setTimeout(()=>{$('ttsPop').classList.remove('show');setTimeout(()=>{ttsBusy=false;nextTTS()},800)},1500)};
-  try{const u=new SpeechSynthesisUtterance(i.from+' says: '+i.text);u.rate=1.02;u.onend=end;u.onerror=()=>{$('audioGate').style.display='block'};
-    speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}
+  const synth=()=>{try{const u=new SpeechSynthesisUtterance(i.from+' says: '+i.text);u.rate=1.02;u.onend=end;u.onerror=()=>{$('audioGate').style.display='block'};
+    speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}};
+  if(i.audio){const a=new Audio(i.audio);a.onended=end;a.onerror=synth;a.play().catch(()=>{$('audioGate').style.display='block';synth()})}else synth();
   setTimeout(end,Math.max(9000,i.text.length*85))}
 $('audioGate').onclick=()=>{try{speechSynthesis.speak(new SpeechSynthesisUtterance(' '))}catch(e){}$('audioGate').style.display='none'};
 addEventListener('pointerdown',()=>{audioOk=true;$('audioGate').style.display='none'},{once:true});
