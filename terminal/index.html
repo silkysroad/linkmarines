@@ -277,8 +277,8 @@ html.fit #tip{font-size:20px;padding:10px 14px}
   .stats .xtra{display:none}.stats.open .xtra{display:block}
   .moreStats{display:block;grid-column:span 2;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--blue2);font:inherit;font-size:11px;letter-spacing:1.5px;padding:8px;cursor:pointer}
   main{display:flex;flex-direction:column}.col,.lower{display:contents}
-  .chartP{order:1}.ads{order:2}.tapeP{order:3}.bill{order:4}.feed{order:5}
-  .ads>.ph{display:none}.ads .slots{gap:6px}.wrP{display:none}
+  .chartP{order:1}.bill{order:2}.ads{order:3}.tapeP{order:4}.feed{order:5}
+  .ads .slots{gap:6px}.wrP{display:none}
   .panel{padding:10px 12px}
   .acc>.ph{cursor:pointer;margin-bottom:8px;flex-wrap:nowrap;user-select:none;-webkit-tap-highlight-color:transparent}
   .acc>.ph h2{font-size:20px;display:flex;align-items:center;gap:8px}
@@ -286,11 +286,10 @@ html.fit #tip{font-size:20px;padding:10px 14px}
   .acc.shut>.ph{margin-bottom:0}.acc.shut>.ph .chev{transform:rotate(-90deg)}
   .acc.shut>:not(.ph){display:none!important}
   .acc.shut>.ph .tabs,.acc.shut>.ph .meta{display:none}
-  .ads>.ph .meta{display:none}
   #chartWrap{height:230px}
   #xfeed{max-height:460px;overflow-y:auto}
   .post .txt{-webkit-line-clamp:3}
-  .board{min-height:90px}.bill .board.sold .head,.board.sold .head{font-size:30px}
+  .board{min-height:90px}#slot1{aspect-ratio:1112/358;min-height:0}.slots .board.house,.slots .board.img{aspect-ratio:912/176;min-height:0}.bill .board.sold .head,.board.sold .head{font-size:30px}
   .src .fx{display:none}.src{padding:6px 12px}
   #mbar{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:6px;position:fixed;left:0;right:0;bottom:0;z-index:45;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(4,6,15,.96);border-top:1px solid var(--line);backdrop-filter:blur(6px)}
   #mbar .btn{text-align:center;padding:11px 6px;font-size:12px;text-decoration:none}
@@ -386,7 +385,7 @@ html.fit #tip{font-size:20px;padding:10px 14px}
       </div>
       <div id="xfeed"><div id="xlist"><div class="dim">loading posts…</div></div></div>
     </section>
-    <section class="panel bill acc" data-acc="bill" data-def="1">
+    <section class="panel bill">
       <div class="ph"><h2>BILLBOARD</h2><span class="meta">slot 01 · prime</span></div>
       <div class="board" data-slot="1" id="slot1"></div>
     </section>
@@ -414,7 +413,7 @@ html.fit #tip{font-size:20px;padding:10px 14px}
   <div id="kA" style="display:none">
     <div id="kAt"><label class="f">Headline</label><input id="fHead" maxlength="36" placeholder="BIG TEXT, 36 max">
     <label class="f">Sub line</label><input id="fSub" maxlength="70" placeholder="smaller text, 70 max"></div>
-    <div id="kAi" style="display:none"><label class="f">Image · PNG / JPG / WEBP, under 3 MB, wide works best</label>
+    <div id="kAi" style="display:none"><label class="f">Image · PNG / JPG / WEBP, under 3 MB · <span id="dimHint">slot 01: 1112×358 · slots 02/03: 912×176</span></label>
     <input id="fImg" type="file" accept="image/png,image/jpeg,image/webp"><img id="iPrev" alt=""></div>
     <div class="grid2">
       <div><label class="f">Slot</label><select id="fSlot"></select></div>
@@ -426,7 +425,7 @@ html.fit #tip{font-size:20px;padding:10px 14px}
     <div><label class="f">Pay with</label><select id="fTok"><option value="usdc">USDC</option><option value="sol">SOL</option></select></div>
     <div style="text-align:right"><div class="dim" style="font-size:10px;letter-spacing:1.5px">TOTAL</div><div class="total" id="fTotal">—</div></div>
   </div>
-  <p style="font-size:11px" class="dim" id="rules">Text only. No links, no contract addresses, nothing hateful. Anything that trips the filter is held for a mod and refunded if rejected. Paid on Solana; it goes live automatically once the payment confirms.</p>
+  <p style="font-size:11px" class="dim" id="rules">Text only. No links, no contract addresses, nothing hateful. Anything that trips the filter is held for a mod and refunded if rejected. Paid on Solana; it goes live automatically once the payment confirms. Want a longer run or an all-day sponsor slot? DM <a href="https://x.com/TheMarinesX" target="_blank" rel="noopener" style="color:var(--amber)">@TheMarinesX</a>.</p>
   <div id="payMsg"></div>
   <div class="acts"><button class="btn" id="ttsClose">CLOSE</button><a class="btn" id="payLink" href="#">OPEN IN WALLET APP</a><button class="btn primary" id="payBtn">PAY WITH WALLET</button></div>
 </div></div>
